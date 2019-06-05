@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#CF0000</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Improve your Apps by leveraging Managed Package Error Notifications.</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>App Cockpit</label>
+    <navType>Standard</navType>
+    <tabs>Home</tabs>
+    <tabs>AppError__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

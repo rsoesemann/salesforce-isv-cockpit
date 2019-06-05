@@ -1,0 +1,18 @@
+<apex:page controller="ConfigurationCtrl" sidebar="false" title="App Error Inbox" lightningStylesheets="true">
+    <apex:pageBlock >
+        <apex:sectionHeader title="App Error Inbox" subtitle="Configuration"/>
+
+        <c:configurationStep title="Create Email Service" step="{!configureEmailService}"/>
+        <c:configurationStep title="Prepare LMA Packages" step="{!configureNamespaces}"/>
+
+        <apex:pageBlockSection columns="1" title="Third-Party Licenses" collapsible="false">
+            The following third-party pieces of free and open-source software are used and embedded in this product.
+            Their licenses require us to reproduce their copyright notice.
+
+            <ul>
+                <li><a href="https://github.com/financialforcedev/fflib-apex-common/blob/master/LICENSE"
+                       target="_blank">financialforcedev/fflib-apex-common (click for code and license)</a></li>
+            </ul>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ftxt_ForwardViaEmail__c</fullName>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(&#39;mailto:support@logicline.de?subject=Hello+There&amp;body=This+is+an+example&#39;,&#39;Email Me&#39;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Forward via email...</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
