@@ -9,11 +9,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>AppError__c.ftxt_ForwardViaEmail__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>AppError__c.lkp_Account__c</field>
         <readable>true</readable>
@@ -100,6 +95,10 @@
     </pageAccesses>
     <tabSettings>
         <tab>AppError__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Home</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

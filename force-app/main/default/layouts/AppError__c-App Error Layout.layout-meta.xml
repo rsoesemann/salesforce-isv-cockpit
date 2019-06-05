@@ -89,10 +89,6 @@
         <label>Full Mail</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ftxt_ForwardViaEmail__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>txl_FullMailBody__c</field>
             </layoutItems>
