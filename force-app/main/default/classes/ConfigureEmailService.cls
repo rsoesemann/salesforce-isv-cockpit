@@ -9,16 +9,16 @@ public with sharing class ConfigureEmailService extends ConfigurationStep {
     public override ApexPages.Message getStatus() {
         classId = [SELECT Id FROM ApexClass WHERE Name = 'ErrorMailReceiver' LIMIT 1].Id;
 
-        List<EmailServicesAddress> existing = [SELECT LocalPart, EmailDomainName FROM EmailServicesAddress
-                                               WHERE Function.FunctionName = :FUNCTION_NAME AND Function.ApexClassId = :classId];
+        List<EmailServicesAddress> existing = [SELECT LocalPart, EmailDomainName, Id FROM EmailServicesAddress
+                                               WHERE Function.FunctionName = :FUNCTION_NAME AND Function.ApexClassId = :classId LIMIT 1];
 
         if(existing.isEmpty()) {
             return new ApexPages.Message(ApexPages.Severity.WARNING, 'An Email Service is required to allow the tool to receive app errors.');
         }
         else {
             String address = existing[0].LocalPart + '@' + existing[0].EmailDomainName;
-            String mailtoLink = '<em><a href="mailto:' + address + '">' + address + '</a></em>';
-            return new ApexPages.Message(ApexPages.Severity.CONFIRM, 'An Email Service is set up to receive app errors. Make all your Managed Packages send errors to: <br/>' + mailtoLink);
+            String link = '<em><a href="/lightning/setup/EmailToApexFunction/page?address=%2Femail-admin%2Fservices%2FdetailEmailServicesAddress.apexp%3Fid%3D' + existing[0].Id + '">' + address + '</a></em>';
+            return new ApexPages.Message(ApexPages.Severity.CONFIRM, 'An Email Service is set up to receive app errors. Make all your Managed Packages send errors to: <br/>' + link);
         }
     }
 

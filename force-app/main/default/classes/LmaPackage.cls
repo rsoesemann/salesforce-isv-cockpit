@@ -6,7 +6,7 @@ public class LmaPackage extends DomainBuilder {
         name('MyApp');
         ns('ns');
         set(sfLma__Package__c.sfLma__Release_Date__c, System.today());
-        set(sfLma__Package__c.sfLma__Package_ID__c, '0Ho2o0000004C9hCAE');
+        set(sfLma__Package__c.sfLma__Package_ID__c, '033i0000000TScM');
     }
 
     public LmaPackage ns(String value) {
@@ -15,6 +15,10 @@ public class LmaPackage extends DomainBuilder {
 
     public LmaPackage name(String value) {
         return (LmaPackage) set(sfLma__Package__c.Name, value);
+    }
+
+    public LmaPackage id(Id value) {
+        return (LmaPackage) set(sfLma__Package__c.sfLma__Package_ID__c, value);
     }
 
     public LmaPackage add(LmaVersion v) {

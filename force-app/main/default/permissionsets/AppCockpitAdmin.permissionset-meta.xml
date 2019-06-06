@@ -98,6 +98,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Configuration</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Home</tab>
         <visibility>Visible</visibility>
     </tabSettings>

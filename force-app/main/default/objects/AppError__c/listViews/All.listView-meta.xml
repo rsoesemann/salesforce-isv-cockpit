@@ -3,6 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>txt_ExceptionType__c</columns>
+    <columns>txt_ApexClass__c</columns>
     <columns>lkp_Package__c</columns>
     <columns>lkp_PackageVersion__c</columns>
     <columns>lkp_Account__c</columns>
