@@ -8,5 +8,9 @@
     <columns>lkp_Account__c</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
-    <label>All</label>
+    <filters>
+        <field>lkp_License__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <label>Inbox</label>
 </ListView>
