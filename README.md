@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-[![](http://img.youtube.com/vi/GTy0Lr19z34/0.jpg)](http://www.youtube.com/watch?v=GTy0Lr19z34 "Video Demo")
+[![](http://img.youtube.com/vi/GTy0Lr19z34/0.jpg)](https://youtu.be/GTy0Lr19z34 "Video Demo")
 
 ## What is the App Cockpit?
 
