@@ -1,19 +1,20 @@
-@IsTest
 public class LmaPackage extends DomainBuilder {
-
-    private static Integer count = 1;
 
     public LmaPackage() {
         super(sfLma__Package__c.SObjectType);
 
-        set(sfLma__Package__c.Name, 'App ' + count++);
-        ns('ns_' + count++);
+        name('MyApp');
+        ns('ns');
         set(sfLma__Package__c.sfLma__Release_Date__c, System.today());
-        set(sfLma__Package__c.sfLma__Package_ID__c, '033A0000000' + count++ + '000IAA');
+        set(sfLma__Package__c.sfLma__Package_ID__c, '0Ho2o0000004C9hCAE');
     }
 
     public LmaPackage ns(String value) {
         return (LmaPackage) set(sfLma__Package__c.txt_Namespace__c, value);
+    }
+
+    public LmaPackage name(String value) {
+        return (LmaPackage) set(sfLma__Package__c.Name, value);
     }
 
     public LmaPackage add(LmaVersion v) {

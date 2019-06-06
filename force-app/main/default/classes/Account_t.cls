@@ -1,4 +1,3 @@
-@IsTest
 public class Account_t extends DomainBuilder {
 
 	public Account_t() {

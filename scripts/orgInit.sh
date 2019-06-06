@@ -9,6 +9,7 @@ sfdx force:package:install --package 04t30000001DWL0AAO --publishwait 5 --wait 1
 sfdx force:source:push
 sfdx force:user:permset:assign -n AppErrorAdmin
 sfdx force:data:record:update -s User -w "Name='User User'" -v "Languagelocalekey=en_US" -u $SCRATCH_ORG_ALIAS
+sfdx force:apex:execute -f scripts/createSampleData.apex -u $SCRATCH_ORG_ALIAS
 sfdx force:org:open
 sfdx force:apex:test:run -u $SCRATCH_ORG_ALIAS -l RunLocalTests -r human
 
