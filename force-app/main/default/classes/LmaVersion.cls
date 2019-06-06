@@ -1,5 +1,7 @@
 public class LmaVersion extends DomainBuilder {
 
+    private static Integer count = 0;
+
 
     public LmaVersion() {
         this(new LmaPackage());
@@ -12,11 +14,15 @@ public class LmaVersion extends DomainBuilder {
         name('v.1');
         set(sfLma__Package_Version__c.sfLma__Version__c, '1');
         set(sfLma__Package_Version__c.sfLma__Release_Date__c, System.today());
-        set(sfLma__Package_Version__c.sfLma__Version_ID__c, '04t2o000000AjwpAAC');
+        id('04t00000000000' + count++);
     }
 
     public LmaVersion name(String value) {
         return (LmaVersion) set(sfLma__Package_Version__c.Name, value);
+    }
+
+    public LmaVersion id(Id value) {
+        return (LmaVersion) set(sfLma__Package_Version__c.sfLma__Version_ID__c, value);
     }
 
     public LmaVersion add(LmaLicense l) {

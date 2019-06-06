@@ -1,8 +1,9 @@
 public with sharing class ParseAppErrors {
 
     private static final Pattern ORIGIN_REGEXP = Pattern.compile('(005[A-Za-z0-9]{12})/(00D[A-Za-z0-9]{12})');
-    private static final Pattern PAGE_REGEXP = Pattern.compile('[\\s]+.+/(.+)__(.+)[\\s]+caused by: ((.+?): (.+))[\\s]+Class\\.((.+)\\.(.+))');
     private static final Pattern TRIGGER_REGEXP = Pattern.compile('[\\s]+((.+?)\\.(.+?)): (.+?): (.+)');
+    private static final Pattern PAGE_REGEXP
+                    = Pattern.compile('[\\s]+.+/(.+)__(.+)[\\s]+caused by: ((.+?): (.+))[\\s]+Class\\.((.+)\\.(.+))');
 
     private List<AppError__c> errors;
 
@@ -55,14 +56,41 @@ public with sharing class ParseAppErrors {
                                     FROM sflma__License__c
                                     WHERE sfLma__Subscriber_Org_ID__c = :error.txt_OrgId__c
                                     AND sfLma__Package__r.txt_Namespace__c = :error.txt_Namespace__c
-                                    LIMIT 1
-                ]) {
+                                    LIMIT 1]) {
                     error.lkp_License__c = license.Id;
                     error.lkp_Package__c = license.sfLma__Package__c;
                     error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
                     error.lkp_Account__c = license.sfLma__Account__c;
                 }
             }
+
+            if(!isPopulated(error)) {
+                System.debug(LoggingLevel.ERROR, 'Failed to match: ' + stripBreaks(body));
+                System.debug(LoggingLevel.ERROR, stripBreaks(String.valueOf(error)));
+            }
         }
+    }
+
+
+    // PRIVATE
+
+    @TestVisible
+    private static Boolean isPopulated(AppError__c error) {
+        return (error.txt_UserId__c != null
+             && error.txt_OrgId__c != null
+             && error.txt_Namespace__c != null
+             && (error.txt_ApexClass__c != null || error.txt_VisualforcePage__c != null)
+             && error.txt_Location__c != null
+             && error.txt_ExceptionMessage__c != null
+             && error.txt_ExceptionType__c != null
+             && error.lkp_License__c != null
+             && error.lkp_Package__c != null
+             && error.lkp_PackageVersion__c != null
+             && error.lkp_Account__c != null);
+    }
+
+
+    private String stripBreaks(String input){
+        return input.replaceAll('(\\r|\\n)+', '|');
     }
 }
