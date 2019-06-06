@@ -20,11 +20,11 @@ As a PDO partner, we help many customers each year to get their product ideas ou
 
 For two reasons. We truly believe in Open Source. We use Open Source in our daily work and think we also have to give back. But we also think that for our customers it's even more trustworthy to know that the source code of the app that they use for support can be checked for bugs by anybody out there.
 
-[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com)
-
 ## How can I use and extends this?
 
 The project was built as a flexible unnamespaced SFDX project. The repo contains all the scripts to automatically build dev scratch orgs with the LMA installed and sample data to play with.
+
+[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com)
 
 From there you can eighter build Unlocked Packages from it or even push it into a Packaging org using the deployMetadata.sh script.
 
