@@ -16,7 +16,7 @@ public with sharing class ParseAppErrors {
 
 
     public ParseAppErrors(List<AppError__c> errors, Map<Id, AppError__c> old) {
-        this( (List<AppError__c>) new SObjects(errors).changes(old, AppError__c.txl_FullMailBody__c).records() );
+        this( changedBody(errors, old) );
     }
 
 
@@ -75,6 +75,18 @@ public with sharing class ParseAppErrors {
 
 
     // PRIVATE
+
+    private static List<AppError__c> changedBody(List<AppError__c> errors, Map<Id, AppError__c> old) {
+        List<AppError__c> result = new List<SObject>();
+
+        for(AppError__c error : errors) {
+            if(error.txl_FullMailBody__c != old.get(error.Id).txl_FullMailBody__c) {
+                result.add(error);
+            }
+        }
+
+        return result;
+    }
 
     @TestVisible
     private static Boolean isPopulated(AppError__c error) {

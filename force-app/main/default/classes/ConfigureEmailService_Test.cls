@@ -13,7 +13,7 @@ private class ConfigureEmailService_Test {
 
         // Exercise
         try {
-            step.run();
+            step.doRun();
         }
         catch(Exception ex) {
             unexpectedException = ex;
@@ -21,7 +21,9 @@ private class ConfigureEmailService_Test {
 
 
         // Verify
-        System.assertNotEquals(null, step.getStatus().getSeverity());
+        System.assertNotEquals(null, step.getSeverity());
+        System.assertNotEquals(null, step.getMessage());
+        System.assertNotEquals(null, step.buttonLabel());
         System.assertEquals(null, unexpectedException);
     }
 

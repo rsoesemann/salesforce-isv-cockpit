@@ -71,6 +71,7 @@ private class ParseAppErrors_Test {
     }
 
 
+    @IsTest
     private static void reparseOnChange(){
 
         // Setup
@@ -81,12 +82,13 @@ private class ParseAppErrors_Test {
 
 
         // Exercise
-        e.txl_FullMailBody__c.replaceAll('MyClass', 'MyOtherClass');
+        e.txl_FullMailBody__c = e.txl_FullMailBody__c.replaceAll('MyClass', 'MyOtherClass');
         update e;
 
         
         // Verify
-        System.assertEquals('MyOtherClass' , e.txt_ApexClass__c);
+
+        System.assertEquals('MyOtherClass' , [SELECT txt_ApexClass__c FROM AppError__c LIMIT 1].txt_ApexClass__c);
     }
 
 

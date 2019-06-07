@@ -7,6 +7,8 @@ private class ConfigurePackageNamespaces_Test {
         // Setup
         Exception unexpectedException = null;
 
+        new LmaPackage().ns(null).persist();
+
         ConfigurePackageNamespaces step = new ConfigurePackageNamespaces();
 
 
@@ -20,7 +22,9 @@ private class ConfigurePackageNamespaces_Test {
 
 
         // Verify
-        System.assertNotEquals(null, step.getStatus().getSeverity());
+        System.assertNotEquals(null, step.getSeverity());
+        System.assertNotEquals(null, step.getMessage());
+        System.assertNotEquals(null, step.buttonLabel());
         System.assertEquals(null, unexpectedException);
     }
 }

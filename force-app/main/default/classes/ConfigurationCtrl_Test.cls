@@ -23,5 +23,4 @@ private class ConfigurationCtrl_Test {
         System.assertEquals(null, unexpectedException);
         System.assertNotEquals(null, ctrl);
     }
-
 }

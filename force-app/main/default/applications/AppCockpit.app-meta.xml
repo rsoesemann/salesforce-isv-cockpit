@@ -12,5 +12,6 @@
     <navType>Standard</navType>
     <tabs>Home</tabs>
     <tabs>AppError__c</tabs>
+    <tabs>Configuration</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
