@@ -8,13 +8,13 @@
 
 The App Cockpit is a native Salesforce App that extends the Salesforce LMA and helps you monitor the health of your apps and proactively support your subscribers in error cases.
 
-Managed Packages have an option to send out app errors to an email address defined during Package upload. We use this mechanism and let our App receive and parse those emails. In combination with the information in the LMA app, we can perfectly assign each incoming error a customer account, a package, package version, and license. But we can do more. We also extract information about the type of error and where it occurred.
+Managed Packages have an option to send out app errors to an email address defined during Package upload. We use this mechanism and let our App receive and parse those emails. In combination with the information in the LMA app, we can perfectly assign each incoming error to a customer account, a package, package version, and license. But we can do more. We also extract information about the type of error and where it occurred.
 
 All this information is stored in a single Custom Object and can be easily used for reporting and sophisticated support workflows.
 
 ## Why did you built this?
 
-As a PDO partner, we help many customers each year to get their product ideas out into the AppExchange. But our support doesn't stop with that. Over time we realized that doing support with the LMA app alone is not optimal. So we developed an internal solution which worked well for us. 
+As a PDO partner, we help many customers every year to get their product ideas out into the AppExchange. But our support doesn't stop with that. Over time we realized that doing support with the LMA app alone is not optimal. So we developed an internal solution which worked well for us. 
 
 ## Why did you open-source this?
 
@@ -26,6 +26,6 @@ The project was built as a flexible unnamespaced SFDX project. The repo contains
 
 [![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com)
 
-From there you can eighter build Unlocked Packages from it or even push it into a Packaging org using the deployMetadata.sh script.
+From there you can either build Unlocked Packages from it or even push it into a Packaging org using the deployMetadata.sh script.
 
-Feel free to fork the repo and extend it. We would love to get improvements as Pull Request from you. Or create issues when you find a problem but don't wont to fix it on your own.
+Feel free to fork the repo and extend it. We would love to get improvements as Pull Request from you. Or create issues when you find a problem but don't want to fix it on your own.
