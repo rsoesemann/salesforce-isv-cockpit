@@ -18,6 +18,9 @@ private class ParseAppErrors_Test {
         // Setup
         setup();
 
+        System.debug(LoggingLevel.ERROR, [SELECT sfLma__Subscriber_Org_ID__c, sfLma__Package__r.txt_Namespace__c, sfLma__Package_Version__c, sfLma__Account__c
+        FROM sflma__License__c WHERE sfLma__Package__r.txt_Namespace__c = 'NSA' AND sfLma__Subscriber_Org_ID__c = '00D000000000000']);
+
 
         // Exercise
         insert new AppError__c(txl_FullMailBody__c = mails[0]);
@@ -26,7 +29,7 @@ private class ParseAppErrors_Test {
         // Verify
         AppError__c e = query()[0];
         System.assertEquals('005500000024uNj' , e.txt_UserId__c );
-        System.assertEquals('00D1X0000000R9E' , e.txt_OrgId__c );
+        System.assertEquals('00D000000000001' , e.txt_OrgId__c );
         System.assertEquals('NSA.MyClass', e.txt_Location__c);
         System.assertEquals('NSA', e.txt_Namespace__c);
         System.assertEquals('System.LimitException' , e.txt_ExceptionType__c);
@@ -54,7 +57,7 @@ private class ParseAppErrors_Test {
         // Verify
         AppError__c e = query()[0];
         System.assertEquals('005500000024uNj', e.txt_UserId__c);
-        System.assertEquals('00D1X0000000R9E', e.txt_OrgId__c);
+        System.assertEquals('00D000000000001', e.txt_OrgId__c);
         System.assertEquals('NSB', e.txt_Namespace__c);
         System.assertEquals('System.NullPointerException', e.txt_ExceptionType__c);
         System.assertEquals('Attempt to de-reference a null object', e.txt_ExceptionMessage__c);
@@ -116,11 +119,11 @@ private class ParseAppErrors_Test {
 
         appA = new LmaPackage().name('App A').ns('NSA');
         verA = new LmaVersion(appA).name('v1');
-        licA = new LmaLicense(customer, verA);
+        licA = new LmaLicense(customer, verA).org('00D000000000001');
 
         appB = new LmaPackage().name('App B').ns('NSB');
         verB = new LmaVersion(appB).name('v1');
-        licB = new LmaLicense(customer, verB);
+        licB = new LmaLicense(customer, verB).org('00D000000000001');
 
         customer.persist();
 
@@ -132,7 +135,7 @@ private class ParseAppErrors_Test {
 
     private static List<AppError__c> query() {
         return [SELECT txt_UserId__c, txt_OrgId__c, txt_Namespace__c, txt_ExceptionType__c, txt_ExceptionMessage__c,
-                        txt_ApexClass__c, txt_VisualforcePage__c, txt_Location__c, lkp_License__c, lkp_Package__c, lkp_PackageVersion__c
+                        lkp_Account__c, txt_ApexClass__c, txt_VisualforcePage__c, txt_Location__c, lkp_License__c, lkp_Package__c, lkp_PackageVersion__c
                 FROM AppError__c];
     }
 }

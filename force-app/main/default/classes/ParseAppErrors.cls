@@ -29,6 +29,7 @@ public with sharing class ParseAppErrors {
             Matcher originMatch = ORIGIN_REGEXP.matcher(body);
 
             if(originMatch.find()) {
+
                 error.txt_UserId__c = originMatch.group(1);
                 error.txt_OrgId__c = originMatch.group(2);
 
@@ -50,13 +51,14 @@ public with sharing class ParseAppErrors {
                     error.txt_ExceptionType__c = triggerMatch.group(4);
                     error.txt_ExceptionMessage__c = triggerMatch.group(5);
                 }
+                System.debug(LoggingLevel.ERROR, [SELECT txt_Namespace__c FROM sfLma__Package__c]);
 
                 for(sfLma__License__c license : [
                                     SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c
                                     FROM sflma__License__c
                                     WHERE sfLma__Subscriber_Org_ID__c = :error.txt_OrgId__c
-                                    AND sfLma__Package__r.txt_Namespace__c = :error.txt_Namespace__c
-                                    LIMIT 1]) {
+                                    AND sfLma__Package__r.txt_Namespace__c = :error.txt_Namespace__c]) {
+
                     error.lkp_License__c = license.Id;
                     error.lkp_Package__c = license.sfLma__Package__c;
                     error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
