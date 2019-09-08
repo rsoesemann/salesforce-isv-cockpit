@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>txt_VisualforcePage__c</fullName>
+    <fullName>txl_Stacktrace__c</fullName>
     <externalId>false</externalId>
-    <label>Page</label>
-    <length>80</length>
-    <required>false</required>
+    <label>Stacktrace</label>
+    <length>4000</length>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
 </CustomField>

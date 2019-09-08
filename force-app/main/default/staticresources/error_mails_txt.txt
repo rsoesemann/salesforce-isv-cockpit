@@ -18,31 +18,19 @@ Class.NSB.MyController.<init>: line 3, column 1
 
 Apex script unhandled trigger exception by user/organization: 005500000024uNj/00D000000000001
 
-NSA.MyClass: data changed by trigger for field Owner ID: owner cannot be blank
+NSA.TriggerDelete: execution of BeforeInsert
+
+caused by: System.DmlException: Delete failed. First exception on row 0 with id a031t00000RuMxyAAF; first error: ENTITY_IS_DELETED, entity is deleted: []
+
+Trigger.NSA.TriggerDelete: line 18, column 1
 
 &
 
-Apex script unhandled trigger exception by user/organization: 005d0000004Pi7c/00D000000000001
-
-NSB.MyClass: data changed by trigger for field Owner ID: owner cannot be blank
-
-&
 
 Apex script unhandled trigger exception by user/organization: 005500000024uNj/00D000000000001
 
 NSA.MyClass: System.LimitException: NSA:Too many SOQL queries: 101
 
-&
-
-Apex script unhandled trigger exception by user/organization: 005500000024uNj/00D000000000001
-
-NSB.MyClass: System.LimitException: Apex CPU time limit exceeded
-
-&
-
-Apex script unhandled trigger exception by user/organization: 005500000024uNj/00D000000000001
-
-NSA.MyClass: data changed by trigger for field Owner ID: owner cannot be blank
 
 &
 
@@ -59,3 +47,23 @@ Class.NSA.MyController.<init>: line 12, column 1
 Class.NSA.MyController.initTableOwner: line 326, column 1
 Class.NSA.MyController.init: line 129, column 1
 Class.NSA.MyController.<init>: line 72, column 1
+
+
+&
+
+Apex script unhandled exception by user/organization: 0051t000000kuff/00D1t000000CoeT
+
+Failed to process batch for class 'CleverReachApp.loli_batch_QueryImpl' for job id '7071t00001modVz'
+
+caused by: System.DmlException: Insert failed. First exception on row 0; first error: CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY, CleverReachApp.TriggerCRLogDelete: execution of BeforeInsert
+
+caused by: System.DmlException: Delete failed. First exception on row 0 with id a031t00000RuMxyAAF; first error: ENTITY_IS_DELETED, entity is deleted: []
+
+Trigger.CleverReachApp.TriggerCRLogDelete: line 18, column 1: []
+
+Class.CleverReachApp.DMLManager.performDMLOperation: line 106, column 1
+Class.CleverReachApp.DMLManager.insertAsUser: line 35, column 1
+Class.CleverReachApp.LoggerRepository.createErrorLog: line 16, column 1
+Class.CleverReachApp.BatchCMSendAction.onError: line 80, column 1
+Class.CleverReachApp.loli_batch_Executor.execute: line 32, column 1
+Class.CleverReachApp.loli_batch_QueryImpl.execute: line 23, column 1

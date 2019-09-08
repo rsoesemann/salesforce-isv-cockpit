@@ -35,6 +35,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AppError__c.txl_Stacktrace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AppError__c.txt_ApexClass__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49,8 +54,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>AppError__c.txt_Location__c</field>
+        <editable>false</editable>
+        <field>AppError__c.txt_MatchedWith__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

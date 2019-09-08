@@ -1,9 +1,9 @@
 public with sharing class ParseAppErrors {
 
-    private static final Pattern ORIGIN_REGEXP = Pattern.compile('(005[A-Za-z0-9]{12})/(00D[A-Za-z0-9]{12})');
-    private static final Pattern TRIGGER_REGEXP = Pattern.compile('[\\s]+((.+?)\\.(.+?)): (.+?): (.+)');
-    private static final Pattern PAGE_REGEXP
-                    = Pattern.compile('[\\s]+.+/(.+)__(.+)[\\s]+caused by: ((.+?): (.+))[\\s]+Class\\.((.+)\\.(.+))');
+    private static final List<EmailFormat> FORMATS = new List<EmailFormat>{
+            new PageErrorFormat(),
+            new TriggerErrorFormat()
+    };
 
     private List<AppError__c> errors;
 
@@ -24,51 +24,17 @@ public with sharing class ParseAppErrors {
 
     public void execute() {
         for(AppError__c error : errors) {
-            String body = error.txl_FullMailBody__c;
+            for(EmailFormat format : FORMATS) {
+                Matcher matcher = format.matcher( error.txl_FullMailBody__c );
 
-            Matcher originMatch = ORIGIN_REGEXP.matcher(body);
+                if(matcher.find()) {
+                    error.txt_MatchedWith__c = String.valueOf(format).split(':')[0];
 
-            if(originMatch.find()) {
+                    format.populateFields(matcher, error);
+                    linkToLma(error);
 
-                error.txt_UserId__c = originMatch.group(1);
-                error.txt_OrgId__c = originMatch.group(2);
-
-                Matcher pageMatch = PAGE_REGEXP.matcher(body);
-                Matcher triggerMatch = TRIGGER_REGEXP.matcher(body);
-
-                if(pageMatch.find()) {
-                    error.txt_Namespace__c = pageMatch.group(1).toUpperCase();
-                    error.txt_VisualforcePage__c = pageMatch.group(2);
-                    error.txt_ExceptionType__c = pageMatch.group(4);
-                    error.txt_ExceptionMessage__c = pageMatch.group(5);
-                    error.txt_Location__c = pageMatch.group(6);
-                    error.txt_ApexClass__c = pageMatch.group(7);
+                    break;
                 }
-                else if(triggerMatch.find()) {
-                    error.txt_Location__c = triggerMatch.group(1);
-                    error.txt_Namespace__c = triggerMatch.group(2);
-                    error.txt_ApexClass__c = triggerMatch.group(3);
-                    error.txt_ExceptionType__c = triggerMatch.group(4);
-                    error.txt_ExceptionMessage__c = triggerMatch.group(5);
-                }
-                System.debug(LoggingLevel.ERROR, [SELECT txt_Namespace__c FROM sfLma__Package__c]);
-
-                for(sfLma__License__c license : [
-                                    SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c
-                                    FROM sflma__License__c
-                                    WHERE sfLma__Subscriber_Org_ID__c = :error.txt_OrgId__c
-                                    AND sfLma__Package__r.txt_Namespace__c = :error.txt_Namespace__c]) {
-
-                    error.lkp_License__c = license.Id;
-                    error.lkp_Package__c = license.sfLma__Package__c;
-                    error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
-                    error.lkp_Account__c = license.sfLma__Account__c;
-                }
-            }
-
-            if(!isPopulated(error)) {
-                System.debug(LoggingLevel.ERROR, 'Failed to match: ' + stripBreaks(body));
-                System.debug(LoggingLevel.ERROR, stripBreaks(String.valueOf(error)));
             }
         }
     }
@@ -88,23 +54,30 @@ public with sharing class ParseAppErrors {
         return result;
     }
 
-    @TestVisible
-    private static Boolean isPopulated(AppError__c error) {
-        return (error.txt_UserId__c != null
-             && error.txt_OrgId__c != null
-             && error.txt_Namespace__c != null
-             && (error.txt_ApexClass__c != null || error.txt_VisualforcePage__c != null)
-             && error.txt_Location__c != null
-             && error.txt_ExceptionMessage__c != null
-             && error.txt_ExceptionType__c != null
-             && error.lkp_License__c != null
-             && error.lkp_Package__c != null
-             && error.lkp_PackageVersion__c != null
-             && error.lkp_Account__c != null);
+
+    private void linkToLma(AppError__c error) {
+        for(sfLma__License__c license : [SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c
+                                         FROM sflma__License__c
+                                         WHERE sfLma__Subscriber_Org_ID__c = :error.txt_OrgId__c
+                                         AND sfLma__Package__r.txt_Namespace__c = :error.txt_Namespace__c]) {
+            error.lkp_License__c = license.Id;
+            error.lkp_Package__c = license.sfLma__Package__c;
+            error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
+            error.lkp_Account__c = license.sfLma__Account__c;
+        }
     }
 
 
-    private String stripBreaks(String input){
-        return input.replaceAll('(\\r|\\n)+', '|');
+    // INNER
+
+    public abstract class EmailFormat {
+
+        public abstract String regex();
+        public abstract void populateFields(Matcher matcher, AppError__c error);
+
+        public Matcher matcher(String text) {
+            Pattern pattern = Pattern.compile(regex());
+            return pattern.matcher(text);
+        }
     }
 }
