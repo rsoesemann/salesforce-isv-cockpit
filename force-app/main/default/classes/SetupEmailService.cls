@@ -1,4 +1,4 @@
-public with sharing class ConfigureEmailService extends ConfigurationStep {
+public with sharing class SetupEmailService extends SetupStep {
 
     private static final String FUNCTION_NAME = 'App Error Inbox';
     private Id classId;

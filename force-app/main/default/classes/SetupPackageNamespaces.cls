@@ -1,4 +1,4 @@
-public with sharing class ConfigurePackageNamespaces extends ConfigurationStep {
+public with sharing class SetupPackageNamespaces extends SetupStep {
 
     // PUBLIC
 

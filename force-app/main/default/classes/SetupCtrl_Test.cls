@@ -1,18 +1,18 @@
 @IsTest
-private class ConfigurationCtrl_Test {
+private class SetupCtrl_Test {
 
     @IsTest
     private static void load() {
 
         // Setup
         Exception unexpectedException = null;
-        ConfigurationCtrl ctrl = null;
+        SetupCtrl ctrl = null;
 
 
         // Exercise
         try {
-            Test.setCurrentPage(Page.Configuration);
-            ctrl = new ConfigurationCtrl();
+            Test.setCurrentPage(Page.setup);
+            ctrl = new SetupCtrl();
         }
         catch(Exception ex) {
             unexpectedException = ex;

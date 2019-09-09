@@ -1,6 +1,6 @@
 <apex:component allowDml="true">
     <apex:attribute name="title" type="String" required="true" description=""  />
-    <apex:attribute name="step" type="ConfigurationStep" required="true" description="" />
+    <apex:attribute name="step" type="SetupStep" required="true" description="" />
     <apex:attribute name="executeJs" type="String" required="false" default="" description="" />
 
     <apex:form id="form">

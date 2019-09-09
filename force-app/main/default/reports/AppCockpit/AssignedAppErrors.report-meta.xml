@@ -43,9 +43,6 @@
         <field>AppError__c.lkp_License__c</field>
     </columns>
     <columns>
-        <field>AppError__c.txt_Location__c</field>
-    </columns>
-    <columns>
         <field>AppError__c.txt_UserId__c</field>
     </columns>
     <columns>

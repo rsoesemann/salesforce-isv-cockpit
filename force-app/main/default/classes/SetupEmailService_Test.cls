@@ -1,5 +1,5 @@
 @IsTest
-private class ConfigureEmailService_Test {
+private class SetupEmailService_Test {
 
     @IsTest
     private static void execute() {
@@ -8,7 +8,7 @@ private class ConfigureEmailService_Test {
         Exception unexpectedException = null;
         Test.setMock(WebServiceMock.class, new MdApiMock());
 
-        ConfigureEmailService step = new ConfigureEmailService();
+        SetupEmailService step = new SetupEmailService();
 
 
         // Exercise

@@ -1,5 +1,5 @@
 @IsTest
-private class ConfigurePackageNamespaces_Test {
+private class SetupPackageNamespaces_Test {
 
     @IsTest
     private static void execute() {
@@ -9,7 +9,7 @@ private class ConfigurePackageNamespaces_Test {
 
         new LmaPackage().ns(null).persist();
 
-        ConfigurePackageNamespaces step = new ConfigurePackageNamespaces();
+        SetupPackageNamespaces step = new SetupPackageNamespaces();
 
 
         // Exercise

@@ -5,7 +5,7 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>ConfigurationCtrl</apexClass>
+        <apexClass>SetupCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <fieldPermissions>
@@ -95,7 +95,7 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
-        <apexPage>Configuration</apexPage>
+        <apexPage>setup</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <tabSettings>
@@ -103,7 +103,7 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>Configuration</tab>
+        <tab>Setup</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

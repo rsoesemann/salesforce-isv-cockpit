@@ -1,4 +1,4 @@
-public abstract class ConfigurationStep {
+public abstract class SetupStep {
 
     public String getMessage() {
         return getStatus().getSummary();

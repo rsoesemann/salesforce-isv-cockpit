@@ -3,8 +3,8 @@
     <availability>online</availability>
     <displayType>link</displayType>
     <linkType>page</linkType>
-    <masterLabel>Configuration</masterLabel>
+    <masterLabel>Setup</masterLabel>
     <openType>replace</openType>
-    <page>Configuration</page>
+    <page>setup</page>
     <protected>true</protected>
 </CustomPageWebLink>

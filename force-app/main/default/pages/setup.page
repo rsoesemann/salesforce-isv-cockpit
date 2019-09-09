@@ -1,9 +1,9 @@
-<apex:page controller="ConfigurationCtrl" sidebar="false" title="App Cockpit Configuration" lightningStylesheets="true">
+<apex:page controller="SetupCtrl" sidebar="false" title="App Cockpit Setup" lightningStylesheets="true">
     <apex:pageBlock >
-        <apex:sectionHeader title="App Cockpit" subtitle="Configuration"/>
+        <apex:sectionHeader title="App Cockpit" subtitle="Setup"/>
 
-        <c:configurationStep title="Create Email Service" step="{!configureEmailService}"/>
-        <c:configurationStep title="Prepare LMA Packages" step="{!configureNamespaces}"/>
+        <c:setupStep title="Create Email Service" step="{!setupEmailService}"/>
+        <c:setupStep title="Prepare LMA Packages" step="{!setupPackageNamespaces}"/>
 
         <apex:pageBlockSection columns="1" title="Third-Party Licenses" collapsible="false">
             This software uses the following open-source software. Their licenses require us to reproduce their copyright notice.
