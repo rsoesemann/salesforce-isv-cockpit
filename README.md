@@ -1,4 +1,4 @@
-# Salesforce LMA App Cockpit [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ec0461b71c16496cbe88cf1b26033538)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=logiclinegmbh/lma-app-cockpit&amp;utm_campaign=Badge_Grade)
+# Salesforce LMA App Cockpit [![Codacy Badge](https://api.codacy.com/project/badge/Grade/23b534ce743a4017a0bba2faaa4ee8ff)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=logiclinegmbh/lma-app-cockpit&amp;utm_campaign=Badge_Grade)
 
 ## TL;DR - Show me a demo!
 
