@@ -10,7 +10,13 @@
 
             <ul>
                 <li><a href="https://github.com/financialforcedev/fflib-apex-common/blob/master/LICENSE"
-                       target="_blank">financialforcedev/fflib-apex-common (click for code and license)</a></li>
+                       target="_blank">financialforcedev/fflib-apex-common</a></li>
+                <li><a href="https://github.com/financialforcedev/apex-mdapi/blob/master/LICENSE"
+                       target="_blank">financialforcedev/apex-mdapi</a></li>
+                <li><a href="https://github.com/rsoesemann/app-setup/blob/master/LICENSE"
+                       target="_blank">rsoesemann/app-setup</a></li>
+                <li><a href="https://github.com/superfell/json2apex/blob/master/LICENSE.md"
+                       target="_blank">superfell/json2apex</a></li>
             </ul>
         </apex:pageBlockSection>
     </apex:pageBlock>
