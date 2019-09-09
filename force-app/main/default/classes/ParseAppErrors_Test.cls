@@ -60,6 +60,32 @@ private class ParseAppErrors_Test {
 
 
     @IsTest
+    private static void batchErrorFormat() {
+
+        // Setup
+        setup();
+
+
+        // Exercise
+        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[2]);
+        insert e;
+
+
+        // Verify
+        e = query()[0];
+        System.assertEquals('005500000024uNj', e.txt_UserId__c);
+        System.assertEquals('00D000000000001', e.txt_OrgId__c);
+        System.assertEquals('NSA', e.txt_Namespace__c);
+        System.assertEquals('System.DmlException', e.txt_ExceptionType__c);
+        System.assertEquals('Insert failed. First exception on row 0; first error: STRING_TOO_LONG, Log Status: Datenwert zu groß: Fehler NSA.RetrieveAction.UnsuccessfulCalloutException (max length=80): [Name]', e.txt_ExceptionMessage__c);
+        System.assertEquals('DMLManager', e.txt_ApexClass__c);
+        System.assertEquals(null, e.txt_VisualforcePage__c);
+        System.assertNotEquals(null, e.txl_Stacktrace__c);
+        System.assertEquals('BatchErrorFormat', e.txt_MatchedWith__c);
+    }
+
+
+    @IsTest
     private static void linkToLma(){
 
         // Setup

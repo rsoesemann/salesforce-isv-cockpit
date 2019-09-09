@@ -23,6 +23,21 @@ Trigger.NSA.TriggerDelete: line 18, column 1
 
 Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
 
+Failed to process batch for class 'NSA.IteratorImpl' for job id '7071v0000680gLG'
+
+caused by: System.DmlException: Insert failed. First exception on row 0; first error: STRING_TOO_LONG, Log Status: Datenwert zu groß: Fehler NSA.RetrieveAction.UnsuccessfulCalloutException (max length=80): [Name]
+
+Class.NSA.DMLManager.performDMLOperation: line 106, column 1
+Class.NSA.DMLManager.insertAsUser: line 35, column 1
+Class.NSA.Logger.createErrorLog: line 16, column 1
+Class.NSA.RetrieveAction.onError: line 48, column 1
+Class.NSA.Executor.execute: line 32, column 1
+Class.NSA.IteratorImpl.execute: line 22, column 11
+
+&
+
+Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
+
 Visualforce Page: /apex/nsB__myPage
 
 
