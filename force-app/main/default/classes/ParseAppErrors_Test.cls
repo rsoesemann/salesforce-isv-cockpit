@@ -16,13 +16,12 @@ private class ParseAppErrors_Test {
 
 
         // Exercise
-        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[1]);
+        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[0]);
         insert e;
 
 
         // Verify
         e = query()[0];
-        System.assertEquals('PageErrorFormat', e.txt_MatchedWith__c);
         System.assertEquals('005500000024uNj', e.txt_UserId__c);
         System.assertEquals('00D000000000001', e.txt_OrgId__c);
         System.assertEquals('NSB', e.txt_Namespace__c);
@@ -31,6 +30,7 @@ private class ParseAppErrors_Test {
         System.assertEquals('NSB.MyController', e.txt_ApexClass__c);
         System.assertEquals('myPage', e.txt_VisualforcePage__c);
         System.assertNotEquals(null, e.txl_Stacktrace__c);
+        System.assertEquals('PageErrorFormat', e.txt_MatchedWith__c);
     }
 
 
@@ -42,20 +42,20 @@ private class ParseAppErrors_Test {
 
 
         // Exercise
-        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[0]);
+        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[1]);
         insert e;
 
 
         // Verify
         e = query()[0];
-        System.assertEquals('TriggerErrorFormat', e.txt_MatchedWith__c);
         System.assertEquals('005500000024uNj', e.txt_UserId__c);
         System.assertEquals('00D000000000001', e.txt_OrgId__c);
         System.assertEquals('NSA', e.txt_Namespace__c);
-        System.assertEquals('System.LimitException', e.txt_ExceptionType__c);
-        System.assertEquals('Apex CPU time limit exceeded', e.txt_ExceptionMessage__c);
-        System.assertEquals('MyClass', e.txt_ApexClass__c);
+        System.assertEquals('System.DmlException', e.txt_ExceptionType__c);
+        System.assertEquals('Delete failed. First exception on row 0 with id a031t00000RuMxyAAF; first error: ENTITY_IS_DELETED, entity is deleted: []', e.txt_ExceptionMessage__c);
+        System.assertEquals('TriggerDelete', e.txt_ApexClass__c);
         System.assertEquals(null, e.txt_VisualforcePage__c);
+        System.assertEquals('TriggerErrorFormat', e.txt_MatchedWith__c);
     }
 
 
@@ -67,7 +67,7 @@ private class ParseAppErrors_Test {
 
 
         // Exercise
-        insert new AppError__c(txl_FullMailBody__c = mails[0]);
+        insert new AppError__c(txl_FullMailBody__c = mails[1]);
 
 
         // Verify
