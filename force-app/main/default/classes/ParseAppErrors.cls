@@ -43,7 +43,7 @@ public with sharing class ParseAppErrors {
     // PRIVATE
 
     private static List<AppError__c> changedBody(List<AppError__c> errors, Map<Id, AppError__c> old) {
-        List<AppError__c> result = new List<SObject>();
+        List<AppError__c> result = new List<AppError__c>();
 
         for(AppError__c error : errors) {
             if(error.txl_FullMailBody__c != old.get(error.Id).txl_FullMailBody__c) {

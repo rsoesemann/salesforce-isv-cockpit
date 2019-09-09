@@ -90,12 +90,12 @@ private class ParseAppErrors_Test {
 
 
         // Exercise
-        e.txl_FullMailBody__c = e.txl_FullMailBody__c.replaceAll('MyClass', 'MyOtherClass');
+        e.txl_FullMailBody__c = e.txl_FullMailBody__c.replaceAll('NSB.MyController', 'NSB.MyOtherController');
         update e;
 
         
         // Verify
-        System.assertEquals('MyOtherClass' , [SELECT txt_ApexClass__c FROM AppError__c LIMIT 1].txt_ApexClass__c);
+        System.assertEquals('NSB.MyOtherController' , [SELECT txt_ApexClass__c FROM AppError__c LIMIT 1].txt_ApexClass__c);
     }
 
 
