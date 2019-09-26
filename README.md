@@ -1,7 +1,5 @@
 # Salesforce LMA App Cockpit [![Codacy Badge](https://api.codacy.com/project/badge/Grade/23b534ce743a4017a0bba2faaa4ee8ff)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=logiclinegmbh/lma-app-cockpit&amp;utm_campaign=Badge_Grade)
 
-## TL;DR - Show me a demo!
-
 [![](http://img.youtube.com/vi/GTy0Lr19z34/0.jpg)](http://www.youtube.com/watch?v=GTy0Lr19z34 "")
 
 ## What is the App Cockpit?
