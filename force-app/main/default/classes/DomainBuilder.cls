@@ -1,17 +1,15 @@
-public virtual class DomainBuilder {
+public abstract class DomainBuilder {
 
-    public SObjectType type;
-    public SObject record;
-    public Id id { private set; get {return record.Id;} }
+    private static DirectedGraph graph = new DirectedGraph();
+    private static Set<DomainBuilder> objects = new Set<DomainBuilder>();
 
     private Boolean isSetupObject;
-
     private Map<SObjectField, DomainBuilder> parentByRelationship = new Map<SObjectField, DomainBuilder>();
-    private Map<SObjectField, Map<SObjectField, List<DomainBuilder>>> relationshipsToSync = new Map<SObjectField, Map<SObjectField, List<DomainBuilder>>>();
-
-    private static fflib_SObjectUnitOfWork uow = initUnitOfWork();
-    private static fflib_SObjectUnitOfWork setupUow = initUnitOfWork();
-    private static Set<DomainBuilder> objects = new Set<DomainBuilder>();
+    private Map<SObjectField, Map<SObjectField, List<DomainBuilder>>> relationshipsToSync
+                                                    = new Map<SObjectField, Map<SObjectField, List<DomainBuilder>>>();
+    public SObject record;
+    public Id id { private set; get {return record.Id;} }
+    public SObjectType type;
 
 
     // CONSTRUCTORS
@@ -21,6 +19,7 @@ public virtual class DomainBuilder {
         this.record = type.newSObject(null, true);
         this.isSetupObject = isSetupObject;
 
+        graph.node(type);
         objects.add(this);
     }
 
@@ -32,21 +31,24 @@ public virtual class DomainBuilder {
 
     // PUBLIC
 
-    public virtual SObject persist() {
+    public SObject persist() {
+	    fflib_SObjectUnitOfWork dataUow = unitOfWork();
+	    fflib_SObjectUnitOfWork setupUow = unitOfWork();
+
         for(DomainBuilder obj: objects) {
-            fflib_SObjectUnitOfWork tempUow = (obj.isSetupObject) ? setupUow : uow;
+            fflib_SObjectUnitOfWork uow = (obj.isSetupObject) ? setupUow : dataUow;
 
             if(obj.record.Id == null) {
-                tempUow.registerNew(obj.record);
+                uow.registerNew(obj.record);
             }
 
             for(SObjectField rel: obj.parentByRelationship.keySet()) {
                 DomainBuilder parent = obj.parentByRelationship.get(rel);
-                tempUow.registerRelationship(obj.record, rel, parent.record);
+                uow.registerRelationship(obj.record, rel, parent.record);
             }
         }
 
-        uow.commitWork();
+        dataUow.commitWork();
 
         if(Test.isRunningTest()) {
             System.runAs(new User(Id = UserInfo.getUserId())) {
@@ -57,8 +59,8 @@ public virtual class DomainBuilder {
             System.debug(LoggingLevel.ERROR, 'PermissionSetAssignment can not be inserted (Mixed DML)');
         }
 
-        uow = initUnitOfWork();
-        setupUow = initUnitOfWork();
+	    dataUow = unitOfWork();
+	    setupUow = unitOfWork();
 
         objects.clear();
 
@@ -66,10 +68,15 @@ public virtual class DomainBuilder {
     }
 
 
+    public DomainBuilder recordType(String developerName) {
+        Id rtId = type.getDescribe().getRecordTypeInfosByDeveloperName().get(developerName).getRecordTypeId();
+        return set('RecordTypeId', rtId);
+    }
+
+
     // PROTECTED
 
     protected DomainBuilder setParent(SObjectField relationship, DomainBuilder parent) {
-
         // Note: The parent registered last always wins!
         DomainBuilder oldParent = parentByRelationship.get(relationship);
 
@@ -90,8 +97,24 @@ public virtual class DomainBuilder {
             synchronize(relationship);
         }
 
+        graph.edge(this.type, parent.type);
+
         // Note: Return parent instead of this as we call this always from the parent
         return parent;
+    }
+
+
+    protected void syncOnChange(SObjectField sourceField, DomainBuilder targetObject, SObjectField targetField) {
+        if( !relationshipsToSync.containsKey(sourceField)) {
+            relationshipsToSync.put(sourceField, new Map<SObjectField, List<DomainBuilder>>());
+        }
+        if( !relationshipsToSync.get(sourceField).containsKey(targetField)) {
+            relationshipsToSync.get(sourceField).put(targetField, new List<DomainBuilder>());
+        }
+
+        relationshipsToSync.get(sourceField).get(targetField).add(targetObject);
+
+        synchronize(sourceField);
     }
 
 
@@ -107,7 +130,7 @@ public virtual class DomainBuilder {
     }
 
 
-    protected virtual void unregisterIncludingParents() {
+    protected void unregisterIncludingParents() {
         objects.remove(this);
 
         for(DomainBuilder parent : parentByRelationship.values()) {
@@ -140,60 +163,99 @@ public virtual class DomainBuilder {
     }
 
 
-    private static fflib_SObjectUnitOfWork initUnitOfWork() {
-        return new fflib_SObjectUnitOfWork(new List<Schema.SObjectType>{
-                            PermissionSetAssignment.SObjectType,
-                            User.SObjectType,
-                            Account.SObjectType,
-                            Contact.SObjectType,
-                            Opportunity.SObjectType,
-                            OpportunityContactRole.SObjectType,
-                            sfLma__Package__c.SObjectType,
-                            sfLma__Package_Version__c.SObjectType,
-                            sfLma__License__c.SObjectType,
-                            AppError__c.SObjectType
-        });
+    private static fflib_SObjectUnitOfWork unitOfWork() {
+	    List<SObjectType> insertOrder = new List<SObjectType>();
+	    List<SObjectType> sorted = graph.sortTopologically();
+
+	    for(Integer i = sorted.size() - 1; i >= 0; i--){
+		    insertOrder.add(sorted[i]);
+	    }
+        return new fflib_SObjectUnitOfWork(insertOrder);
     }
 
 
     // INNER
 
-    public class Random {
+    // Note: Code adapted from https://codereview.stackexchange.com/questions/177442
+    
+    @TestVisible
+    class DirectedGraph {
 
-        public String string() {
-            return string(8);
+        Map<SObjectType, Integer> childCount = new Map<SObjectType, Integer>();
+        Set<SObjectType> pureChilds = new Set<SObjectType>();
+        Map<SObjectType, Set<SObjectType>> parents = new Map<SObjectType, Set<SObjectType>>();
+
+
+        @TestVisible
+        DirectedGraph node(SObjectType type) {
+            if(!parents.containsKey(type)) {
+                parents.put(type, new Set<SObjectType>());
+            }
+
+            return this;
+        }
+
+        @TestVisible
+        DirectedGraph edge(SObjectType child, SObjectType parent) {
+            parents.get(child).add(parent);
+            return this;
         }
 
 
-        public String string(Integer length) {
-            String result = '';
+        @TestVisible
+        List<SObjectType> sortTopologically() {
+            List<SObjectType> result = new List<SObjectType>();
 
-            for(Integer i=0; i<length; i++) {
-                Integer pos = integer(25);
-                result += 'abcdefghijklmnopqrstuvwxyz'.substring(pos, pos+1);
+            countDependencies();
+
+            if(pureChilds.isEmpty()) {
+                throw new CyclicGraphException();
+            }
+
+            while(!pureChilds.isEmpty()) {
+                SObjectType cur = (SObjectType) pureChilds.iterator().next();
+                pureChilds.remove(cur);
+
+                result.add(cur);
+
+                for(SObjectType type : parents.get(cur)) {
+                    Integer newCnt = childCount.get(type) - 1;
+                    childCount.put(type, newCnt);
+
+                    if(newCnt == 0) {
+                        pureChilds.add(type);
+                    }
+                }
+            }
+
+            if(result.size() != parents.size()) {
+                throw new CyclicGraphException();
             }
 
             return result;
         }
 
 
-        public Integer integer(Integer first, Integer last) {
-            return Math.floor(Math.random() * ((last - first) + 1) + first).intValue();
-        }
+        void countDependencies() {
+            for(SObjectType type : parents.keySet()) {
+                if(!childCount.containsKey(type)) {
+                    pureChilds.add(type);
+                }
 
+                for(SObjectType parent : parents.get(type)) {
+                    pureChilds.remove(parent);
 
-        public Integer integer(Integer max) {
-            return integer(0, max);
-        }
-
-
-        public Boolean boolean() {
-            return integer(0, 1) == 0;
-        }
-
-
-        public Object value(List<Object> values) {
-            return values.get(integer(values.size()-1));
+                    if(!childCount.containsKey(parent)) {
+                        childCount.put(parent, 1);
+                    }
+                    else {
+                        childCount.put(parent, childCount.get(parent) + 1);
+                    }
+                }
+            }
         }
     }
+
+
+    public class CyclicGraphException extends Exception {}
 }
