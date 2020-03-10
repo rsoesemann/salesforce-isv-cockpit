@@ -4,17 +4,42 @@
 
 # Salesforce cache
 .sfdx/
+.localdevserver/
 
-# Project temps
-mdapi/
+# IDEs
+.idea/
+.vscode/
+IlluminatedCloud/
+projectFilesBackup/
+# LWC VSCode autocomplete
+**/lwc/jsconfig.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Eslint cache
+.eslintcache
 
 # MacOS system files
 .DS_Store
 
-# VS Code project settings
-.vscode/
+# Windows system files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+.prettierignore
+.prettierrc
+package-lock.json
+*.iml
 
-# IDEA
-IlluminatedCloud/
-projectFilesBackup/
-.idea/
+mdapi/
+/.idea/
+/.idea/
