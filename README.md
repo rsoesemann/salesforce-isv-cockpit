@@ -1,6 +1,4 @@
-https://confluence.logicline.de/pages/viewpage.action?pageId=85599789
-
-# Salesforce LMA App Cockpit [![Codacy Badge](https://api.codacy.com/project/badge/Grade/23b534ce743a4017a0bba2faaa4ee8ff)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=logiclinegmbh/lma-app-cockpit&amp;utm_campaign=Badge_Grade)
+# Salesforce LMA App Cockpit 
 
 ## TL;DR - Show me a demo!
 
@@ -31,5 +29,3 @@ The project was built as a flexible unnamespaced SFDX project. The repo contains
 From there you can either build Unlocked Packages from it or even push it into a Packaging org using the deployMetadata.sh script.
 
 Feel free to fork the repo and extend it. We would love to get improvements as Pull Request from you. Or create issues when you find a problem but don't want to fix it on your own.
-
-https://confluence.logicline.de/pages/viewpage.action?pageId=85599789
