@@ -12,14 +12,6 @@ Managed Packages have an option to send out app errors to an email address defin
 
 All this information is stored in a single Custom Object and can be easily used for reporting and sophisticated support workflows.
 
-## Why did you built this?
-
-As a PDO partner, we help many customers every year to get their product ideas out into the AppExchange. But our support doesn't stop with that. Over time we realized that doing support with the LMA app alone is not optimal. So we developed an internal solution which worked well for us. 
-
-## Why did you open-source this?
-
-For two reasons. We truly believe in Open Source. We use Open Source in our daily work and think we also have to give back. But we also think that for our customers it's even more trustworthy to know that the source code of the app that they use for support can be checked for bugs by anybody out there.
-
 ## How can I use and extends this?
 
 The project was built as a flexible unnamespaced SFDX project. The repo contains all the scripts to automatically build dev scratch orgs with the LMA installed and sample data to play with.
