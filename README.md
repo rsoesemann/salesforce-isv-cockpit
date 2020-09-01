@@ -16,8 +16,6 @@ All this information is stored in a single Custom Object and can be easily used 
 
 The project was built as a flexible unnamespaced SFDX project. The repo contains all the scripts to automatically build dev scratch orgs with the LMA installed and sample data to play with.
 
-[![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com)
-
 From there you can either build Unlocked Packages from it or even push it into a Packaging org using the deployMetadata.sh script.
 
 Feel free to fork the repo and extend it. We would love to get improvements as Pull Request from you. Or create issues when you find a problem but don't want to fix it on your own.
