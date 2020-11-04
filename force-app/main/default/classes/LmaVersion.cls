@@ -21,7 +21,7 @@ public class LmaVersion extends DomainBuilder {
         return (LmaVersion) set(sfLma__Package_Version__c.Name, value);
     }
 
-    public LmaVersion id(Id value) {
+    public LmaVersion id(String value) {
         return (LmaVersion) set(sfLma__Package_Version__c.sfLma__Version_ID__c, value);
     }
 

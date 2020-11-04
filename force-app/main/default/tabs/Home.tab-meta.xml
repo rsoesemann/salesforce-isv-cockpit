@@ -3,6 +3,5 @@
     <description>Created by Lightning App Builder</description>
     <flexiPage>App_Cockpit_Home</flexiPage>
     <label>Home</label>
-    <mobileReady>true</mobileReady>
     <motif>Custom97: Thermometer</motif>
 </CustomTab>

@@ -19,7 +19,7 @@ public class LmaPackage extends DomainBuilder {
         return (LmaPackage) set(sfLma__Package__c.Name, value);
     }
 
-    public LmaPackage id(Id value) {
+    public LmaPackage id(String value) {
         return (LmaPackage) set(sfLma__Package__c.sfLma__Package_ID__c, value);
     }
 
