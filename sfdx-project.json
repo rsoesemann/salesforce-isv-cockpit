@@ -5,13 +5,20 @@
             "default": true,
             "package": "LmaAppCockpit",
             "versionName": "ver 1.0",
-            "versionNumber": "1.0.0.NEXT"
+            "versionNumber": "1.0.0.NEXT",
+            "dependencies": [
+                {
+                    "package": "lma"
+                }
+            ]
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "48.0",
     "packageAliases": {
-        "LmaAppCockpit": "0Ho5p000000oLkjCAE"
+        "LmaAppCockpit": "0Ho5p000000oLkjCAE",
+        "lma": "04t30000001DWL0AAO",
+        "LmaAppCockpit@1.0.0-1": "04t5p000001UjMMAA0"
     }
 }
