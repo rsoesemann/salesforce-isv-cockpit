@@ -79,22 +79,6 @@ private class DomainBuilder_Test {
 
 
     @IsTest
-    private static void worksWithSetupObjects() {
-
-        try {
-            System.runAs(User_t.standard()) {
-                new Account_t().persist();
-            }
-        }
-        catch(Exception ex) {
-            System.assert(false);
-        }
-
-        System.assertEquals(1, [SELECT Count() FROM Account]);
-    }
-
-
-    @IsTest
     private static void worksWithLinkerObjects() {
 
         Opportunity_t o = new Opportunity_t();
