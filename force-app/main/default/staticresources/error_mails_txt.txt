@@ -53,7 +53,7 @@ Class.NSA.MyController.<init>: line 72, column 1
 
 &
 
-Apex script unhandled exception by user/organization: 0051t000000kuff/00D1t000000CoeT
+Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
 
 Failed to process batch for class 'NSA.QueryImpl' for job id '7071t00001modVz'
 
@@ -69,3 +69,39 @@ Class.NSA.Logger.createErrorLog: line 16, column 1
 Class.NSA.SendAction.onError: line 80, column 1
 Class.NSA.Executor.execute: line 32, column 1
 Class.NSA.QueryImpl.execute: line 23, column 1
+
+&
+
+Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
+
+Failed to process batch for class 'NSA.PREFIX_MyBatchOb' for job id '7073X00009N7cij'
+
+caused by: System.NullPointerException: Attempt to de-reference a null object
+
+External entry point
+
+&
+
+Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
+
+Failed to invoke future method 'public static void callFutureMethod(String, String)' on class 'NSA.FutureClass' for job id '7074N0000875KTv'
+
+&
+
+Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
+
+Failed to process batch for class 'NSA.BatchClass' for job id '707670000Ctreje'
+
+caused by: System.DmlException: Update failed. First exception on row 9 with id a7p67000000TiD6AAK; first error: CANNOT_EXECUTE_FLOW_TRIGGER, We can't save this record because the “Shizzle_Mizzle” process failed. Give your Salesforce admin these details. This error occurred when the flow tried to update records: CANNOT_EXECUTE_FLOW_TRIGGER: We can't save this record because the “NSA SAT User Story Default - stable_v3” process failed. Give your Salesforce admin these details. This error occurred when the flow tried to update records: CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY: NSA.AccountTrigger: execution of AfterUpdate
+
+caused by: System.AsyncException: Database.executeBatch cannot be called from a batch start, batch execute, or future method.
+
+(NSA)
+
+
+
+. You can look up ExceptionCode values in the SOAP API Developer Guide. Error ID: 265498433-10568 (-883246653). You can look up ExceptionCode values in the SOAP API Developer Guide. Error ID: 265498433-10569 (1006372730): []
+
+Class.NSA.Utilities.Secure_DML: line 429, column 1
+Class.NSA.Utilities.Secure_DML: line 493, column 1
+Class.NSA.MyJob.execute: line 105, column 1

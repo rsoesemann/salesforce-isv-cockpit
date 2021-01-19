@@ -2,8 +2,8 @@ public class TriggerErrorFormat extends ParseAppErrors.EmailFormat {
 
 	public override String regex() {
 		return '(005[A-Za-z0-9]{12})/(00D[A-Za-z0-9]{12})' +
-				'[\\s\\S]+' +
-				'caused by: (([^:]+):(.+))' +
+				'[\\s]+' +
+				'caused by: ([^:]+): ((.*\\r?\\n)+\\r?\\n)' +
 				'[\\s]+' +
 				'(Trigger\\.((.+)\\.([^:]+)([\\S\\s]+)))';
 	}

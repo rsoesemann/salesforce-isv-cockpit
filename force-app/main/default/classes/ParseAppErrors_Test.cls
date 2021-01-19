@@ -143,6 +143,11 @@ private class ParseAppErrors_Test {
         // Verify
         for(AppError__c e : query()) {
             System.assertNotEquals(null, e.txt_MatchedWith__c, e.txl_FullMailBody__c);
+            
+            System.assertNotEquals(null, e.txt_OrgId__c, e.txl_FullMailBody__c);
+            System.assertNotEquals(null, e.txt_UserId__c, e.txl_FullMailBody__c);
+            System.assertNotEquals(null, e.txt_Namespace__c, e.txl_FullMailBody__c);
+            System.assertNotEquals(null, e.txt_ApexClass__c, e.txl_FullMailBody__c);
         }
     }
 

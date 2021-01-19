@@ -4,6 +4,7 @@
 
         <c:setupStep title="Create Email Service" step="{!setupEmailService}"/>
         <c:setupStep title="Prepare LMA Packages" step="{!setupPackageNamespaces}"/>
+        <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}"/>
 
         <apex:pageBlockSection columns="1" title="Third-Party Licenses" collapsible="false">
             This software uses the following open-source software. Their licenses require us to reproduce their copyright notice.

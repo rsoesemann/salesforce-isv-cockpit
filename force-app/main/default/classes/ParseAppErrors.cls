@@ -3,7 +3,8 @@ public with sharing class ParseAppErrors {
     private static final List<EmailFormat> FORMATS = new List<EmailFormat>{
             new PageErrorFormat(),
             new TriggerErrorFormat(),
-            new BatchErrorFormat()
+            new BatchErrorFormat(),
+            new FallbackFormat()
     };
 
     private List<AppError__c> errors;
