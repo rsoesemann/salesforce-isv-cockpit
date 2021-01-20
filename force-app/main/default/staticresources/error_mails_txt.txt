@@ -84,12 +84,6 @@ External entry point
 
 Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
 
-Failed to invoke future method 'public static void callFutureMethod(String, String)' on class 'NSA.FutureClass' for job id '7074N0000875KTv'
-
-&
-
-Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
-
 Failed to process batch for class 'NSA.BatchClass' for job id '707670000Ctreje'
 
 caused by: System.DmlException: Update failed. First exception on row 9 with id a7p67000000TiD6AAK; first error: CANNOT_EXECUTE_FLOW_TRIGGER, We can't save this record because the “Shizzle_Mizzle” process failed. Give your Salesforce admin these details. This error occurred when the flow tried to update records: CANNOT_EXECUTE_FLOW_TRIGGER: We can't save this record because the “NSA SAT User Story Default - stable_v3” process failed. Give your Salesforce admin these details. This error occurred when the flow tried to update records: CANNOT_INSERT_UPDATE_ACTIVATE_ENTITY: NSA.AccountTrigger: execution of AfterUpdate

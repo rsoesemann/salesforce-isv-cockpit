@@ -1,10 +1,10 @@
 public with sharing class ParseAppErrors {
 
     private static final List<EmailFormat> FORMATS = new List<EmailFormat>{
-            new PageErrorFormat(),
-            new TriggerErrorFormat(),
-            new BatchErrorFormat(),
-            new FallbackFormat()
+            new BatchErrorFormat().compile(),
+            new TriggerErrorFormat().compile(),
+            new PageErrorFormat().compile(),
+            new FallbackFormat().compile()
     };
 
     private List<AppError__c> errors;
@@ -30,8 +30,9 @@ public with sharing class ParseAppErrors {
                 Matcher matcher = format.matcher( error.txl_FullMailBody__c );
 
                 if(matcher.find()) {
+                    clearFields(error);
                     error.txt_MatchedWith__c = String.valueOf(format).split(':')[0];
-
+                    
                     format.populateFields(matcher, error);
                     linkToLma(error);
 
@@ -70,16 +71,38 @@ public with sharing class ParseAppErrors {
     }
 
 
+    private void clearFields(AppError__c error) {
+        error.txt_UserId__c = null;
+		error.txt_OrgId__c = null;
+		error.txt_Namespace__c = null;
+		error.txt_VisualforcePage__c = null;
+		error.txt_ExceptionType__c = null;
+		error.txt_ExceptionMessage__c = null;
+        error.txt_ApexClass__c = null;
+        
+        error.lkp_License__c = null;
+        error.lkp_Package__c = null;
+        error.lkp_PackageVersion__c = null;
+        error.lkp_Account__c = null;
+    }
+
+
     // INNER
 
     public abstract class EmailFormat {
 
+        private Pattern regex;
+
         public abstract String regex();
         public abstract void populateFields(Matcher matcher, AppError__c error);
 
+        public EmailFormat compile() {
+            regex = Pattern.compile(regex());
+            return this;
+        }
+
         public Matcher matcher(String text) {
-            Pattern pattern = Pattern.compile(regex());
-            return pattern.matcher(text);
+            return regex.matcher(text);
         }
     }
 }
