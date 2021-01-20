@@ -14,7 +14,7 @@ echo "List existing package versions"
 sfdx force:package:version:list -p $PACKAGENAME --concise
 
 echo "Create new package version"
-PACKAGE_VERSION="$(execute sfdx force:package:version:create -p $PACKAGENAME -x -w 10 --json | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
+PACKAGE_VERSION="$(execute sfdx force:package:version:create -p $PACKAGENAME -x -w 10 --codecoverage --json | jq '.result.SubscriberPackageVersionId' | tr -d '"')"
 echo $PACKAGE_VERSION
 
 if [ $QA_ORG_ALIAS ]; then

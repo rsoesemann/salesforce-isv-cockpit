@@ -27,9 +27,8 @@ public with sharing class SetupRetryUnparseable extends SetupStep {
 
     public override PageReference run() {
         try {
-            for(AppError__c error : errors) {
-                error.txl_FullMailBody__c += ' .';
-            }
+            // Note: Ignore check if Body has changed
+            ParseAppErrors.parseAlways = true;
             
             update errors;
         }

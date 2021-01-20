@@ -1,5 +1,7 @@
 public with sharing class ParseAppErrors {
 
+    public static Boolean parseAlways = false;
+
     private static final List<EmailFormat> FORMATS = new List<EmailFormat>{
             new BatchErrorFormat().compile(),
             new TriggerErrorFormat().compile(),
@@ -49,7 +51,7 @@ public with sharing class ParseAppErrors {
         List<AppError__c> result = new List<AppError__c>();
 
         for(AppError__c error : errors) {
-            if(error.txl_FullMailBody__c != old.get(error.Id).txl_FullMailBody__c) {
+            if(parseAlways || error.txl_FullMailBody__c != old.get(error.Id).txl_FullMailBody__c) {
                 result.add(error);
             }
         }
