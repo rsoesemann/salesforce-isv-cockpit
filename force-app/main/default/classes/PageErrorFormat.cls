@@ -2,11 +2,11 @@ public with sharing class PageErrorFormat extends ParseAppErrors.EmailFormat {
 
 	public override String regex() {
 		return '(005[A-Za-z0-9]{12})/(00D[A-Za-z0-9]{12})' +
-				'[\\s]+' +
+				'[\\s\\S]+' +
 			    '.+/apex/(.+)__(.+)' +
-				'[\\s]+' +
+				'[\\s\\S]+' +
 			    'caused by: (([^:]+):(.+))' +
-				'[\\s]+' +
+				'[\\s\\S]+' +
 				'(Class\\.((.+)\\.([^:]+)([\\S\\s]+)))';
 	}
 
@@ -18,7 +18,6 @@ public with sharing class PageErrorFormat extends ParseAppErrors.EmailFormat {
 		error.txt_VisualforcePage__c = matcher.group(4);
 		error.txt_ExceptionType__c = matcher.group(6);
 		error.txt_ExceptionMessage__c = matcher.group(7);
-		error.txl_Stacktrace__c = matcher.group(8);
 		error.txt_ApexClass__c = matcher.group(10);
 	}
 }

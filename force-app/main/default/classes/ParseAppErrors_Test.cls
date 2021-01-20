@@ -29,7 +29,6 @@ private class ParseAppErrors_Test {
         System.assertEquals('Attempt to de-reference a null object', e.txt_ExceptionMessage__c);
         System.assertEquals('NSB.MyController', e.txt_ApexClass__c);
         System.assertEquals('myPage', e.txt_VisualforcePage__c);
-        System.assertNotEquals(null, e.txl_Stacktrace__c);
         System.assertEquals('PageErrorFormat', e.txt_MatchedWith__c);
     }
 
@@ -78,9 +77,8 @@ private class ParseAppErrors_Test {
         System.assertEquals('NSA', e.txt_Namespace__c);
         System.assertEquals('System.DmlException', e.txt_ExceptionType__c);
         System.assertEquals('Insert failed. First exception on row 0; first error: STRING_TOO_LONG, Log Status: Datenwert zu groß: Fehler NSA.RetrieveAction.UnsuccessfulCalloutException (max length=80): [Name]', e.txt_ExceptionMessage__c);
-        System.assertEquals('DMLManager', e.txt_ApexClass__c);
+        System.assertEquals('IteratorImpl', e.txt_ApexClass__c);
         System.assertEquals(null, e.txt_VisualforcePage__c);
-        System.assertNotEquals(null, e.txl_Stacktrace__c);
         System.assertEquals('BatchErrorFormat', e.txt_MatchedWith__c);
     }
 
@@ -131,13 +129,16 @@ private class ParseAppErrors_Test {
         // Setup
         setup();
 
-
-        // Exercise
         List<AppError__c> errors = new List<AppError__c>();
         for(String mail : mails) {
             errors.add(new AppError__c(txl_FullMailBody__c = mail));
         }
-        insert errors;
+
+
+        // Exercise
+        Test.startTest();
+            insert errors;
+        Test.stopTest();
 
 
         // Verify
