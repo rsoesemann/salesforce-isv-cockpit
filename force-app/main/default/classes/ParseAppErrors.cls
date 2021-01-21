@@ -27,21 +27,8 @@ public with sharing class ParseAppErrors {
     // PUBLIC
 
     public void execute() {
-        for(AppError__c error : errors) {
-            for(EmailFormat format : FORMATS) {
-                Matcher matcher = format.matcher( error.txl_FullMailBody__c );
-
-                if(matcher.find()) {
-                    clearFields(error);
-                    error.txt_MatchedWith__c = String.valueOf(format).split(':')[0];
-                    
-                    format.populateFields(matcher, error);
-                    linkToLma(error);
-
-                    break;
-                }
-            }
-        }
+        parse();
+        linkToLma();
     }
 
 
@@ -51,7 +38,9 @@ public with sharing class ParseAppErrors {
         List<AppError__c> result = new List<AppError__c>();
 
         for(AppError__c error : errors) {
-            if(parseAlways || error.txl_FullMailBody__c != old.get(error.Id).txl_FullMailBody__c) {
+            Boolean bodyHasChanged = (error.txl_FullMailBody__c != old.get(error.Id).txl_FullMailBody__c);
+
+            if(parseAlways || bodyHasChanged) {
                 result.add(error);
             }
         }
@@ -60,15 +49,19 @@ public with sharing class ParseAppErrors {
     }
 
 
-    private void linkToLma(AppError__c error) {
-        for(sfLma__License__c license : [SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c
-                                         FROM sflma__License__c
-                                         WHERE sfLma__Subscriber_Org_ID__c = :error.txt_OrgId__c
-                                         AND sfLma__Package__r.txt_Namespace__c = :error.txt_Namespace__c]) {
-            error.lkp_License__c = license.Id;
-            error.lkp_Package__c = license.sfLma__Package__c;
-            error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
-            error.lkp_Account__c = license.sfLma__Account__c;
+    private void parse() {
+        for(AppError__c error : errors) {
+            for(EmailFormat format : FORMATS) {
+                Matcher match = format.matcher( error.txl_FullMailBody__c );
+
+                if(match.find()) {
+                    clearFields(error);
+                    error.txt_MatchedWith__c = String.valueOf(format).split(':')[0];
+                    format.populateFields(match, error);
+
+                    break;
+                }
+            }
         }
     }
 
@@ -89,14 +82,83 @@ public with sharing class ParseAppErrors {
     }
 
 
+
+    private void linkToLma() {
+        Map<String, List<AppError__c>> bySubscriber = groupBySubscriber();
+
+        for(sfLma__License__c license : [SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c,
+                                                sfLma__Package__r.txt_Namespace__c, sfLma__Subscriber_Org_ID__c
+                                         FROM sflma__License__c
+                                         WHERE sfLma__Subscriber_Org_ID__c = :orgIds(bySubscriber)
+                                         AND sfLma__Package__r.txt_Namespace__c = :namespaces(bySubscriber)]) {
+
+            for(AppError__c error : bySubscriber.get( subscriberKey(license) )) {
+                error.lkp_License__c = license.Id;
+                error.lkp_Package__c = license.sfLma__Package__c;
+                error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
+                error.lkp_Account__c = license.sfLma__Account__c;
+            }
+        }
+    }
+
+
+    private Map<String, List<AppError__c>> groupBySubscriber() {
+        Map<String, List<AppError__c>> result = new Map<String, List<AppError__c>>();
+
+        for(AppError__c error : errors) {
+            String key = subscriberKey(error);
+
+            if(!result.containsKey(key)) {
+                result.put(key, new List<AppError__c>());
+            }
+
+            result.get(key).add(error);
+        }
+
+        return result;
+    }
+
+
+    private String subscriberKey(AppError__c error) {
+        return error.txt_Namespace__c + '_' +  error.txt_OrgId__c;
+    }
+
+
+    private String subscriberKey(sflma__License__c license) {
+        return license.sfLma__Package__r.txt_Namespace__c + '_' +  license.sfLma__Subscriber_Org_ID__c;
+    }
+
+
+    private Set<String> namespaces(Map<String, List<AppError__c>> bySubscribers) {
+        Set<String> result = new Set<String>();
+
+        for(String key : bySubscribers.keySet()) {
+            result.add(key.substringBefore('_'));
+        }
+
+        return result;
+    }
+
+
+    private Set<String> orgIds(Map<String, List<AppError__c>> bySubscribers) {
+        Set<String> result = new Set<String>();
+
+        for(String key : bySubscribers.keySet()) {
+            result.add(key.substringAfter('_'));
+        }
+
+        return result;
+    }
+
+
     // INNER
 
     public abstract class EmailFormat {
 
-        private Pattern regex;
-
         public abstract String regex();
         public abstract void populateFields(Matcher matcher, AppError__c error);
+
+        private Pattern regex;
 
         public EmailFormat compile() {
             regex = Pattern.compile(regex());

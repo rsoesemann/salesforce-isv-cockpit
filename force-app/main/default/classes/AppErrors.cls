@@ -15,7 +15,7 @@ public with sharing class AppErrors extends fflib_SObjectDomain {
 
 
     public override void onBeforeUpdate(Map<Id, SObject> old) {
-        new ParseAppErrors(cast(records), cast(old)).execute();
+        new ParseAppErrors(records, cast(old)).execute();
     }
 
 
@@ -23,11 +23,6 @@ public with sharing class AppErrors extends fflib_SObjectDomain {
 
     private Map<Id, AppError__c> cast(Map<Id, SObject> uncasted) {
         return (Map<Id, AppError__c>) uncasted;
-    }
-
-
-    private List<AppError__c> cast(List<SObject> uncasted) {
-        return (List<AppError__c>) uncasted;
     }
 
 
