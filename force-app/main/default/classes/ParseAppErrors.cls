@@ -52,7 +52,7 @@ public with sharing class ParseAppErrors {
     private void parse() {
         for(AppError__c error : errors) {
             for(EmailFormat format : FORMATS) {
-                Matcher match = format.matcher( error.txl_FullMailBody__c );
+                Matcher match = format.match( error.txl_FullMailBody__c );
 
                 if(match.find()) {
                     clearFields(error);
@@ -159,17 +159,17 @@ public with sharing class ParseAppErrors {
 
     public abstract class EmailFormat {
 
-        public abstract String regex();
-        public abstract void populateFields(Matcher matcher, AppError__c error);
-
         private Pattern regex;
+
+        public abstract String regex();
+        public abstract void populateFields(Matcher match, AppError__c error);
 
         public EmailFormat compile() {
             regex = Pattern.compile(regex());
             return this;
         }
 
-        public Matcher matcher(String text) {
+        public Matcher match(String text) {
             return regex.matcher(text);
         }
     }
