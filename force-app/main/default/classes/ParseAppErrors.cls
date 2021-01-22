@@ -92,11 +92,15 @@ public with sharing class ParseAppErrors {
                                          WHERE sfLma__Subscriber_Org_ID__c = :orgIds(bySubscriber)
                                          AND sfLma__Package__r.txt_Namespace__c = :namespaces(bySubscriber)]) {
 
-            for(AppError__c error : bySubscriber.get( subscriberKey(license) )) {
-                error.lkp_License__c = license.Id;
-                error.lkp_Package__c = license.sfLma__Package__c;
-                error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
-                error.lkp_Account__c = license.sfLma__Account__c;
+            String key = subscriberKey(license);
+            
+            if(bySubscriber.containsKey(key)) {
+                for(AppError__c error : bySubscriber.get(key)) {
+                    error.lkp_License__c = license.Id;
+                    error.lkp_Package__c = license.sfLma__Package__c;
+                    error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
+                    error.lkp_Account__c = license.sfLma__Account__c;
+                }
             }
         }
     }

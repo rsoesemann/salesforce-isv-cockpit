@@ -2,7 +2,7 @@
 private class ParseAppErrors_Test {
 
     private static Account_t account;
-    private static LmaPackage pakkage;
+    private static LmaPackage app;
     private static LmaVersion version;
     private static LmaLicense license;
     private static List<String> mails;
@@ -89,6 +89,12 @@ private class ParseAppErrors_Test {
         // Setup
         setup();
 
+        LmaPackage otherApp = new LmaPackage().name('App B').ns('NSB');
+        LmaVersion otherVersion = new LmaVersion(otherApp).name('v2');
+        new LmaLicense(account, otherVersion)
+                .org('00D000000000001')
+                .persist();
+
 
         // Exercise
         insert new AppError__c(txl_FullMailBody__c = mails[1]);
@@ -98,7 +104,7 @@ private class ParseAppErrors_Test {
         AppError__c e = query()[0];
         System.assertEquals(account.Id, e.lkp_Account__c);
         System.assertEquals(license.Id, e.lkp_License__c);
-        System.assertEquals(pakkage.Id, e.lkp_Package__c);
+        System.assertEquals(app.Id, e.lkp_Package__c);
         System.assertEquals(version.Id, e.lkp_PackageVersion__c);
     }
 
@@ -157,8 +163,8 @@ private class ParseAppErrors_Test {
 
     private static void setup() {
         account = new Account_t();
-        pakkage = new LmaPackage().name('App A').ns('NSA');
-        version = new LmaVersion(pakkage).name('v1');
+        app = new LmaPackage().name('App A').ns('NSA');
+        version = new LmaVersion(app).name('v1');
         license = new LmaLicense(account, version).org('00D000000000001');
         account.persist();
 
