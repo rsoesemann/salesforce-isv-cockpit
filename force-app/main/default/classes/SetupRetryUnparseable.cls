@@ -4,7 +4,7 @@ public with sharing class SetupRetryUnparseable extends SetupStep {
 
     public Integer unassigned  {
         get {
-            errors = [SELECT txl_FullMailBody__c FROM AppError__c WHERE txt_OrgId__c = NULL OR txt_Namespace__c = NULL];
+            errors = [SELECT txl_FullMailBody__c FROM AppError__c WHERE txt_OrgId__c = NULL OR txt_Namespace__c = NULL LIMIT 100];
             return errors.size();
         }
         private set;
