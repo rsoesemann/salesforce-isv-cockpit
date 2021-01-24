@@ -1,19 +1,9 @@
 public with sharing class SetupRetryUnparseable extends SetupStep {
 
-    private List<AppError__c> errors;
-
-    public Integer unassigned  {
-        get {
-            errors = [SELECT txl_FullMailBody__c FROM AppError__c WHERE txt_OrgId__c = NULL OR txt_Namespace__c = NULL LIMIT 100];
-            return errors.size();
-        }
-        private set;
-    }
-
-
     // PUBLIC
 
     public override ApexPages.Message getStatus() {
+        Integer unassigned = [SELECT Count() FROM AppError__c WHERE txt_OrgId__c = NULL OR txt_Namespace__c = NULL];
         ApexPages.Severity severity = (unassigned > 0) ? ApexPages.Severity.WARNING  : ApexPages.Severity.CONFIRM;
 
         return new ApexPages.Message(severity, unassigned + ' AppErrors are not assigned. Reparse them?');
@@ -27,10 +17,9 @@ public with sharing class SetupRetryUnparseable extends SetupStep {
 
     public override PageReference run() {
         try {
-            // Note: Ignore check if Body has changed
+            // Note: Even if Body is unchanged
             ParseAppErrors.parseAlways = true;
-            
-            update errors;
+            update [SELECT Id FROM AppError__c WHERE txt_OrgId__c = NULL OR txt_Namespace__c = NULL LIMIT 100];
         }
         catch(Exception ex) {
             ApexPages.addMessages(ex);

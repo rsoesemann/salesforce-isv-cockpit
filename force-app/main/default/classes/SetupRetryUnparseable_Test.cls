@@ -14,7 +14,7 @@ private class SetupRetryUnparseable_Test {
         fflib_SObjectDomain.getTriggerEvent(AppErrors.class).enableAll();
 
         SetupRetryUnparseable step = new SetupRetryUnparseable();
-        System.assertEquals(1, step.unassigned);
+        System.assertEquals(ApexPages.Severity.WARNING, step.getStatus().getSeverity());
 
 
         // Exercise
@@ -22,7 +22,7 @@ private class SetupRetryUnparseable_Test {
 
 
         // Verify
-        System.assertEquals(0, step.unassigned);
+        System.assertEquals(ApexPages.Severity.CONFIRM, step.getStatus().getSeverity());
     }
 
 

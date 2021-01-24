@@ -172,5 +172,9 @@ public with sharing class ParseAppErrors {
         public Matcher match(String text) {
             return regex.matcher(text);
         }
+
+        protected String abbreviate(String value, Integer length) {
+            return (value == null) ? null : value.abbreviate(length);
+        }
     }
 }
