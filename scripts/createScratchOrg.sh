@@ -40,3 +40,6 @@ if [ -f "package.json" ]; then
   execute npm install
   execute npm run test:unit
 fi
+
+echo "Running CLI Scanner"
+execute sfdx scanner:run --target "force-app" --pmdconfig "ruleset.xml" --eslintconfig ".eslintrc.json"
