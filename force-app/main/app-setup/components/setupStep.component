@@ -18,9 +18,10 @@
         }
     </style>
 
-    <apex:form id="form">
-        <li class="slds-setup-assistant__item">
-            <article class="slds-setup-assistant__step">
+    
+    <li class="slds-setup-assistant__item">
+        <article class="slds-setup-assistant__step">
+            <apex:form id="form">
                 <div class="slds-summary-detail slds-is-open" id="toggelDetail">
                     <button class="{!IF(step.success && NOT(keepOpen), 'slds-hide', 'slds-button slds-button_icon slds-m-right_x-small slds-m-top_x-small')}">
                         <span onclick="toggleContent(this); return false;" class="slds-icon_container" >
@@ -80,10 +81,10 @@
                         </div>
                     </div>
                 </div>
-            </article>
-        </li>
-    </apex:form>
-
+            </apex:form>
+        </article>
+    </li>
+    
 
     <script>
         function toggleContent(event) {
