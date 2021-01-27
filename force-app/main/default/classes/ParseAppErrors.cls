@@ -93,7 +93,7 @@ public with sharing class ParseAppErrors {
                                          AND sfLma__Package__r.txt_Namespace__c = :namespaces(bySubscriber)]) {
 
             String key = subscriberKey(license);
-            
+
             if(bySubscriber.containsKey(key)) {
                 for(AppError__c error : bySubscriber.get(key)) {
                     error.lkp_License__c = license.Id;
@@ -124,31 +124,35 @@ public with sharing class ParseAppErrors {
 
 
     private String subscriberKey(AppError__c error) {
-        return error.txt_Namespace__c + '_' +  error.txt_OrgId__c;
+        return namespacePrefix(error.txt_Namespace__c) + error.txt_OrgId__c;
     }
 
 
     private String subscriberKey(sflma__License__c license) {
-        return license.sfLma__Package__r.txt_Namespace__c + '_' +  license.sfLma__Subscriber_Org_ID__c;
+        return namespacePrefix(license.sfLma__Package__r.txt_Namespace__c) + license.sfLma__Subscriber_Org_ID__c;
+    }
+
+
+    private String namespacePrefix(String namespace) {
+        return (namespace == null) ? '_' : '_' + namespace.toUpperCase();
     }
 
 
     private Set<String> namespaces(Map<String, List<AppError__c>> bySubscribers) {
-        Set<String> result = new Set<String>();
-
-        for(String key : bySubscribers.keySet()) {
-            result.add(key.substringBefore('_'));
-        }
-
-        return result;
+        return fragmentOnly(bySubscribers.keySet(), 0);
     }
 
 
     private Set<String> orgIds(Map<String, List<AppError__c>> bySubscribers) {
+        return fragmentOnly(bySubscribers.keySet(), 1);
+    }
+
+
+    private Set<String> fragmentOnly(Set<String> compoundKeys, Integer index) {
         Set<String> result = new Set<String>();
 
-        for(String key : bySubscribers.keySet()) {
-            result.add(key.substringAfter('_'));
+        for(String key : compoundKeys) {
+            result.add( key.split('_')[index] );
         }
 
         return result;

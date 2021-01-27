@@ -1,24 +1,22 @@
-<apex:page controller="SetupCtrl" sidebar="false" title="App Cockpit Setup" lightningStylesheets="true">
-    <apex:pageBlock >
-        <apex:sectionHeader title="App Cockpit" subtitle="Setup"/>
+<apex:page controller="SetupPageCtrl" title="LMA App Cockpit - Setup" docType="html-5.0" sidebar="false" lightningStylesheets="true">
+
+    <c:setup ctrl="{!controller}">
 
         <c:setupStep title="Create Email Service" step="{!setupEmailService}"/>
         <c:setupStep title="Prepare LMA Packages" step="{!setupPackageNamespaces}"/>
         <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}"/>
 
-        <apex:pageBlockSection columns="1" title="Third-Party Licenses" collapsible="false">
-            This software uses the following open-source software. Their licenses require us to reproduce their copyright notice.
-
+        <c:setupStep title="Third-Party Licenses (click for details)">
+            <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                This software uses the following open-source software. Their licenses require us to reproduce their copyright notice.
+            </div>
             <ul>
-                <li><a href="https://github.com/financialforcedev/fflib-apex-common/blob/master/LICENSE"
-                       target="_blank">financialforcedev/fflib-apex-common</a></li>
-                <li><a href="https://github.com/financialforcedev/apex-mdapi/blob/master/LICENSE"
-                       target="_blank">financialforcedev/apex-mdapi</a></li>
-                <li><a href="https://github.com/rsoesemann/app-setup/blob/master/LICENSE"
-                       target="_blank">rsoesemann/app-setup</a></li>
-                <li><a href="https://github.com/superfell/json2apex/blob/master/LICENSE.md"
-                       target="_blank">superfell/json2apex</a></li>
+                <li><a href="https://github.com/apex-enterprise-patterns/fflib-apex-common/blob/master/LICENSE" target="_blank">apex-enterprise-patterns/fflib-apex-common</a></li>
+                <li><a href="https://github.com/financialforcedev/apex-mdapi/blob/master/LICENSE" target="_blank">financialforcedev/apex-mdapi</a></li>
+                <li><a href="https://github.com/rsoesemann/app-setup/blob/master/LICENSE" target="_blank">rsoesemann/app-setup</a></li>
+                <li><a href="https://github.com/rsoesemann/apex-domainbuilder/blob/master/LICENSE" target="_blank">rsoesemann/apex-domainbuilder</a></li>
+                <li><a href="https://github.com/superfell/json2apex/blob/master/LICENSE.md" target="_blank">superfell/json2apex</a></li>
             </ul>
-        </apex:pageBlockSection>
-    </apex:pageBlock>
+        </c:setupStep>
+    </c:setup>
 </apex:page>

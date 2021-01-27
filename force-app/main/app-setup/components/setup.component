@@ -1,0 +1,28 @@
+<apex:component >
+    <apex:attribute name="ctrl" type="SetupCtrl" required="true" description="" />
+    <apex:attribute name="progressLabel" type="String" default="Complete all the steps below to finish setting up the app" required="false" description="" />
+
+    <apex:slds />
+
+    <div class="slds-scope">
+        <section class="slds-card slds-p-around_small">
+            <header class="slds-theme_shade slds-p-around_medium slds-m-bottom_small {!IF($User.UIThemeDisplayed == 'Theme4d', 'slds-global-header_container', '')}">
+                <div>
+                    <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar-label-id-2">
+                        <span>{!progressLabel}</span>
+                        <span aria-hidden="true"><strong>{!ctrl.progress}% Complete</strong></span>
+                    </div>
+                    <div class="slds-progress-bar slds-progress-bar_circular" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-labelledby="progress-bar-label-id-2" role="progressbar">
+                        <span class="slds-progress-bar__value {!ctrl.classes}" style="width: {!ctrl.progress}%">
+                            <span class="slds-assistive-text">Progress: {!ctrl.progress}%</span>
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+            <ol class="slds-setup-assistant">
+                <apex:componentBody />
+            </ol>
+        </section>
+    </div>
+</apex:component>

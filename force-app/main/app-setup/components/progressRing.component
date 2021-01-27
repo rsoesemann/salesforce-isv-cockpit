@@ -1,0 +1,54 @@
+<apex:component>
+    <apex:attribute name="type" type="String" required="true" description=""/>
+    <apex:attribute name="text" type="String" required="false" default="i" description=""/>
+
+    <div class="{!IF(type=='CONFIRM', 'slds-progress-ring slds-progress-ring_complete slds-progress-ring_large', 'slds-hide')}">
+        <div class="slds-progress-ring__progress">
+            <svg viewBox="-1 -1 2 2">
+                <circle class="slds-progress-ring__path" id="slds-progress-ring-path-66" cx="0" cy="0" r="1"></circle>
+            </svg>
+        </div>
+        <div class="slds-progress-ring__content">
+            <c:svg name="check" type="utility"/>
+        </div>
+    </div>
+
+    <div class="{!IF(type=='WARNING', 'slds-progress-ring slds-progress-ring_warning slds-progress-ring_large', 'slds-hide')}">
+        <div class="slds-progress-ring__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75">
+            <svg viewBox="-1 -1 2 2">
+                <path class="slds-progress-ring__path" id="slds-progress-ring-path-39" d="M 1 0 A 1 1 0 1 0 0.00 1.00 L 0 0"></path>
+            </svg>
+        </div>
+        <div class="slds-progress-ring__content">
+            <c:svg name="warning" type="utility"/>
+        </div>
+    </div>
+
+
+    <div class="{!IF(type=='ERROR', 'slds-progress-ring  slds-progress-ring_expired slds-progress-ring_large', 'slds-hide')}">
+        <div class="slds-progress-ring__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+            <svg viewBox="-1 -1 2 2">
+                <path class="slds-progress-ring__path" d="M 1 0 A 1 1 0 1 1 0.73 -0.68 L 0 0"></path>
+            </svg>
+        </div>
+        <div class="slds-progress-ring__content">
+            <c:svg name="error" type="utility"/>
+        </div>
+    </div>
+
+    <div class="{!IF(type == 'INFO', 'slds-progress-ring  slds-progress-ring_warning slds-progress-ring_large', 'slds-hide')}">
+        
+        <div class="slds-progress-ring__content">
+            <c:svg name="warning" type="utility" styleClasses="slds-icon-text-warning"/>
+        </div>
+    </div> 
+
+    <div class="{!IF(type == null, 'slds-progress-ring slds-progress-ring_large', 'slds-hide')}">
+        <div class="slds-progress-ring__progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <svg viewBox="-1 -1 2 2">
+                <path class="slds-progress-ring__path" id="slds-progress-ring-path-57" d="M 1 0 A 1 1 0 0 0 1.00 -0.00 L 0 0"></path>
+            </svg>
+        </div>
+        <div class="slds-progress-ring__content slds-text-heading_medium slds-text-title_bold">{!text}</div>
+    </div> 
+</apex:component>

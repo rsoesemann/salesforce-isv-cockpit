@@ -15,7 +15,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "48.0",
+    "sourceApiVersion": "50.0",
     "packageAliases": {
         "LmaAppCockpit": "0Ho5p000000oLkjCAE",
         "lma": "04t30000001DWL0AAO",

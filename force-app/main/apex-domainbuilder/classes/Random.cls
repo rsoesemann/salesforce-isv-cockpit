@@ -32,9 +32,14 @@ public class Random {
 	}
 
 
-	public Integer integer(Integer max) {
-		return integer(0, max);
-	}
+    public Integer integer(Integer max) {
+        return integer(0, max);
+    }
+
+
+    public Integer integer() {
+        return integer(0, 214748364);
+    }
 
 
 	public Boolean boolean() {

@@ -42,4 +42,4 @@ if [ -f "package.json" ]; then
 fi
 
 echo "Running CLI Scanner"
-execute sfdx scanner:run --target "force-app" --pmdconfig "ruleset.xml" --eslintconfig ".eslintrc.json"
+execute sfdx scanner:run --target "force-app" --pmdconfig "ruleset.xml"
