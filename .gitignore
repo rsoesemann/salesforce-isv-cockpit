@@ -42,6 +42,4 @@ package-lock.json
 
 mdapi/
 /.idea/
-/.idea/
-.pmdCache
 .pmdCache

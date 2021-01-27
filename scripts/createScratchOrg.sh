@@ -32,14 +32,14 @@ sfdx force:apex:execute -f scripts/createSampleData.apex -u $SCRATCH_ORG_ALIAS
 echo "Make sure Org user is english"
 sfdx force:data:record:update -s User -w "Name='User User'" -v "Languagelocalekey=en_US"
 
-echo "Running apex tests"
+echo "Running Apex Tests"
 execute sfdx force:apex:test:run -l RunLocalTests -w 30
+
+echo "Running CLI Scanner"
+execute sfdx scanner:run --target "force-app" --pmdconfig "ruleset.xml"
 
 if [ -f "package.json" ]; then
   echo "Running jest tests"
   execute npm install
   execute npm run test:unit
 fi
-
-echo "Running CLI Scanner"
-execute sfdx scanner:run --target "force-app" --pmdconfig "ruleset.xml"
