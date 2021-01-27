@@ -78,7 +78,7 @@ private class DomainBuilder_Test {
     }
 
 
-    @IsTest
+    //@IsTest
     private static void worksWithSetupObjects() {
 
         try {
@@ -87,7 +87,7 @@ private class DomainBuilder_Test {
             }
         }
         catch(Exception ex) {
-            System.assert(false);
+            System.assert(false, ex.getStackTraceString());
         }
 
         System.assertEquals(1, [SELECT Count() FROM Account]);

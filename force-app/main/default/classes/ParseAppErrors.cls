@@ -124,17 +124,17 @@ public with sharing class ParseAppErrors {
 
 
     private String subscriberKey(AppError__c error) {
-        return namespacePrefix(error.txt_Namespace__c) + error.txt_OrgId__c;
+        return namespace(error.txt_Namespace__c) + '_' + error.txt_OrgId__c;
     }
 
 
     private String subscriberKey(sflma__License__c license) {
-        return namespacePrefix(license.sfLma__Package__r.txt_Namespace__c) + license.sfLma__Subscriber_Org_ID__c;
+        return namespace(license.sfLma__Package__r.txt_Namespace__c) + '_' + license.sfLma__Subscriber_Org_ID__c;
     }
 
 
-    private String namespacePrefix(String namespace) {
-        return (namespace == null) ? '_' : '_' + namespace.toUpperCase();
+    private String namespace(String namespace) {
+        return (namespace == null) ? '' : namespace.toUpperCase();
     }
 
 
