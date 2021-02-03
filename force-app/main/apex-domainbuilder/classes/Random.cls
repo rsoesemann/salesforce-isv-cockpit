@@ -1,5 +1,7 @@
 public class Random {
 
+	private static Integer idCount = 0;
+
 	public String string() {
 		return string(8);
 	}
@@ -49,5 +51,18 @@ public class Random {
 
 	public Object value(List<Object> values) {
 		return values.get(integer(values.size()-1));
+	}
+
+
+	public Id id(SObjectType type) {
+		return id( type.getDescribe().getKeyPrefix() );
+	}
+
+
+	public Id id(String prefix) {
+		idCount++;
+		String zeros = '000000000000'.substring(0, 12 - String.valueOf(idCount).length());
+
+		return Id.valueOf(prefix + zeros + idCount);
 	}
 }
