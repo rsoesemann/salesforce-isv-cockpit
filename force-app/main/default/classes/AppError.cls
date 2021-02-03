@@ -1,9 +1,9 @@
-@IsTest
 public class AppError extends DomainBuilder {
 
     public AppError() {
         this(new LmaLicense());
     }
+    
 
     public AppError(LmaLicense l) {
         super(AppError__c.SObjectType);
