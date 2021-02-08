@@ -5,7 +5,7 @@
             "default": true,
             "package": "LmaAppCockpit",
             "versionName": "ver 1.0",
-            "versionNumber": "1.9.0.NEXT",
+            "versionNumber": "1.10.0.NEXT",
             "dependencies": [
                 {
                     "package": "lma"
@@ -30,6 +30,7 @@
         "LmaAppCockpit@1.6.0-1": "04t5p000001UjUQAA0",
         "LmaAppCockpit@1.7.0-1": "04t5p000001UjUVAA0",
         "LmaAppCockpit@1.8.0-1": "04t5p000001UjUaAAK",
-        "LmaAppCockpit@1.9.0-1": "04t5p000001UjVOAA0"
+        "LmaAppCockpit@1.9.0-1": "04t5p000001UjVOAA0",
+        "LmaAppCockpit@1.10.0-1": "04t5p000001UjWCAA0"
     }
 }
