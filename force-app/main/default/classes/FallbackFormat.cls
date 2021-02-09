@@ -3,7 +3,7 @@ public class FallbackFormat extends ParseAppErrors.EmailFormat {
     public override String regex() {
         return '(?:(005[A-Za-z0-9]{12})/(00D[A-Za-z0-9]{12})[\\s\\S]+)' +
                 '(?:caused by: ([^:]+): (.+)[\\s\\S]+)?' +
-                '(?:class \'|Class\\.)(.+)\\.([^\']+)(?:\\.|\')?';
+                '(?:class \'|Class\\.)([^.]+)\\.([^\']+)(?:|\\.)?';
     }
 
 

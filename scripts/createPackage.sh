@@ -18,8 +18,6 @@ PACKAGE_VERSION="$(execute sfdx force:package:version:create -p $PACKAGE_NAME -x
 echo "Promote with: sfdx force:package:version:promote -p $PACKAGE_VERSION"
 echo "Install from: /packaging/installPackage.apexp?p0=$PACKAGE_VERSION"
 
-
-
 if [ $QA_ORG_ALIAS ]; then
   if [ $secrets.QA_URL ]; then
     echo "Authenticate QA Org"
