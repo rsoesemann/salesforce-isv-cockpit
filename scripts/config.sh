@@ -1,4 +1,3 @@
-#!/bin/bash
-DEV_HUB_ALIAS="DevHubCopado"
+PACKAGE_NAME="lma-app-cockpit"
+DEV_HUB_ALIAS="DevHub"
 SCRATCH_ORG_ALIAS="lma-app-cockpit_DEV"
-PACKAGE_NAME="LmaAppCockpit"
