@@ -1,14 +1,12 @@
 public class LmaPackage extends DomainBuilder {
 
-    private static Integer count = 0;
-
     public LmaPackage() {
         super(sfLma__Package__c.SObjectType);
 
         name('MyApp');
         ns('ns');
         set(sfLma__Package__c.sfLma__Release_Date__c, System.today());
-        id('03300000000000' + count++);
+        id(new Random().id('033'));
     }
 
     public LmaPackage ns(String value) {

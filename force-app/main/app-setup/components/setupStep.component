@@ -1,0 +1,100 @@
+<apex:component allowDml="true">
+    <apex:attribute name="title" type="String" required="true" description=""  />
+    <apex:attribute name="step" type="SetupStep" required="false" description="" />
+    <apex:attribute name="enabled" type="Boolean" required="false" default="true" description="" />
+    <apex:attribute name="keepOpen" type="Boolean" required="false" default="false" description="" />
+
+    <style>
+        .vfLabelColTextWrap {
+            text-align: left !important;
+            width: 5% !important;
+        }
+        .apexDefaultPageBlock {
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .messageCell {
+            text-align: center !important;
+        }
+    </style>
+
+    
+    <li class="slds-setup-assistant__item">
+        <article class="slds-setup-assistant__step">
+            <apex:form id="form">
+                <div class="slds-summary-detail slds-is-open" id="toggelDetail">
+                    <button class="{!IF(step.success && NOT(keepOpen), 'slds-hide', 'slds-button slds-button_icon slds-m-right_x-small slds-m-top_x-small')}">
+                        <span onclick="toggleContent(this); return false;" class="slds-icon_container" >
+                            <span id="chevronright" class="slds-hide"><c:svg name="chevronright"/></span>
+                            <span id="chevrondown"><c:svg name="chevrondown"/></span>
+                        </span>
+                    </button>
+
+                    <div class="slds-container_fluid">
+                        <div class="slds-summary-detail__title">
+                            <div class="slds-setup-assistant__step-summary">
+                                <div class="slds-media">
+                                    <div class="slds-media__figure">
+                                        <c:progressRing type="{!IF(enabled, step.severity, 'INFO')}" />
+                                    </div>
+
+                                    <div class="slds-media__body slds-m-top_x-small">
+                                        <div class="slds-media">
+                                            <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                                                <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                                                    <button class="slds-button slds-button_reset" aria-controls="step-0-summary-action" aria-expanded="true">{!title}</button>
+                                                </h3>
+
+                                                <apex:pageMessages id="errorMessage" />
+                                                <apex:outputText value="{!step.message}" escape="false"/>
+                                            </div>
+                                            <div class="{!IF(step == null || !enabled, 'slds-hide', 'slds-media__figure slds-media__figure_reverse')}">
+                                                <apex:commandButton value="{!step.buttonLabel}"
+                                                                    action="{!step.doRun}"
+                                                                    disabled="{!NOT(step.showButtonOnSuccess) && (step.success || step.severity = 'ERROR')}"
+                                                                    rerender="form"
+                                                                    status="loading"
+                                                                    styleClass="slds-button slds-button_outline-brand" />
+                                                <apex:actionStatus id="loading">
+                                                    <apex:facet name="start">
+                                                        <div class="slds-align_absolute-center" style="height:0rem;">
+                                                            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_inline slds-spinner_brand">
+                                                                <span class="slds-assistive-text">Loading</span>
+                                                                <div class="slds-spinner__dot-a"></div>
+                                                                <div class="slds-spinner__dot-b"></div>
+                                                            </div>
+                                                        </div>
+                                                    </apex:facet>
+                                                </apex:actionStatus>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div aria-hidden="false" class="slds-summary-detail__content" id="content">
+                            <div class="slds-setup-assistant__step-detail">
+                                <apex:componentBody rendered="{!NOT(step.success) || keepOpen}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </article>
+    </li>
+    
+
+    <script>
+        function toggleContent(event) {
+            event.parentElement.parentElement.classList.toggle('slds-is-open');
+
+            event.classList.toggle('slds-icon-utility-chevronright');
+            event.classList.toggle('slds-icon-utility-chevrondown');
+
+            event.children[0].classList.toggle("slds-hide");
+            event.children[1].classList.toggle("slds-hide");
+        }
+    </script>
+</apex:component>

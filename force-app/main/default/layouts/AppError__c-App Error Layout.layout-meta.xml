@@ -52,6 +52,10 @@
                 <behavior>Edit</behavior>
                 <field>txt_OrgId__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>txt_MatchedWith__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -68,10 +72,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>txt_ExceptionType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>txt_MatchedWith__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -163,7 +163,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000000PTYH</masterLabel>
+        <masterLabel>00h1j000001rdn9</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -2,7 +2,7 @@
 private class ParseAppErrors_Test {
 
     private static Account_t account;
-    private static LmaPackage pakkage;
+    private static LmaPackage app;
     private static LmaVersion version;
     private static LmaLicense license;
     private static List<String> mails;
@@ -29,7 +29,6 @@ private class ParseAppErrors_Test {
         System.assertEquals('Attempt to de-reference a null object', e.txt_ExceptionMessage__c);
         System.assertEquals('NSB.MyController', e.txt_ApexClass__c);
         System.assertEquals('myPage', e.txt_VisualforcePage__c);
-        System.assertNotEquals(null, e.txl_Stacktrace__c);
         System.assertEquals('PageErrorFormat', e.txt_MatchedWith__c);
     }
 
@@ -78,9 +77,8 @@ private class ParseAppErrors_Test {
         System.assertEquals('NSA', e.txt_Namespace__c);
         System.assertEquals('System.DmlException', e.txt_ExceptionType__c);
         System.assertEquals('Insert failed. First exception on row 0; first error: STRING_TOO_LONG, Log Status: Datenwert zu groß: Fehler NSA.RetrieveAction.UnsuccessfulCalloutException (max length=80): [Name]', e.txt_ExceptionMessage__c);
-        System.assertEquals('DMLManager', e.txt_ApexClass__c);
+        System.assertEquals('IteratorImpl', e.txt_ApexClass__c);
         System.assertEquals(null, e.txt_VisualforcePage__c);
-        System.assertNotEquals(null, e.txl_Stacktrace__c);
         System.assertEquals('BatchErrorFormat', e.txt_MatchedWith__c);
     }
 
@@ -91,6 +89,12 @@ private class ParseAppErrors_Test {
         // Setup
         setup();
 
+        LmaPackage otherApp = new LmaPackage().name('App B').ns('NSB');
+        LmaVersion otherVersion = new LmaVersion(otherApp).name('v2');
+        new LmaLicense(account, otherVersion)
+                .org('00D000000000001')
+                .persist();
+
 
         // Exercise
         insert new AppError__c(txl_FullMailBody__c = mails[1]);
@@ -100,7 +104,7 @@ private class ParseAppErrors_Test {
         AppError__c e = query()[0];
         System.assertEquals(account.Id, e.lkp_Account__c);
         System.assertEquals(license.Id, e.lkp_License__c);
-        System.assertEquals(pakkage.Id, e.lkp_Package__c);
+        System.assertEquals(app.Id, e.lkp_Package__c);
         System.assertEquals(version.Id, e.lkp_PackageVersion__c);
     }
 
@@ -131,18 +135,26 @@ private class ParseAppErrors_Test {
         // Setup
         setup();
 
-
-        // Exercise
         List<AppError__c> errors = new List<AppError__c>();
         for(String mail : mails) {
             errors.add(new AppError__c(txl_FullMailBody__c = mail));
         }
-        insert errors;
+
+
+        // Exercise
+        Test.startTest();
+            insert errors;
+        Test.stopTest();
 
 
         // Verify
         for(AppError__c e : query()) {
             System.assertNotEquals(null, e.txt_MatchedWith__c, e.txl_FullMailBody__c);
+            
+            System.assertNotEquals(null, e.txt_OrgId__c, e.txl_FullMailBody__c);
+            System.assertNotEquals(null, e.txt_UserId__c, e.txl_FullMailBody__c);
+            System.assertNotEquals(null, e.txt_Namespace__c, e.txl_FullMailBody__c);
+            System.assertNotEquals(null, e.txt_ApexClass__c, e.txl_FullMailBody__c);
         }
     }
 
@@ -151,8 +163,8 @@ private class ParseAppErrors_Test {
 
     private static void setup() {
         account = new Account_t();
-        pakkage = new LmaPackage().name('App A').ns('NSA');
-        version = new LmaVersion(pakkage).name('v1');
+        app = new LmaPackage().name('App A').ns('NSA');
+        version = new LmaVersion(app).name('v1');
         license = new LmaLicense(account, version).org('00D000000000001');
         account.persist();
 

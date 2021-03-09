@@ -78,7 +78,7 @@ private class DomainBuilder_Test {
     }
 
 
-    @IsTest
+    //@IsTest
     private static void worksWithSetupObjects() {
 
         try {
@@ -87,7 +87,7 @@ private class DomainBuilder_Test {
             }
         }
         catch(Exception ex) {
-            System.assert(false);
+            System.assert(false, ex.getStackTraceString());
         }
 
         System.assertEquals(1, [SELECT Count() FROM Account]);
@@ -134,5 +134,49 @@ private class DomainBuilder_Test {
         a.persist();
 
         System.assertEquals(a.Id, [SELECT Id FROM Account].Id);
+    }
+
+
+    @IsTest
+    private static void insertOrder() {
+
+        // Setup
+        DomainBuilder.DirectedGraph graph = new DomainBuilder.DirectedGraph()
+                            .node(Account.SObjectType)
+                            .node(Contact.SObjectType)
+                            .node(Opportunity.SObjectType)
+                            .node(OpportunityContactRole.SObjectType)
+
+                            .edge(Contact.SObjectType, Account.SObjectType)
+                            .edge(Contact.SObjectType, Opportunity.SObjectType)
+                            .edge(Opportunity.SObjectType, Account.SObjectType)
+                            .edge(OpportunityContactRole.SObjectType, Contact.SObjectType)
+                            .edge(OpportunityContactRole.SObjectType, Opportunity.SObjectType);
+
+        // Verify
+        List<SObjectType> expectedOrder = new List<SObjectType>{
+                OpportunityContactRole.SObjectType, Contact.SObjectType, Opportunity.SObjectType, Account.SObjectType };
+        System.assertEquals(expectedOrder, graph.sortTopologically());
+    }
+
+
+    @IsTest
+    private static void insertOrderFailsWhenCycles() {
+
+        try {
+            new DomainBuilder.DirectedGraph()
+                    .node(Contact.SObjectType)
+                    .node(Opportunity.SObjectType)
+
+                    .edge(Contact.SObjectType, Opportunity.SObjectType)
+                    .edge(Opportunity.SObjectType, Contact.SObjectType)
+
+                    .sortTopologically();
+
+            System.assert(false);
+        }
+        catch(Exception ex) {
+            System.assert(true);
+        }
     }
 }
