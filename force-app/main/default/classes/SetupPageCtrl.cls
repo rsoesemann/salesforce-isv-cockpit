@@ -3,6 +3,7 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
     public SetupEmailService setupEmailService { get; set; }
     public SetupPackageNamespaces setupPackageNamespaces { get; set; }
     public SetupRetryUnparseable setupRetryUnparseable { get; set; }
+    public SetupArchiveErrors setupArchive { get; set; }
 
 
     // CONSTRUCTOR
@@ -11,12 +12,13 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
         setupEmailService = new SetupEmailService();
         setupPackageNamespaces = new SetupPackageNamespaces();
         setupRetryUnparseable = new SetupRetryUnparseable();
+        setupArchive = new SetupArchiveErrors();
     }
 
 
     // PUBLIC
 
     public override List<SetupStep> steps() {
-        return new List<SetupStep>{ setupEmailService, setupPackageNamespaces, setupRetryUnparseable };
+        return new List<SetupStep>{ setupEmailService, setupPackageNamespaces, setupRetryUnparseable, setupArchive };
     }
 }

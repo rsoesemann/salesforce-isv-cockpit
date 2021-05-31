@@ -6,6 +6,20 @@
         <c:setupStep title="Prepare LMA Packages" step="{!setupPackageNamespaces}"/>
         <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}"/>
 
+        <c:setupStep title="Auto-Archive Errors" step="{!setupArchive}" keepOpen="true">
+            <apex:pageBlock>
+                <apex:pageBlockSection columns="2">
+                    <apex:outputLabel for="cron">Cron Expression (Use <a href='http://www.cronmaker.com/'>Cronmaker</a> to make that easy.)</apex:outputLabel>
+                    <apex:inputText id="cron" value="{!setupArchive.cronExpression}" size="20" required="true" />
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection columns="2">
+                    <apex:outputLabel for="filter">Filter Condition</apex:outputLabel>
+                    <apex:inputText id="filter" value="{!setupArchive.filter}" size="20" required="true" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </c:setupStep>
+
         <c:setupStep title="Third-Party Licenses (click for details)">
             <div class="slds-setup-assistant__step-summary-content slds-media__body">
                 This software uses the following open-source software. Their licenses require us to reproduce their copyright notice.
