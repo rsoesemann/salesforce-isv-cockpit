@@ -2,7 +2,8 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     
     private SObjectType source;
     private SObjectType target;
-    private String condition;
+    private CorrespondingFields mapping;
+    private String filter;
 
 
     // CONSTRUCTOR
@@ -10,7 +11,8 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     public ArchiveRecords(SObjectType source, SObjectType target, String filter) {
         this.source = source;
         this.target = target;
-        condition = filter;
+        mapping = new CorrespondingFields(source, target);
+        this.filter = (String.isEmpty(filter)) ? null : filter;
     }
 
 
@@ -45,11 +47,14 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     // BATCH
 
     public Database.QueryLocator start(Database.BatchableContext ctx) {
-        return Database.getQueryLocator(sanitized('SELECT FIELDS(ALL) FROM ' + source + ' WHERE ' + condition));
+        return Database.getQueryLocator(new fflib_QueryFactory(source)
+                                                    .selectFields( mapping.sourceFields(source) )
+                                                    .setCondition(filter)
+                                                    .toSOQL());
     }
 
 
-    public void execute(Database.BatchableContext ctx, List<SObject> originalRecords) {
+    public void execute(Database.BatchableContext ctx, List<SObject> originalRecords) {         
         Database.insertImmediate( archiveRecordsOf(originalRecords) );
         Database.deleteAsync(originalRecords);
     }
@@ -63,26 +68,18 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     private List<SObject> archiveRecordsOf(List<SObject> originalRecords) {
         List<SObject> result = new List<SObject>();
 
-        CorrespondingFields mapping = new CorrespondingFields(source, target);
-
         for(SObject original : originalRecords) {
             SObject archived = target.newSObject();
 
             for(SObjectField targetField : mapping.targetFields(source)) {
                 SObjectField sourceField = mapping.sourceField(targetField);
                 archived.put(targetField, original.get(sourceField));
-
-                result.add(archived);
             }
+
+            result.add(archived);
         } 
-        
+
         return result;
-    }
-
-
-    private String sanitized(String soqlWithInjectionFlaw) {
-        // Note: https://salesforce.stackexchange.com/questions/206284/soql-injection-vulnerability
-        return String.escapeSingleQuotes(soqlWithInjectionFlaw);
     }
 
 

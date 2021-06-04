@@ -135,7 +135,7 @@ public class CorrespondingFields {
 		for(SObjectField field : fflib_SObjectDescribe.getDescribe(target).getFieldsMap().values()) {
 			DescribeFieldResult describe = field.getDescribe();
 			
-			if((describe.isNameField() || describe.isCustom()) && describe.isUpdateable() && dontIgnore(field)) {
+			if((describe.isNameField() || describe.isCustom()) && dontIgnore(field)) {
 				result.add(field);
 			}
 		}
