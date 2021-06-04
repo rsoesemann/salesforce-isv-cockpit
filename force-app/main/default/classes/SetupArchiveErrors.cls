@@ -58,7 +58,6 @@ public with sharing class SetupArchiveErrors extends SetupStep {
             System.abortJob(job.Id);
         }
 
-
         System.schedule(JOB_NAME, cronExpression, 
                         new ArchiveRecords(Account.SObjectType, AppError__c.SObjectType, filter));
     }
