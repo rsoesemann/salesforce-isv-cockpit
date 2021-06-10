@@ -2,6 +2,7 @@ delete [SELECT Id FROM AppError__c];
 delete [SELECT Id FROM sfLma__Package_Version__c];
 delete [SELECT Id FROM sfLma__License__c];
 delete [SELECT Id FROM sfLma__Package__c];
+delete [SELECT Id FROM Entitlement];
 delete [SELECT Id FROM Account];
 
 Account_t customer1 = new Account_t().name('Customer 1');

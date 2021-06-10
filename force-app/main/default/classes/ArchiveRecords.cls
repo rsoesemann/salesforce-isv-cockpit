@@ -61,7 +61,9 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     }
 
 
-    public void finish(Database.BatchableContext ctx) { }
+    public void finish(Database.BatchableContext ctx) { 
+        queryArchiveCount();
+    }
 
 
     // PRIVATE
@@ -93,5 +95,12 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
         }
 
         return result;
+    }
+
+
+    private void queryArchiveCount() {
+        String query = '{ "query":"SELECT COUNT(idx_Index__c) FROM ArchivedAppError__b", "targetObject":"AsyncSoqlResult__c", "targetFieldMap":{ "expr0": "Count__c" }}';
+        String response = SetupStep.asynchSoql(query);
+        System.debug(LoggingLevel.DEBUG, response);
     }
 }

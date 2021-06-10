@@ -3,6 +3,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     private static final String JOB_NAME = 'LmaAppCockpit_ArchiveErrors';
 
     private List<CronTrigger> jobs = [SELECT CronExpression FROM CronTrigger WHERE CronJobDetail.Name = :JOB_NAME];
+    private Integer archiveCount;
 
     public String cronExpression { get; set; }
     public String filter { get; set; }
@@ -13,6 +14,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     public SetupArchiveErrors() {
         cronExpression = (jobs.isEmpty()) ?  '0 0 1 * * ?' : jobs[0].CronExpression;
         filter = (jobs.isEmpty()) ? 'LastModifiedDate < LAST_N_DAYS:265' : '???';
+        archiveCount = queryArchiveCount();
     }
 
 
@@ -25,7 +27,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
         message += (jobExists)
                         ? setupLink('/DeploymentSettings/home', 'Deployment Settings') + ' and a ' + setupLink('ScheduledJobs/home', 'Scheduled Job') + ' have been created.'
                         : 'DeploymentSettings and a Scheduled Job need to be created.';
-
+        message += archiveCount + ' records were successfully archived)';
         return new ApexPages.Message(severity, message);
     }
 
@@ -74,5 +76,17 @@ public with sharing class SetupArchiveErrors extends SetupStep {
         setting.doesSkipAsyncApexValidation = true;
 
         overwrite(setting);
+    }
+
+
+    private Integer queryArchiveCount() {
+        Integer result = 0;
+
+        for(AsyncSoqlResult__c record : [SELECT Count__c FROM AsyncSoqlResult__c 
+                                         ORDER BY CreatedDate DESC LIMIT 1]) {
+            result = Integer.valueOf(record.Count__c);
+        }
+
+        return result;
     }
 }
