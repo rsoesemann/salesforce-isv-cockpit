@@ -17,6 +17,8 @@
                     <apex:outputLabel for="filter">Filter Condition</apex:outputLabel>
                     <apex:inputText id="filter" value="{!setupArchive.filter}" size="20" required="true" />
                 </apex:pageBlockSection>
+
+                <apex:commandButton action="{!setupArchive.runNow}" value="Run Now..." />
             </apex:pageBlock>
         </c:setupStep>
 

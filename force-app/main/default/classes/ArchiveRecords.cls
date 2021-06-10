@@ -55,8 +55,9 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
 
 
     public void execute(Database.BatchableContext ctx, List<SObject> originalRecords) {         
-        Database.insertImmediate( archiveRecordsOf(originalRecords) );
-        Database.deleteAsync(originalRecords);
+        List<Database.SaveResult> srList = Database.insertImmediate( archiveRecordsOf(originalRecords) );
+        System.debug(LoggingLevel.ERROR, srList);
+        //Database.deleteAsync(originalRecords);
     }
 
 

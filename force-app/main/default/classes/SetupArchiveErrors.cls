@@ -12,7 +12,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
 
     public SetupArchiveErrors() {
         cronExpression = (jobs.isEmpty()) ?  '0 0 1 * * ?' : jobs[0].CronExpression;
-        filter = (jobs.isEmpty()) ? 'LastModifiedDate = LAST_N_DAYS: 30' : '???';
+        filter = (jobs.isEmpty()) ? 'LastModifiedDate < LAST_N_DAYS:265' : '???';
     }
 
 
@@ -49,6 +49,12 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     }
 
 
+    public PageReference runNow() {
+        new ArchiveRecords(AppError__c.SObjectType, ArchivedAppError__b.SObjectType, filter).execute();
+        return currentPage();
+    }
+
+
     // PRIVATE
 
     private void reschedule() {
@@ -59,7 +65,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
         }
 
         System.schedule(JOB_NAME, cronExpression, 
-                        new ArchiveRecords(Account.SObjectType, AppError__c.SObjectType, filter));
+                        new ArchiveRecords(AppError__c.SObjectType, ArchivedAppError__b.SObjectType, filter));
     }
 
 
