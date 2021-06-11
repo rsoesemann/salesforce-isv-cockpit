@@ -23,11 +23,11 @@ private class ArchiveRecords_Test {
 
         // Exercise
         String noFilter = '';   
-        new ArchiveRecords(AppError__c.SObjectType, ArchivedAppError__b.SObjectType, noFilter).execute();
+        new ArchiveRecords(AppError__c.SObjectType, AppErrorArchived__b.SObjectType, noFilter).execute();
 
 
         // Verify
-        System.assertEquals(2, [SELECT Count() FROM ArchivedAppError__b]);
+        System.assertEquals(2, [SELECT Count() FROM AppErrorArchived__b]);
         System.assertEquals(0, [SELECT Count() FROM AppError__c]);
     }
 

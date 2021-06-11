@@ -4,8 +4,8 @@
     <externalId>false</externalId>
     <label>Package Version</label>
     <referenceTo>sfLma__Package_Version__c</referenceTo>
-    <relationshipLabel>Archived App Errors</relationshipLabel>
-    <relationshipName>ArchivedAppErrors</relationshipName>
+    <relationshipLabel>App Errors Archived</relationshipLabel>
+    <relationshipName>AppErrorsArchived</relationshipName>
     <required>true</required>
     <type>Lookup</type>
 </CustomField>

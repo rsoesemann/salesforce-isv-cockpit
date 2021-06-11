@@ -61,9 +61,7 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     }
 
 
-    public void finish(Database.BatchableContext ctx) { 
-        queryArchiveCount();
-    }
+    public void finish(Database.BatchableContext ctx) { }
 
 
     // PRIVATE
@@ -78,6 +76,8 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
                 SObjectField sourceField = mapping.sourceField(targetField);
                 archived.put(targetField, original.get(sourceField));
             }
+
+            archived.put('dtm_ArchivedDate__c', System.now());
 
             result.add(archived);
         } 
@@ -95,12 +95,5 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
         }
 
         return result;
-    }
-
-
-    private void queryArchiveCount() {
-        String query = '{ "query":"SELECT COUNT(idx_Index__c) FROM ArchivedAppError__b", "targetObject":"AsyncSoqlResult__c", "targetFieldMap":{ "expr0": "Count__c" }}';
-        String response = SetupStep.asynchSoql(query);
-        System.debug(LoggingLevel.DEBUG, response);
     }
 }

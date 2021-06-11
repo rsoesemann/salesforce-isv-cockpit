@@ -4,8 +4,8 @@
     <externalId>false</externalId>
     <label>Account</label>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Archived App Errors</relationshipLabel>
-    <relationshipName>ArchivedAppErrors</relationshipName>
+    <relationshipLabel>App Errors Archived</relationshipLabel>
+    <relationshipName>AppErrorsArchived</relationshipName>
     <required>true</required>
     <type>Lookup</type>
 </CustomField>

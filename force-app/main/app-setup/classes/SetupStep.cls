@@ -64,19 +64,20 @@ public abstract class SetupStep {
     public static List<SelectOption> metatdataOptions(String type) {
         List<SelectOption> result = new List<SelectOption>();
 
-        String rawResponse = callSfApi('GET', '/services/data/v51.0/tooling/query?q=Select+Id,DeveloperName+FROM+' +  type, null);
-        ToolingApiResponse response =(ToolingApiResponse) JSON.deserialize(rawResponse, ToolingApiResponse.class);
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/data/v51.0/tooling/query?q=Select+Id,DeveloperName+FROM+' +  type);
+        request.setMethod('GET');
+        request.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+        request.setHeader('Content-Type', 'application/json');
+
+        ToolingApiResponse response =
+                (ToolingApiResponse) JSON.deserialize(new Http().send(request).getBody(), ToolingApiResponse.class);
 
         for(SObject_x record : response.records) {
             result.add( new SelectOption(record.DeveloperName + ' ' + record.Id, record.DeveloperName) );
         }
 
         return result;
-    }
-
-
-    public static String asynchSoql(String query) {
-        return callSfApi('POST', '/services/data/v51.0/async-queries', query);
     }
 
 
@@ -105,20 +106,6 @@ public abstract class SetupStep {
 
 
     // PRIVATE
-
-    private static String callSfApi(String method, String endpoint, String body) {
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + endpoint);
-        request.setMethod(method);
-        request.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
-        request.setHeader('Content-Type', 'application/json');
-        if(body != null) {
-            request.setBody(body);
-        }
-
-        return new Http().send(request).getBody();
-    }
-
 
     private static void handle(List<MetadataService.SaveResult> saveResults) {
         for(MetadataService.SaveResult result : saveResults) {
