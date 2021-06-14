@@ -4,6 +4,7 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
     public SetupPackageNamespaces setupPackageNamespaces { get; set; }
     public SetupRetryUnparseable setupRetryUnparseable { get; set; }
     public SetupArchiveErrors setupArchive { get; set; }
+    public SetupRestoreErrors setupRestore { get; set; }
 
 
     // CONSTRUCTOR
@@ -13,6 +14,7 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
         setupPackageNamespaces = new SetupPackageNamespaces();
         setupRetryUnparseable = new SetupRetryUnparseable();
         setupArchive = new SetupArchiveErrors();
+        setupRestore = new SetupRestoreErrors();
     }
 
 
