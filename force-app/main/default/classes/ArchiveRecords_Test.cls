@@ -22,13 +22,17 @@ private class ArchiveRecords_Test {
 
 
         // Exercise
-        String noFilter = '';   
-        new ArchiveRecords(AppError__c.SObjectType, AppErrorArchived__b.SObjectType, noFilter).execute();
+        Test.startTest();
+
+        ArchiveRecords command = new ArchiveRecords(AppError__c.SObjectType, AppErrorArchived__b.SObjectType, '');
+        command.execute();
+
+         Test.stopTest();
 
 
         // Verify
-        System.assertEquals(2, [SELECT Count() FROM AppErrorArchived__b]);
-        System.assertEquals(0, [SELECT Count() FROM AppError__c]);
+        System.assertEquals(2, command.archived.size());
+        System.assertEquals(0, command.deleted.size());
     }
 
 

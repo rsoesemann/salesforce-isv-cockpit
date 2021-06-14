@@ -5,6 +5,9 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     private CorrespondingFields mapping;
     private String filter;
 
+    @TestVisible List<SObject> archived;
+    @TestVisible List<SObject> deleted;
+
 
     // CONSTRUCTOR
 
@@ -54,10 +57,11 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     }
 
 
-    public void execute(Database.BatchableContext ctx, List<SObject> originalRecords) {         
-        List<Database.SaveResult> srList = Database.insertImmediate( archiveRecordsOf(originalRecords) );
-        System.debug(LoggingLevel.ERROR, srList);
-        //Database.deleteAsync(originalRecords);
+    public void execute(Database.BatchableContext ctx, List<SObject> originalRecords) {   
+        archived = archiveRecordsOf(originalRecords);
+        Database.insertImmediate(archived);
+        Database.deleteAsync(originalRecords);
+        deleted = originalRecords;
     }
 
 

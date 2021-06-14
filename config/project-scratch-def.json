@@ -1,7 +1,7 @@
 {
   "orgName": "lma-app-cockpit_DEV",
   "edition": "Developer",
-  "features": [],
+  "features": ["FieldAuditTrail"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
