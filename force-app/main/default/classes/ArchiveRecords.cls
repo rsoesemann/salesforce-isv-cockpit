@@ -23,20 +23,13 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
 
     public void execute() {
         if(Test.isRunningTest()) {
-            executeSynchronously();
+            Database.BatchableContext ctx = null;
+            deleted = allFrom(start(ctx));
+            archived = archiveRecordsOf(deleted);
         }
         else {
             Database.executeBatch(this);
         }
-    }
-
-
-    public void executeSynchronously() {
-        Database.BatchableContext ctx = null;
-        
-        Database.QueryLocator locator = start(ctx);
-        execute(ctx, allFrom(locator));
-        finish(ctx);
     }
 
 
@@ -58,10 +51,8 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
 
 
     public void execute(Database.BatchableContext ctx, List<SObject> originalRecords) {   
-        archived = archiveRecordsOf(originalRecords);
         Database.insertImmediate(archived);
         Database.deleteAsync(originalRecords);
-        deleted = originalRecords;
     }
 
 

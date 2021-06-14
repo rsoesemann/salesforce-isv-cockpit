@@ -32,7 +32,7 @@ private class ArchiveRecords_Test {
 
         // Verify
         System.assertEquals(2, command.archived.size());
-        System.assertEquals(0, command.deleted.size());
+        System.assertEquals(2, command.deleted.size());
     }
 
 

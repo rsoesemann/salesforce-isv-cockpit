@@ -1,17 +1,13 @@
 public with sharing class SetupEmailService extends SetupStep {
 
     private static final String FUNCTION_NAME = 'App Error Inbox';
-    private Id classId;
-
+    private Id classId = [SELECT Id FROM ApexClass WHERE Name = 'ErrorMailReceiver' LIMIT 1].Id;
 
     // PUBLIC
 
     public override ApexPages.Message getStatus() {
-        classId = [SELECT Id FROM ApexClass WHERE Name = 'ErrorMailReceiver' LIMIT 1].Id;
-
         List<EmailServicesAddress> existing = [SELECT LocalPart, EmailDomainName, Id FROM EmailServicesAddress
                                                WHERE Function.FunctionName = :FUNCTION_NAME AND Function.ApexClassId = :classId LIMIT 1];
-
         if(existing.isEmpty()) {
             return new ApexPages.Message(ApexPages.Severity.WARNING, 'An Email Service is required to allow the tool to receive app errors.');
         }
@@ -30,12 +26,12 @@ public with sharing class SetupEmailService extends SetupStep {
 
     public override PageReference run() {
         try {
-            createSObject('<urn1:type>EmailServicesFunction</urn1:type>' +
+            HttpResponse response = createSObject('<urn1:type>EmailServicesFunction</urn1:type>' +
                                 '<urn1:fieldsToNull></urn1:fieldsToNull>' +
                                 '<urn1:ApexClassId>' +  classId + '</urn1:ApexClassId>' +
                                 '<urn1:IsActive>true</urn1:IsActive>' +
-                                '<urn1:FunctionName>' + FUNCTION_NAME +'</urn1:FunctionName>' +
-                                '<urn1:AttachmentOption>None</urn1:AttachmentOption>');
+                                '<urn1:FunctionName>' + FUNCTION_NAME +'</urn1:FunctionName>');
+System.debug(LoggingLevel.ERROR, response);
 
             Id functionId = [SELECT Id FROM EmailServicesFunction WHERE FunctionName = :FUNCTION_NAME AND ApexClassId = :classId].Id;
             createSObject('<urn1:type>EmailServicesAddress</urn1:type>' +
@@ -57,7 +53,7 @@ public with sharing class SetupEmailService extends SetupStep {
 
     private HTTPResponse createSObject(String fragment) {
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/u/45.0');
+        request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/u/51.0');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'text/xml; charset=UTF-8');
         request.setHeader('SOAPAction', 'ignored');

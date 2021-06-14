@@ -58,7 +58,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
 
 
     public PageReference runNow() {
-        new ArchiveRecords(AppError__c.SObjectType, AppErrorArchived__b.SObjectType, filter).execute();
+        archiveCommand().execute();
         return currentPage();
     }
 
@@ -67,10 +67,12 @@ public with sharing class SetupArchiveErrors extends SetupStep {
 
     private void reschedule() {
         System.purgeOldAsyncJobs(Date.today().addDays(1));
-        System.abortJob(job.Id);
 
-        System.schedule(JOB_NAME + '#' + filter.trim(), cronExpression, 
-                        new ArchiveRecords(AppError__c.SObjectType, AppErrorArchived__b.SObjectType, filter));
+        if(job != null) {
+            System.abortJob(job.Id);
+        }
+
+        System.schedule(JOB_NAME + '#' + filter.trim(), cronExpression, archiveCommand());
     }
 
 
@@ -79,5 +81,10 @@ public with sharing class SetupArchiveErrors extends SetupStep {
         setting.doesSkipAsyncApexValidation = true;
 
         overwrite(setting);
+    }
+
+
+    private ArchiveRecords archiveCommand() {
+        return new ArchiveRecords(AppError__c.SObjectType, AppErrorArchived__b.SObjectType, filter);
     }
 }

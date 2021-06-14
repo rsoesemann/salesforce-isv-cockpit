@@ -10,7 +10,7 @@ private class CorrespondingFields_Test {
 
         // Verify
         System.assertNotEquals(0, mapping.targetFields().size());
-        System.assert(mapping.targetFields().contains(Account.Phone), mapping.targetFields());
-        System.assertEquals(Contact.Phone, mapping.sourceField(Account.Phone));
+        System.assert(mapping.targetFields().contains(Account.Name), mapping.targetFields());
+        System.assertEquals(Contact.Name, mapping.sourceField(Account.Name));
     }
 }
