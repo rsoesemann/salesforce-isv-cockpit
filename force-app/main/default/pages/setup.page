@@ -41,6 +41,7 @@
                 <li><a href="https://github.com/rsoesemann/app-setup/blob/master/LICENSE" target="_blank">rsoesemann/app-setup</a></li>
                 <li><a href="https://github.com/rsoesemann/apex-domainbuilder/blob/master/LICENSE" target="_blank">rsoesemann/apex-domainbuilder</a></li>
                 <li><a href="https://github.com/superfell/json2apex/blob/master/LICENSE.md" target="_blank">superfell/json2apex</a></li>
+                <li><a href="https://github.com/open-force/jsonparse/blob/master/LICENSE.md" target="_blank">open-force/jsonparse</a></li>
             </ul>
         </c:setupStep>
     </c:setup>

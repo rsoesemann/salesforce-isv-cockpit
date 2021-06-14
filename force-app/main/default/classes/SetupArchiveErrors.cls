@@ -20,7 +20,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
         for(CronTrigger cron : [SELECT CronJobDetail.Name, CronExpression, PreviousFireTime 
                                FROM CronTrigger WHERE CronJobDetail.Name LIKE :jobName LIMIT 1]) {
             job = cron; 
-            archived = [SELECT Id FROM AppErrorArchived__b WHERE dtm_ArchivedDate__c < :job.PreviousFireTime].size();                            
+            archived = [SELECT Id FROM ArchivedAppError__b WHERE dtm_ArchivedDate__c < :job.PreviousFireTime].size();                            
             cronExpression = job.CronExpression;
             filter = job.CronJobDetail.Name.substringAfter('#');
         }
@@ -85,6 +85,6 @@ public with sharing class SetupArchiveErrors extends SetupStep {
 
 
     private ArchiveRecords archiveCommand() {
-        return new ArchiveRecords(AppError__c.SObjectType, AppErrorArchived__b.SObjectType, filter);
+        return new ArchiveRecords(AppError__c.SObjectType, ArchivedAppError__b.SObjectType, filter);
     }
 }

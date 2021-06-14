@@ -13,21 +13,20 @@ public with sharing class SetupRestoreErrors extends SetupStep {
     // PUBLIC
 
     public override ApexPages.Message getStatus() {
-        String message = 'Specify an <a href="https://developer.salesforce.com/docs/atlas.en-us.bigobjects.meta/bigobjects/async_query_overview.htm">Async SOQL filter criteria</a> to restore archived errors from Big Objects into the original data model.';
-        return new ApexPages.Message(ApexPages.Severity.INFO, message);
+        String status = new AsyncSoql().status();
+
+		if((new List<String>{ null, 'Complete' }).contains(status)) {
+			return new ApexPages.Message(ApexPages.Severity.CONFIRM, 
+                        'Specify an <a href="https://developer.salesforce.com/docs/atlas.en-us.bigobjects.meta/bigobjects/async_query_overview.htm">Async SOQL filter criteria</a> to restore archived errors from Big Objects into the original data model.');
+		}
+		else {
+			return new ApexPages.Message(ApexPages.Severity.INFO, 'Restore that has been started is in Status :' + status);
+		}
     }
 
 
     public override PageReference run() {
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/data/v51.0/async-queries');
-        request.setMethod('POST');
-        request.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
-        request.setHeader('Content-Type', 'application/json');
-        request.setBody( new AsyncSoql(AppErrorArchived__b.SObjectType, AppError__c.SObjectType, filter)
-                                .serialized() );
-
-        new Http().send(request);
+        new AsyncSoql(ArchivedAppError__b.SObjectType, AppError__c.SObjectType, filter).query();
 
         return currentPage();
     }
@@ -48,11 +47,15 @@ public with sharing class SetupRestoreErrors extends SetupStep {
    private class AsyncSoql {
 
         public String query;
-        public SObjectType targetType;
+        public String targetType;
         public Map<String, String> targetFieldMap = new Map<String, String>();
 
+        // CONSTRUCTOR
+
+        private AsyncSoql() {}
+
         private AsyncSoql(SObjectType sourceType, SObjectType targetType, String filter) {
-            this.targetType = targetType;
+            this.targetType = '' + targetType;
 
             CorrespondingFields mapping = new CorrespondingFields(sourceType, targetType);
             for(SObjectField target : mapping.targetFields()) {
@@ -67,8 +70,32 @@ public with sharing class SetupRestoreErrors extends SetupStep {
             });
         }
 
-        private String serialized() {
-            return JSON.serialize(this);
+        private Id query() {
+            return new JSONParse( callout(this) )
+                            .get('asyncQueries.[0].jobId').getIdValue();
+        }
+    
+        private String status() {
+            return new JSONParse( callout(null) )
+                            .get('status').getStringValue();
+    
+        }
+    
+        private String callout(Object body) {
+            HttpRequest request = new HttpRequest();
+            request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/data/v51.0/async-queries/');
+            request.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+            request.setHeader('Content-Type', 'application/json');
+            
+            if(body != null) {
+                request.setMethod('POST');
+                request.setBody( JSON.serialize(body) );
+            }
+            else {
+                request.setMethod('GET');
+            }
+    
+            return new Http().send(request).getBody();
         }
    }
 }

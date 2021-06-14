@@ -6,15 +6,15 @@
         <sortDirection>DESC</sortDirection>
     </fields>
     <fields>
-        <name>CreatedDate__c</name>
-        <sortDirection>DESC</sortDirection>
-    </fields>
-    <fields>
         <name>lkp_Package__c</name>
         <sortDirection>ASC</sortDirection>
     </fields>
     <fields>
         <name>lkp_PackageVersion__c</name>
+        <sortDirection>DESC</sortDirection>
+    </fields>
+    <fields>
+        <name>dtm_RecordedDate__c</name>
         <sortDirection>DESC</sortDirection>
     </fields>
     <fields>

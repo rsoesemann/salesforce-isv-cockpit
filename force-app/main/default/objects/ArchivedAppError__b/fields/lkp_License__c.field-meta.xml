@@ -4,8 +4,8 @@
     <externalId>false</externalId>
     <label>License</label>
     <referenceTo>sfLma__License__c</referenceTo>
-    <relationshipLabel>App Errors Archived</relationshipLabel>
-    <relationshipName>AppErrorsArchived</relationshipName>
+    <relationshipLabel>Archived App Errors</relationshipLabel>
+    <relationshipName>ArchivedAppErrors</relationshipName>
     <required>true</required>
     <type>Lookup</type>
 </CustomField>
