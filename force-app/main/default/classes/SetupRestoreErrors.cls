@@ -15,13 +15,9 @@ public with sharing class SetupRestoreErrors extends SetupStep {
     public override ApexPages.Message getStatus() {
         String status = new AsyncSoql().status();
 
-		if((new List<String>{ null, 'Complete' }).contains(status)) {
-			return new ApexPages.Message(ApexPages.Severity.CONFIRM, 
-                        'Specify an <a href="https://developer.salesforce.com/docs/atlas.en-us.bigobjects.meta/bigobjects/async_query_overview.htm">Async SOQL filter criteria</a> to restore archived errors from Big Objects into the original data model.');
-		}
-		else {
-			return new ApexPages.Message(ApexPages.Severity.INFO, 'Restore that has been started is in Status :' + status);
-		}
+        return (status == null) 
+                ? new ApexPages.Message(ApexPages.Severity.ERROR, 'Unable to restore as another Restore is in Status :' + status)
+                : new ApexPages.Message(ApexPages.Severity.INFO, 'Specify an <a href="https://developer.salesforce.com/docs/atlas.en-us.bigobjects.meta/bigobjects/async_query_overview.htm">Async SOQL filter criteria</a> to restore archived errors from Big Objects into the original data model.');
     }
 
 
@@ -44,10 +40,10 @@ public with sharing class SetupRestoreErrors extends SetupStep {
 
     // INNER
 
-   private class AsyncSoql {
+    private class AsyncSoql {
 
         public String query;
-        public String targetType;
+        public String targetObject;
         public Map<String, String> targetFieldMap = new Map<String, String>();
 
         // CONSTRUCTOR
@@ -55,47 +51,79 @@ public with sharing class SetupRestoreErrors extends SetupStep {
         private AsyncSoql() {}
 
         private AsyncSoql(SObjectType sourceType, SObjectType targetType, String filter) {
-            this.targetType = '' + targetType;
+            targetObject = '' + targetType;
 
             CorrespondingFields mapping = new CorrespondingFields(sourceType, targetType);
             for(SObjectField target : mapping.targetFields()) {
                 SObjectField source = mapping.sourceField(target);
+
                 targetFieldMap.put('' + source, '' + target);
             }
             
-            query = String.format('SELECT {0} FROM {1} WHERE {2}', new List<String>{
-                String.join(new List<String>(targetFieldMap.keySet()), ','),
-                '' + sourceType, 
-                String.escapeSingleQuotes(filter)
-            });
+            query = String.format('SELECT {0} FROM {1}', 
+                                  new List<String>{ String.join(new List<String>(targetFieldMap.keySet()), ','), '' + sourceType });
+
+            if(String.isNotBlank(filter)){
+                query += ' WHERE ' + String.escapeSingleQuotes(filter);       
+            }                                                                    
         }
 
-        private Id query() {
-            return new JSONParse( callout(this) )
-                            .get('asyncQueries.[0].jobId').getIdValue();
+
+        private void query() {
+            AsyncQuery result = (AsyncQuery) JSON.deserialize(callout(this), AsyncQuery.class);
+            handleErrors(result);
         }
-    
+
+
         private String status() {
-            return new JSONParse( callout(null) )
-                            .get('status').getStringValue();
-    
+            String result = null;
+
+            AsyncQueryCollection response = (AsyncQueryCollection) JSON.deserialize(callout(null), AsyncQueryCollection.class);
+            for(AsyncQuery query : response.asyncQueries) {
+                handleErrors(query);
+                result = query.status;
+            }
+            
+            return result;
         }
-    
+
+
         private String callout(Object body) {
             HttpRequest request = new HttpRequest();
             request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/data/v51.0/async-queries/');
             request.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
             request.setHeader('Content-Type', 'application/json');
-            
+            request.setMethod('GET');
+
             if(body != null) {
                 request.setMethod('POST');
                 request.setBody( JSON.serialize(body) );
             }
-            else {
-                request.setMethod('GET');
-            }
-    
-            return new Http().send(request).getBody();
+
+            String result = new Http().send(request).getBody();
+System.debug(LoggingLevel.ERROR, result);
+            return result;
         }
-   }
+
+
+        private AsyncQuery handleErrors(AsyncQuery query) {
+            if(query.errorCode != null) {
+                throw new ApplicationException('AsyncSOQL failed: (' + query.errorCode + ') ' + query.message);
+            }
+            
+            return query;
+        }
+    }
+
+
+    private class AsyncQueryCollection {
+        public List<AsyncQuery> asyncQueries;
+    }
+
+    private class AsyncQuery {
+        public Id jobId;
+        public String status;
+        public String errorCode;
+        public String message;
+    }
 }

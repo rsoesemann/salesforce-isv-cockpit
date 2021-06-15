@@ -3,10 +3,10 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     private static final String JOB_NAME = 'LmaAppCockpit_ArchiveErrors';
 
     private CronTrigger job;
-    private Integer archived = 0;
 
     public String cronExpression { get; set; }
     public String filter { get; set; }
+    public Integer archived { get; set; }
 
 
     // CONSTRUCTOR
@@ -14,15 +14,15 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     public SetupArchiveErrors() {
         cronExpression = '0 0 1 * * ?';
         filter = 'LastModifiedDate < LAST_N_DAYS:265';
+        archived = [SELECT Id FROM ArchivedAppError__b LIMIT 100].size();
 
         String jobName = JOB_NAME + '%';
-
         for(CronTrigger cron : [SELECT CronJobDetail.Name, CronExpression, PreviousFireTime 
                                FROM CronTrigger WHERE CronJobDetail.Name LIKE :jobName LIMIT 1]) {
             job = cron; 
-            archived = [SELECT Id FROM ArchivedAppError__b WHERE dtm_ArchivedDate__c < :job.PreviousFireTime].size();                            
             cronExpression = job.CronExpression;
             filter = job.CronJobDetail.Name.substringAfter('#');
+            archived = Math.max(archived, [SELECT Id FROM ArchivedAppError__b WHERE dtm_ArchivedDate__c < :job.PreviousFireTime].size());                            
         }
     }
 

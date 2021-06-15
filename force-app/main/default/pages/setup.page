@@ -22,11 +22,11 @@
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Restore Archived Errors from Big Objects" step="{!setupRestore}" keepOpen="true">
+        <c:setupStep title="Restore Archived Errors from Big Objects" step="{!setupRestore}" keepOpen="{!setupArchive.archived > 0}" enabled="{!setupArchive.archived > 0}">
             <apex:pageBlock>
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Async SOQL filter</apex:outputLabel>
-                    <apex:inputTextarea id="filter" value="{!setupRestore.filter}" cols="20" rows="2" required="true" />
+                    <apex:inputTextarea id="filter" value="{!setupRestore.filter}" cols="20" rows="2" />
                 </apex:pageBlockSection>
             </apex:pageBlock>
         </c:setupStep>
@@ -41,7 +41,6 @@
                 <li><a href="https://github.com/rsoesemann/app-setup/blob/master/LICENSE" target="_blank">rsoesemann/app-setup</a></li>
                 <li><a href="https://github.com/rsoesemann/apex-domainbuilder/blob/master/LICENSE" target="_blank">rsoesemann/apex-domainbuilder</a></li>
                 <li><a href="https://github.com/superfell/json2apex/blob/master/LICENSE.md" target="_blank">superfell/json2apex</a></li>
-                <li><a href="https://github.com/open-force/jsonparse/blob/master/LICENSE.md" target="_blank">open-force/jsonparse</a></li>
             </ul>
         </c:setupStep>
     </c:setup>
