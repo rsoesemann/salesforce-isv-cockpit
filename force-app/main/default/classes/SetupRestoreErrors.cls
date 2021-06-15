@@ -15,9 +15,9 @@ public with sharing class SetupRestoreErrors extends SetupStep {
     public override ApexPages.Message getStatus() {
         String status = new AsyncSoql().status();
 
-        return (status == null) 
-                ? new ApexPages.Message(ApexPages.Severity.ERROR, 'Unable to restore as another Restore is in Status :' + status)
-                : new ApexPages.Message(ApexPages.Severity.INFO, 'Specify an <a href="https://developer.salesforce.com/docs/atlas.en-us.bigobjects.meta/bigobjects/async_query_overview.htm">Async SOQL filter criteria</a> to restore archived errors from Big Objects into the original data model.');
+        return (new Set<String>{ null, 'Complete'}.contains(status)) 
+                    ? new ApexPages.Message(ApexPages.Severity.INFO, 'Specify an <a href="https://developer.salesforce.com/docs/atlas.en-us.bigobjects.meta/bigobjects/async_query_overview.htm">Async SOQL filter criteria</a> to restore archived errors from Big Objects into the original data model.')
+                    : new ApexPages.Message(ApexPages.Severity.ERROR, 'Unable to restore as another Restore is in Status :' + status);
     }
 
 

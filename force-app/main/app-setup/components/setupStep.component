@@ -51,7 +51,7 @@
                                             <div class="{!IF(step == null || !enabled, 'slds-hide', 'slds-media__figure slds-media__figure_reverse')}">
                                                 <apex:commandButton value="{!step.buttonLabel}"
                                                                     action="{!step.doRun}"
-                                                                    disabled="{!NOT(step.showButtonOnSuccess) && (step.success || step.severity = 'ERROR')}"
+                                                                    disabled="{!(NOT(step.showButtonOnSuccess) && step.success) || step.severity = 'ERROR'}"
                                                                     rerender="form"
                                                                     status="loading"
                                                                     styleClass="slds-button slds-button_outline-brand" />
