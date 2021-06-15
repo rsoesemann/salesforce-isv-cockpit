@@ -6,8 +6,13 @@
         <c:setupStep title="Prepare LMA Packages" step="{!setupPackageNamespaces}"/>
         <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}"/>
 
-        <c:setupStep title="Archive Errors in Big Objects" step="{!setupArchive}" keepOpen="true">
+        <c:setupStep title="Archive Errors" step="{!setupArchive}" keepOpen="true">
             <apex:pageBlock>
+                <apex:pageBlockSection columns="2">
+                    <apex:outputLabel for="strategy">Archive Strategy</apex:outputLabel>
+                    <apex:inputText id="cron" value="{!setupArchive.strategy}" size="20" required="true" />
+                </apex:pageBlockSection>
+
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Cron Expression (Use <a href='http://www.cronmaker.com/'>Cronmaker</a> to make that easy.)</apex:outputLabel>
                     <apex:inputText id="cron" value="{!setupArchive.cronExpression}" size="20" required="true" />
@@ -22,7 +27,7 @@
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Restore Archived Errors from Big Objects" step="{!setupRestore}" keepOpen="{!setupArchive.archived > 0}" enabled="{!setupArchive.archived > 0}">
+        <c:setupStep title="Restore Errors from Archive" step="{!setupRestore}" keepOpen="{!setupArchive.archived > 0}" enabled="{!setupArchive.archived > 0}">
             <apex:pageBlock>
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Async SOQL filter</apex:outputLabel>
