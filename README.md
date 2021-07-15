@@ -4,7 +4,7 @@ The App Cockpit is a native Salesforce App that extends the Salesforce LMA and h
 
 ## TL;DR - Show me a demo!
 
-[![](http://img.youtube.com/vi/GTy0Lr19z34/0.jpg)](http://www.youtube.com/watch?v=GTy0Lr19z34 "")
+[![](http://img.youtube.com/vi/GTy0Lr19z34/hqdefault.jpg)](http://www.youtube.com/watch?v=GTy0Lr19z34 "")
 
 ## How does it work?
 
