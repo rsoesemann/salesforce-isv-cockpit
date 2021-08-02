@@ -1,12 +1,12 @@
 # Salesforce LMA App Cockpit 
 
+The App Cockpit is a native Salesforce App that extends the Salesforce LMA and helps you monitor the health of your apps and proactively support your subscribers in error cases.
+
 ## TL;DR - Show me a demo!
 
-[![](http://img.youtube.com/vi/GTy0Lr19z34/0.jpg)](http://www.youtube.com/watch?v=GTy0Lr19z34 "")
+[![](http://img.youtube.com/vi/GTy0Lr19z34/hqdefault.jpg)](http://www.youtube.com/watch?v=GTy0Lr19z34 "")
 
-## What is the App Cockpit?
-
-The App Cockpit is a native Salesforce App that extends the Salesforce LMA and helps you monitor the health of your apps and proactively support your subscribers in error cases.
+## How does it work?
 
 Managed Packages have an option to send out app errors to an email address defined during Package upload. We use this mechanism and let our App receive and parse those emails. In combination with the information in the LMA app, we can perfectly assign each incoming error to a customer account, a package, package version, and license. But we can do more. We also extract information about the type of error and where it occurred.
 
