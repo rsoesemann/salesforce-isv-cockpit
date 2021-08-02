@@ -11,13 +11,13 @@
 
 
     <!-- STANDARD RULES -->
-
-    <rule ref="category/apex/design.xml" />
-    <rule ref="category/apex/performance.xml" />
-    <rule ref="category/apex/codestyle.xml" />
+    
     <rule ref="category/apex/security.xml">
         <priority>1</priority>
     </rule>
+    <rule ref="category/apex/design.xml" />
+    <rule ref="category/apex/performance.xml" />
+    <rule ref="category/apex/codestyle.xml" />
     <rule ref="category/apex/bestpractices.xml">
         <exclude name="ApexAssertionsShouldIncludeMessage" />
     </rule>
@@ -28,16 +28,14 @@
 
     <!-- CUSTOM RULES -->
 
-    <rule name="NoUnderscoresInFieldNames" language="xml" 
-          message="Custom fields should not contain underscores." class="net.sourceforge.pmd.lang.rule.XPathRule" >
+    <rule name="NoUnderscoresInFieldNames" language="xml" class="net.sourceforge.pmd.lang.rule.XPathRule"
+          message="Custom fields should not contain underscores."  >
         <priority>3</priority>
         <properties>
             <property name="xpath">
-                <value>
-                    <![CDATA[
-                    //fields/fullName/text[matches(@Image, ".*_.*__c")]
-                    ]]>
-                </value>
+                <value><![CDATA[
+                    //CustomField/fullName/text[matches(@Image, ".*_.*__c")]
+                ]]></value>
             </property>
         </properties>
     </rule>
