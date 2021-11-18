@@ -2,7 +2,7 @@
 
 The App Cockpit is a native Salesforce App that extends the Salesforce LMA and helps you monitor the health of your apps and proactively support your subscribers in error cases.
 
-## TL;DR - Show me a demo!
+## TL;DR - Show me a video demo!
 
 [![](http://img.youtube.com/vi/GTy0Lr19z34/hqdefault.jpg)](http://www.youtube.com/watch?v=GTy0Lr19z34 "")
 
