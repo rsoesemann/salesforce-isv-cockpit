@@ -9,11 +9,6 @@
         <c:setupStep title="Archive Errors" step="{!setupArchive}" keepOpen="true">
             <apex:pageBlock>
                 <apex:pageBlockSection columns="2">
-                    <apex:outputLabel for="strategy">Archive Strategy</apex:outputLabel>
-                    <apex:inputText id="cron" value="{!setupArchive.strategy}" size="20" required="true" />
-                </apex:pageBlockSection>
-
-                <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Cron Expression (Use <a href='http://www.cronmaker.com/'>Cronmaker</a> to make that easy.)</apex:outputLabel>
                     <apex:inputText id="cron" value="{!setupArchive.cronExpression}" size="20" required="true" />
                 </apex:pageBlockSection>
