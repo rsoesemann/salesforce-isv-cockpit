@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "LmaAppCockpit",
-            "versionName": "ver 1.0",
-            "versionNumber": "1.0.0.NEXT",
+            "versionName": "ver 1.1",
+            "versionNumber": "1.1.0.NEXT",
             "dependencies": [
                 {
                     "package": "lma"
