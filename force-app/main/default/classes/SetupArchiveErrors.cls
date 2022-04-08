@@ -63,6 +63,28 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     }
 
 
+    public Boolean getIsSupported() {
+        Boolean result = true;
+
+        try {
+            HttpRequest request = new HttpRequest();
+            request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/data/v51.0/async-queries/');
+            request.setHeader('Authorization', 'OAuth ' + UserInfo.getSessionId());
+            request.setHeader('Content-Type', 'application/json');
+            request.setMethod('GET');
+
+            if(new Http().send(request).getStatusCode() != 200) {
+                result = false;
+            }
+        }
+        catch(Exception ignored) {
+            result = false;
+        }
+
+        return result;
+    }
+
+
     // PRIVATE
 
     private void reschedule() {
