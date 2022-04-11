@@ -10,7 +10,7 @@ private class SetupRetryUnparseable_Test {
         setup();
 
         fflib_SObjectDomain.getTriggerEvent(AppErrors.class).disableAll();
-        insert new AppError__c(txl_FullMailBody__c = mails[6]);
+        insert new AppError__c(txl_FullMailBody__c = mails[6], dtm_RecordedDate__c = System.now());
         fflib_SObjectDomain.getTriggerEvent(AppErrors.class).enableAll();
 
         SetupRetryUnparseable step = new SetupRetryUnparseable();
