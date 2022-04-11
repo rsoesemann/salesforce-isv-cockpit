@@ -57,10 +57,6 @@ public with sharing class ParseAppErrors {
                 if(match.find()) {
                     clearFields(error);
                     error.txt_MatchedWith__c = String.valueOf(format).split(':')[0];
-
-                    if(error.dtm_RecordedDate__c == null) {
-                        error.dtm_RecordedDate__c = System.now(); 
-                    }
                     
                     format.populateFields(match, error);
 
