@@ -148,14 +148,13 @@ private class ParseAppErrors_Test {
 
 
         // Verify
+        List<AppError__c> unassigned = new List<AppError__c>();
         for(AppError__c e : query()) {
-            System.assertNotEquals(null, e.txt_MatchedWith__c, e.txl_FullMailBody__c);
-            
-            System.assertNotEquals(null, e.txt_OrgId__c, e.txl_FullMailBody__c);
-            System.assertNotEquals(null, e.txt_UserId__c, e.txl_FullMailBody__c);
-            System.assertNotEquals(null, e.txt_Namespace__c, e.txl_FullMailBody__c);
-            System.assertNotEquals(null, e.txt_ApexClass__c, e.txl_FullMailBody__c);
+            if(new Set<String>{ e.txt_MatchedWith__c, e.txt_OrgId__c, e.txt_UserId__c, e.txt_Namespace__c, e.txt_ApexClass__c }.contains(null)) {
+                unassigned.add(e);
+            }
         }
+        System.assert(unassigned.isEmpty(), unassigned);
     }
 
 
