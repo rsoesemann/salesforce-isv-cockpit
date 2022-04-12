@@ -9,7 +9,7 @@ private class ParseAppErrors_Test {
 
 
     @IsTest
-    private static void pageErrorFormat() {
+    private static void pageError() {
 
         // Setup
         setup();
@@ -29,12 +29,11 @@ private class ParseAppErrors_Test {
         System.assertEquals('Attempt to de-reference a null object', e.txt_ExceptionMessage__c);
         System.assertEquals('NSB.MyController', e.txt_ApexClass__c);
         System.assertEquals('myPage', e.txt_VisualforcePage__c);
-        System.assertEquals('PageErrorFormat', e.txt_MatchedWith__c);
     }
 
 
     @IsTest
-    private static void triggerErrorFormat() {
+    private static void triggerError() {
 
         // Setup
         setup();
@@ -54,12 +53,11 @@ private class ParseAppErrors_Test {
         System.assertEquals('Delete failed. First exception on row 0 with id a031t00000RuMxyAAF; first error: ENTITY_IS_DELETED, entity is deleted: []', e.txt_ExceptionMessage__c);
         System.assertEquals('TriggerDelete', e.txt_ApexClass__c);
         System.assertEquals(null, e.txt_VisualforcePage__c);
-        System.assertEquals('TriggerErrorFormat', e.txt_MatchedWith__c);
     }
 
 
     @IsTest
-    private static void batchErrorFormat() {
+    private static void batchError() {
 
         // Setup
         setup();
@@ -79,7 +77,6 @@ private class ParseAppErrors_Test {
         System.assertEquals('Insert failed. First exception on row 0; first error: STRING_TOO_LONG, Log Status: Datenwert zu groß: Fehler NSA.RetrieveAction.UnsuccessfulCalloutException (max length=80): [Name]', e.txt_ExceptionMessage__c);
         System.assertEquals('IteratorImpl', e.txt_ApexClass__c);
         System.assertEquals(null, e.txt_VisualforcePage__c);
-        System.assertEquals('BatchErrorFormat', e.txt_MatchedWith__c);
     }
 
 
@@ -125,7 +122,7 @@ private class ParseAppErrors_Test {
 
         
         // Verify
-        System.assertEquals('NSB.MyOtherController' , [SELECT txt_ApexClass__c FROM AppError__c LIMIT 1].txt_ApexClass__c);
+        System.assertEquals('MyOtherController' , [SELECT txt_ApexClass__c FROM AppError__c LIMIT 1].txt_ApexClass__c);
     }
 
 
@@ -148,13 +145,14 @@ private class ParseAppErrors_Test {
 
 
         // Verify
-        List<AppError__c> unassigned = new List<AppError__c>();
+        Integer index = 1;
         for(AppError__c e : query()) {
-            if(new Set<String>{ e.txt_MatchedWith__c, e.txt_OrgId__c, e.txt_UserId__c, e.txt_Namespace__c, e.txt_ApexClass__c }.contains(null)) {
-                unassigned.add(e);
-            }
+            String message = 'Failed on error ' + index++;
+            System.assertNotEquals(null, e.txt_OrgId__c, message);
+            System.assertNotEquals(null, e.txt_UserId__c, message);
+            System.assertNotEquals(null, e.txt_Namespace__c, message);
+            System.assertNotEquals(null, e.txt_ApexClass__c, message);
         }
-        System.assert(unassigned.isEmpty(), unassigned);
     }
 
 
@@ -176,6 +174,6 @@ private class ParseAppErrors_Test {
     private static List<AppError__c> query() {
         return [SELECT txt_UserId__c, txt_OrgId__c, txt_Namespace__c, txt_ExceptionType__c, txt_ExceptionMessage__c,
                 lkp_Account__c, txt_ApexClass__c, txt_VisualforcePage__c, txl_Stacktrace__c, lkp_License__c, lkp_Package__c,
-                lkp_PackageVersion__c, txt_MatchedWith__c, txl_FullMailBody__c FROM AppError__c];
+                lkp_PackageVersion__c, txl_FullMailBody__c FROM AppError__c];
     }
 }

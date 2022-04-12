@@ -2,11 +2,12 @@ public with sharing class ParseAppErrors {
 
     public static Boolean parseAlways = false;
 
-    private static final List<EmailFormat> FORMATS = new List<EmailFormat>{
-            new BatchErrorFormat().compile(),
-            new TriggerErrorFormat().compile(),
-            new PageErrorFormat().compile(),
-            new FallbackFormat().compile()
+    private static final List<Token> TOKENS = new List<Token>{
+        new OrgUserToken().compile(),
+        new ExceptionToken().compile(),
+        new PageToken().compile(),
+        new ClassToken().compile(),
+        new TriggerToken().compile()
     };
 
     private List<AppError__c> errors;
@@ -51,16 +52,13 @@ public with sharing class ParseAppErrors {
 
     private void parse() {
         for(AppError__c error : errors) {
-            for(EmailFormat format : FORMATS) {
-                Matcher match = format.match( error.txl_FullMailBody__c );
+            clearFields(error);
+
+            for(Token token : TOKENS) {
+                Matcher match = token.match( error.txl_FullMailBody__c );
 
                 if(match.find()) {
-                    clearFields(error);
-                    error.txt_MatchedWith__c = String.valueOf(format).split(':')[0];
-                    
-                    format.populateFields(match, error);
-
-                    break;
+                    token.populateFields(match, error);
                 }
             }
         }
@@ -162,14 +160,14 @@ public with sharing class ParseAppErrors {
 
     // INNER
 
-    public abstract class EmailFormat {
+    public abstract class Token {
 
         private Pattern regex;
 
         public abstract String regex();
         public abstract void populateFields(Matcher match, AppError__c error);
 
-        public EmailFormat compile() {
+        public Token compile() {
             regex = Pattern.compile(regex());
             return this;
         }
