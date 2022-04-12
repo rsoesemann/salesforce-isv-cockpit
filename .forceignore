@@ -16,3 +16,5 @@ package.xml
 **/__tests__/**
 
 AppSwitcher.appMenu
+
+force-app/main/default/profiles
