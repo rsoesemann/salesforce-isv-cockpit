@@ -1,7 +1,7 @@
 public with sharing class ClassToken extends ParseAppErrors.Token {
 
     public override String regex() {
-        return 'class |Class\\.([^.]+)\\.([^.]+)';
+        return '(class \'|Class\\.)([^.]+)\\.([^.\']+)';
     }
 
 
