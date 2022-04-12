@@ -19,7 +19,7 @@ public with sharing class SetupRetryUnparseable extends SetupStep {
         try {
             // Note: Even if Body is unchanged
             ParseAppErrors.parseAlways = true;
-            update [SELECT Id FROM AppError__c WHERE lkp_License__c = NULL LIMIT 100];
+            update [SELECT Id FROM AppError__c WHERE lkp_License__c = NULL LIMIT 5000];
         }
         catch(Exception ex) {
             ApexPages.addMessages(ex);
