@@ -27,7 +27,7 @@ private class ParseAppErrors_Test {
         System.assertEquals('NSB', e.txt_Namespace__c);
         System.assertEquals('System.NullPointerException', e.txt_ExceptionType__c);
         System.assertEquals('Attempt to de-reference a null object', e.txt_ExceptionMessage__c);
-        System.assertEquals('NSB.MyController', e.txt_ApexClass__c);
+        System.assertEquals('MyController', e.txt_ApexClass__c);
         System.assertEquals('myPage', e.txt_VisualforcePage__c);
     }
 
