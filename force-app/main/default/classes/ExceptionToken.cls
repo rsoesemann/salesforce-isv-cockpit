@@ -1,7 +1,7 @@
 public with sharing class ExceptionToken extends ParseAppErrors.Token {
 
     public override String regex() {
-        return ': (.+Exception): (.*)';
+        return ': *(.+Exception): *(.*)';
     }
 
 

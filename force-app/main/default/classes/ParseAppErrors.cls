@@ -9,7 +9,7 @@ public with sharing class ParseAppErrors {
         new ClassToken().compile(),
         new ExceptionWithClassToken().compile(),
         new RecompileErrorToken().compile(),
-        new TriggerToken().compile()
+        new TriggerToken().compile()        
     };
 
     private List<AppError__c> errors;
@@ -44,6 +44,7 @@ public with sharing class ParseAppErrors {
             Boolean bodyHasChanged = (error.txl_FullMailBody__c != old.get(error.Id).txl_FullMailBody__c);
 
             if(parseAlways || bodyHasChanged) {
+                clearFields(error);
                 result.add(error);
             }
         }
@@ -54,10 +55,11 @@ public with sharing class ParseAppErrors {
 
     private void parse() {
         for(AppError__c error : errors) {
-            clearFields(error);
+            System.debug(LoggingLevel.ERROR, 'Error: ' + error.txl_FullMailBody__c.replaceAll('(\\r|\\n)+', ' '));
 
             for(Token token : TOKENS) {
                 Matcher match = token.match( error.txl_FullMailBody__c );
+                System.debug(LoggingLevel.ERROR, match);
 
                 if(match.find()) {
                     token.populateFields(match, error);
@@ -67,7 +69,7 @@ public with sharing class ParseAppErrors {
     }
 
 
-    private void clearFields(AppError__c error) {
+    private static void clearFields(AppError__c error) {
         error.txt_UserId__c = null;
 		error.txt_OrgId__c = null;
 		error.txt_Namespace__c = null;

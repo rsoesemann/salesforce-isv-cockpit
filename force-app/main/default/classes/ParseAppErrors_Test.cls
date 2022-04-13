@@ -24,7 +24,7 @@ private class ParseAppErrors_Test {
         e = query()[0];
         System.assertEquals('005500000024uNj', e.txt_UserId__c);
         System.assertEquals('00D000000000001', e.txt_OrgId__c);
-        System.assertEquals('NSB', e.txt_Namespace__c);
+        System.assertEquals('NSA', e.txt_Namespace__c);
         System.assertEquals('System.NullPointerException', e.txt_ExceptionType__c);
         System.assertEquals('Attempt to de-reference a null object', e.txt_ExceptionMessage__c);
         System.assertEquals('MyController', e.txt_ApexClass__c);
@@ -117,7 +117,7 @@ private class ParseAppErrors_Test {
 
 
         // Exercise
-        e.txl_FullMailBody__c = e.txl_FullMailBody__c.replaceAll('NSB.MyController', 'NSB.MyOtherController');
+        e.txl_FullMailBody__c = e.txl_FullMailBody__c.replaceAll('NSA.MyController', 'NSA.MyOtherController');
         update e;
 
         
