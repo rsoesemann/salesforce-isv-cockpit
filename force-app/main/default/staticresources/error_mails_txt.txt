@@ -114,12 +114,6 @@ External entry point
 
 Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
 
-Failed to invoke future method 'public static void myFuture(String, String)' on class 'NSA.MyAPI' for job id '7073b000072aIjN'
-
-&
-
-Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
-
 Scheduled job 'MyJob' threw unhandled exception.
 
 caused by: System.FinalException: ApexPages.addMessage can only be called from a Visualforce page

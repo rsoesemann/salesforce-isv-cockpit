@@ -4,6 +4,7 @@
 
         <c:setupStep title="Create Email Service" step="{!setupEmailService}"/>
         <c:setupStep title="Prepare LMA Packages" step="{!setupPackageNamespaces}"/>
+
         <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}">
             <apex:pageBlock>
                 <apex:pageBlockSection columns="1">

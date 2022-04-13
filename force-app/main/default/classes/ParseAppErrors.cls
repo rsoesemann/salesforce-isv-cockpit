@@ -5,10 +5,10 @@ public with sharing class ParseAppErrors {
     private static final List<Token> TOKENS = new List<Token>{
         new OrgUserToken().compile(),
         new ExceptionToken().compile(),
-        new PageToken().compile(),
-        new ClassToken().compile(),
         new ExceptionWithClassToken().compile(),
         new RecompileErrorToken().compile(),
+        new PageToken().compile(),
+        new ClassToken().compile(),
         new TriggerToken().compile()        
     };
 

@@ -147,7 +147,7 @@ private class ParseAppErrors_Test {
         // Verify
         Integer index = 1;
         for(AppError__c e : query()) {
-            String message = 'Failed on error ' + index++;
+            String message = 'Failed on error ' + index++ + ' ' + e.txl_FullMailBody__c;
             System.assertNotEquals(null, e.txt_OrgId__c, message);
             System.assertNotEquals(null, e.txt_UserId__c, message);
             System.assertNotEquals(null, e.txt_Namespace__c, message);
