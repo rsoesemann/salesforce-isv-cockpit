@@ -4,7 +4,13 @@
 
         <c:setupStep title="Create Email Service" step="{!setupEmailService}"/>
         <c:setupStep title="Prepare LMA Packages" step="{!setupPackageNamespaces}"/>
-        <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}"/>
+        <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}">
+            <apex:pageBlock>
+                <apex:pageBlockSection columns="1">
+                    <apex:input value="{!setupRetryUnparseable.soqlLimit}" type="number" label="Chunk size:" size="100" required="true" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </c:setupStep>
 
         <c:setupStep title="Archive Errors" step="{!setupArchive}" keepOpen="true" rendered="{!setupArchive.isSupported}">
             <apex:pageBlock>

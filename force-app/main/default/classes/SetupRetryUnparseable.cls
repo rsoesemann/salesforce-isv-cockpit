@@ -1,5 +1,15 @@
 public with sharing class SetupRetryUnparseable extends SetupStep {
 
+    public Integer soqlLimit { 
+        get {
+            if(soqlLimit == null) {
+                soqlLimit =  100;
+            }
+            return soqlLimit;
+        }
+        set; 
+    }
+
     // PUBLIC
 
     public override ApexPages.Message getStatus() {
@@ -19,7 +29,8 @@ public with sharing class SetupRetryUnparseable extends SetupStep {
         try {
             // Note: Even if Body is unchanged
             ParseAppErrors.parseAlways = true;
-            update [SELECT Id FROM AppError__c WHERE lkp_License__c = NULL LIMIT 5000];
+            
+            update Database.query('SELECT Id FROM AppError__c WHERE lkp_License__c = NULL LIMIT ' + soqlLimit);
         }
         catch(Exception ex) {
             ApexPages.addMessages(ex);

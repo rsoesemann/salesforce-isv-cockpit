@@ -154,3 +154,14 @@ Scheduled job 'Bounced Email Report' threw unhandled exception.
 caused by: line 1356, column 3: Dependent class is invalid and needs recompilation:
 Class NSA.MyService : Dependent class is invalid and needs recompilation:
 Class NSA.MyClass : DML operation Delete not allowed on List<Lead>
+
+&
+
+Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
+
+Failed to process Queueable job for class NSA.MyRunner for job ID 7078d000000Thv1A.
+
+caused by: System.LimitException: Apex heap size too large: 35716624
+
+External entry point
+(NSA)

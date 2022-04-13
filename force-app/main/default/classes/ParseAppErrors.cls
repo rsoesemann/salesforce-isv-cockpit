@@ -59,11 +59,12 @@ public with sharing class ParseAppErrors {
 
             for(Token token : TOKENS) {
                 Matcher match = token.match( error.txl_FullMailBody__c );
-                System.debug(LoggingLevel.ERROR, match);
 
                 if(match.find()) {
                     token.populateFields(match, error);
                 }
+
+                System.debug(LoggingLevel.ERROR, match);
             }
         }
     }
