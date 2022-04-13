@@ -138,3 +138,19 @@ Scheduled job 'Refresh Metadata' threw unhandled exception.
 caused by: System.QueryException: List has no rows for assignment to SObject
 
 Class.NSA.MySchedulable.execute: line 7, column 1
+
+&
+
+Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
+
+NSA.McClass: System.LimitException: Apex CPU time limit exceeded
+
+&
+
+Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
+
+Scheduled job 'Bounced Email Report' threw unhandled exception.
+
+caused by: line 1356, column 3: Dependent class is invalid and needs recompilation:
+Class NSA.MyService : Dependent class is invalid and needs recompilation:
+Class NSA.MyClass : DML operation Delete not allowed on List<Lead>

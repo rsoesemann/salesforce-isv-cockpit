@@ -7,6 +7,8 @@ public with sharing class ParseAppErrors {
         new ExceptionToken().compile(),
         new PageToken().compile(),
         new ClassToken().compile(),
+        new ExceptionWithClassToken().compile(),
+        new RecompileErrorToken().compile(),
         new TriggerToken().compile()
     };
 
