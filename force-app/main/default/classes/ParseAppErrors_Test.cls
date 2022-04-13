@@ -152,6 +152,8 @@ private class ParseAppErrors_Test {
             System.assertNotEquals(null, e.txt_UserId__c, message);
             System.assertNotEquals(null, e.txt_Namespace__c, message);
             System.assertNotEquals(null, e.txt_ApexClass__c, message);
+            System.assertNotEquals(null, e.txt_ExceptionType__c, message);
+            System.assertNotEquals(null, e.txt_ExceptionMessage__c, message);
         }
     }
 

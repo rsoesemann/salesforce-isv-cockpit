@@ -1,7 +1,7 @@
 public with sharing class RecompileErrorToken extends ParseAppErrors.Token {
 
     public override String regex() {
-        return 'Dependent class is invalid and needs recompilation.+\\n(?:Class )([^.]+)\\.([^ ]+) : ([^:]+)$';
+        return 'Dependent class is invalid and needs recompilation:[\\n\\r](?:Class )([^.]+)\\.([^ ]+) : ([^:]+)$';
     }
 
 
