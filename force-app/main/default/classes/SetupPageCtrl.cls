@@ -21,6 +21,6 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
     // PUBLIC
 
     public override List<SetupStep> steps() {
-        return new List<SetupStep>{ setupEmailService, setupPackageNamespaces, setupRetryUnparseable, setupArchive };
+        return new List<SetupStep>{ setupEmailService, setupPackageNamespaces };
     }
 }
