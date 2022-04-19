@@ -1,41 +1,31 @@
-public with sharing class SetupRetryUnparseable extends SetupStep {
+public with sharing class SetupRetryUnparseable extends BatchSetupStep {
 
-    public Integer soqlLimit { 
-        get {
-            if(soqlLimit == null) {
-                soqlLimit =  100;
-            }
-            return soqlLimit;
-        }
-        set; 
-    }
+	// PUBLIC
 
-    // PUBLIC
+	public override ApexPages.Message getStatus() {
+		ApexPages.Message result = super.getStatus();
 
-    public override ApexPages.Message getStatus() {
-        Integer unassigned = [SELECT Count() FROM AppError__c WHERE lkp_License__c = NULL];
-        ApexPages.Severity severity = (unassigned > 0) ? ApexPages.Severity.WARNING  : ApexPages.Severity.CONFIRM;
+		if(result == null) {
+			Integer unassigned = [SELECT Count() FROM AppError__c WHERE lkp_License__c = NULL];
+			ApexPages.Severity severity = (unassigned > 0) ? ApexPages.Severity.WARNING : ApexPages.Severity.CONFIRM;
+			String message = unassigned + ' AppErrors are not assigned. Reparse them?';
+			result = new ApexPages.Message(severity, message);
+		}
 
-        return new ApexPages.Message(severity, unassigned + ' AppErrors are not assigned. Reparse them?');
-    }
+		return result;
+	}
 
 
-    public override String buttonLabel() {
-        return 'Execute';
-    }
+	public List<SObject> start(Database.BatchableContext ctx) {
+		return [SELECT Id FROM AppError__c WHERE lkp_License__c = NULL];
+	}
 
 
-    public override PageReference run() {
-        try {
-            // Note: Even if Body is unchanged
-            ParseAppErrors.parseAlways = true;
-            
-            update Database.query('SELECT Id FROM AppError__c WHERE lkp_License__c = NULL LIMIT ' + soqlLimit);
-        }
-        catch(Exception ex) {
-            ApexPages.addMessages(ex);
-        }
+	public void execute(Database.BatchableContext ctx, List<AppError__c> errors) {
+		ParseAppErrors.parseAlways = true;
+        update errors;
+	}
 
-        return null;
-    }
+
+	public void finish(Database.BatchableContext ctx) { }
 }

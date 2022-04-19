@@ -25,11 +25,11 @@ public abstract class BatchSetupStep extends SetupStep implements Database.Batch
 
 
 	public override PageReference run() {
-        PageReference result = null;
+		PageReference result = null;
 
-        if(!(new List<String>{ 'Aborted', null }).contains(batchStatus())) {
-            Database.executeBatch(this);
-            result = new PageReference(JOBS_LINK);
+        if((new List<String>{ 'Aborted', null }).contains(batchStatus())) {
+            Database.executeBatch(this, 100);
+			result = new PageReference(JOBS_LINK);
         }
 
 		return result;
@@ -41,7 +41,8 @@ public abstract class BatchSetupStep extends SetupStep implements Database.Batch
 	private String batchStatus() {
 		String result = null;
 
-		for(AsyncApexJob job : [SELECT Status FROM AsyncApexJob  WHERE ApexClass.Name LIKE :className()
+		for(AsyncApexJob job : [SELECT Status FROM AsyncApexJob  
+		                        WHERE ApexClass.Name LIKE :className()
                                 ORDER BY CreatedDate DESC LIMIT 1]) {
 			result = job.Status;
 		}
