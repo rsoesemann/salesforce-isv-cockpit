@@ -134,7 +134,7 @@ System.debug(LoggingLevel.ERROR, error);
 
 
     private String subscriberKey(AppError__c error) {
-        return namespace(error.txt_Namespace__c) + '_' + error.txt_OrgId__c.trim();
+        return namespace(error.txt_Namespace__c) + '_' + error.txt_OrgId__c;
     }
 
 

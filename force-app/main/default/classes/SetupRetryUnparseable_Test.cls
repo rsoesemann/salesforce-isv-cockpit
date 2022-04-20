@@ -18,7 +18,9 @@ private class SetupRetryUnparseable_Test {
 
 
         // Exercise
+        Test.startTest();
         step.run();
+        Test.stopTest();
 
 
         // Verify
