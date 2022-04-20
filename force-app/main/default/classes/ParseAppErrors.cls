@@ -134,7 +134,7 @@ System.debug(LoggingLevel.ERROR, error);
 
 
     private String subscriberKey(AppError__c error) {
-        return namespace(error.txt_Namespace__c) + '_' + error.txt_OrgId__c;
+        return namespace(error.txt_Namespace__c) + '_' + error.txt_OrgId__c.trim();
     }
 
 
@@ -144,7 +144,7 @@ System.debug(LoggingLevel.ERROR, error);
 
 
     private String namespace(String namespace) {
-        return (namespace == null) ? '' : namespace.toLowerCase().trim();
+        return (namespace == null) ? '' : namespace.toUpperCase().trim();
     }
 
 

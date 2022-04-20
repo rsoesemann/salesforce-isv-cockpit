@@ -1,7 +1,7 @@
 public with sharing class ExceptionWithClassToken extends ParseAppErrors.Token {
 
     public override String regex() {
-        return '\\n([^.]+)\\.([^.\' ]+): (.+Exception): (.+)';
+        return '[\\n\\r]+([^.]+)\\.([^.\' ]+): (.+Exception): (.+)';
     }
 
 

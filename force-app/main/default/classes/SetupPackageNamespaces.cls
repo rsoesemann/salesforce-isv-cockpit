@@ -24,7 +24,7 @@ public with sharing class SetupPackageNamespaces extends SetupStep {
                                                 WHERE txt_Namespace__c = NULL];
 			for(sfLma__Package__c pck : packages) {
                 JSON2Apex result = query('SELECT NamespacePrefix FROM SubscriberPackage WHERE Id = \'' + pck.sfLma__Package_ID__c + '\'');
-                pck.txt_Namespace__c = result.records[0].NamespacePrefix.toLowerCase();
+                pck.txt_Namespace__c = result.records[0].NamespacePrefix.toUpperCase();
             }
             
             update packages;
