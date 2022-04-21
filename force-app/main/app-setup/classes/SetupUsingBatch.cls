@@ -16,6 +16,11 @@ public with sharing class SetupUsingBatch extends BatchSetupStep {
 	}
 
 
+	public override Integer batchSize() {
+		return 200;
+	}
+
+
 	public List<SObject> start(Database.BatchableContext ctx) {
 		return [SELECT Id FROM Account];
 	}
