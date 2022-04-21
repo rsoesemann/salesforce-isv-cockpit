@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>txl_RegExp__c</fullName>
+    <description>Test your Regexp here before https://regexr.com/</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Test your Regexp here before https://regexr.com/</inlineHelpText>
+    <label>RegExp</label>
+    <required>true</required>
+    <type>TextArea</type>
+</CustomField>

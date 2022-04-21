@@ -1,7 +1,7 @@
 
 Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001
 
-Visualforce Page: /apex/nsA__myPage
+Visualforce Page: /apex/NSA__myPage
 
 caused by: System.NullPointerException: Attempt to de-reference a null object
 

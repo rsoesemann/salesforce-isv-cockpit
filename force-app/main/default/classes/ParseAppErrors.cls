@@ -2,16 +2,8 @@
 public without sharing class ParseAppErrors {
 
     public static Boolean parseAlways = false;
-
-    private static final List<Token> TOKENS = new List<Token>{
-        new OrgUserToken().compile(),
-        new ExceptionToken().compile(),
-        new ClassToken().compile(),
-        new ExceptionWithClassToken().compile(),
-        new RecompileErrorToken().compile(),
-        new PageToken().compile(),
-        new TriggerToken().compile()        
-    };
+    
+    private static final List<Tokenizer> TOKENIZERS = Tokenizer.initialize();
 
     private List<AppError__c> errors;
 
@@ -56,16 +48,10 @@ public without sharing class ParseAppErrors {
 
     private void parse() {
         for(AppError__c error : errors) {
-            System.debug(LoggingLevel.ERROR, 'Error: ' + error.txl_FullMailBody__c.replaceAll('(\\r|\\n)+', ' '));
+            System.debug(LoggingLevel.ERROR, 'FullMailBody: ' + error.txl_FullMailBody__c.replaceAll('(\\r|\\n)+', ' '));
 
-            for(Token token : TOKENS) {
-                Matcher match = token.match( error.txl_FullMailBody__c );
-
-                if(match.find()) {
-                    token.populateFields(match, error);
-                }
-
-                System.debug(LoggingLevel.ERROR, match);
+            for(Tokenizer tokenizer : TOKENIZERS) {
+                tokenizer.execute(error);
             }
         }
     }
@@ -166,29 +152,5 @@ System.debug(LoggingLevel.ERROR, error);
         }
 
         return result;
-    }
-
-
-    // INNER
-
-    public abstract class Token {
-
-        private Pattern regex;
-
-        public abstract String regex();
-        public abstract void populateFields(Matcher match, AppError__c error);
-
-        public Token compile() {
-            regex = Pattern.compile(regex());
-            return this;
-        }
-
-        public Matcher match(String text) {
-            return regex.matcher(text);
-        }
-
-        protected String abbreviate(String value, Integer length) {
-            return (value == null) ? null : value.abbreviate(length);
-        }
     }
 }

@@ -1,9 +1,23 @@
 <apex:page controller="SetupPageCtrl" title="LMA App Cockpit - Setup" docType="html-5.0" sidebar="false" lightningStylesheets="true">
 
     <c:setup ctrl="{!controller}">
-
         <c:setupStep title="Create Email Service" step="{!setupEmailService}"/>
         <c:setupStep title="Prepare LMA Packages" step="{!setupPackageNamespaces}"/>
+
+        <c:setupStep title="Verify Tokenizers" step="{!setupTokenizers}" keepOpen="true">
+            <apex:pageBlock id="block">
+                <apex:pageBlockTable value="{!setupTokenizers.records}" var="record" columnsWidth="10%,5%,10%,10%,10%,10%,10%,35%">
+                    <apex:column value="{!record.DeveloperName}" />
+                    <apex:column value="{!record.num_Position__c}" />
+                    <apex:column value="{!record.txt_Group1Field__c}" />
+                    <apex:column value="{!record.txt_Group2Field__c}" />
+                    <apex:column value="{!record.txt_Group3Field__c}" />
+                    <apex:column value="{!record.txt_Group4Field__c}" />
+                    <apex:column value="{!record.txt_Group5Field__c}" />
+                    <apex:column value="{!record.txl_RegExp__c}" />
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </c:setupStep>
 
         <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}" enabled="{!setupRetryUnparseable.severity = 'WARNING'}" rendered="{!setupRetryUnparseable.unassigned > 0}">
             <apex:pageBlock>

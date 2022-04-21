@@ -4,10 +4,6 @@
         <application>AppCockpit</application>
         <visible>true</visible>
     </applicationVisibilities>
-    <classAccesses>
-        <apexClass>SetupCtrl</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>AppError__c.lkp_Account__c</field>
@@ -54,11 +50,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>AppError__c.txt_MatchedWith__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>AppError__c.txt_Namespace__c</field>
         <readable>true</readable>
@@ -94,10 +85,6 @@
         <object>AppError__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <pageAccesses>
-        <apexPage>setup</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
     <tabSettings>
         <tab>AppError__c</tab>
         <visibility>Visible</visibility>
@@ -105,9 +92,5 @@
     <tabSettings>
         <tab>Home</tab>
         <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Setup</tab>
-        <visibility>None</visibility>
     </tabSettings>
 </PermissionSet>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TokenizerQueue</fullName>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>num_Position__c</columns>
+    <columns>chk_IsActive__c</columns>
+    <columns>txt_Group1Field__c</columns>
+    <columns>txt_Group2Field__c</columns>
+    <columns>txt_Group3Field__c</columns>
+    <columns>txt_Group4Field__c</columns>
+    <columns>txt_Group5Field__c</columns>
+    <columns>txl_RegExp__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Tokenizer Queue</label>
+</ListView>

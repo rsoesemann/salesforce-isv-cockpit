@@ -18,3 +18,4 @@ package.xml
 AppSwitcher.appMenu
 
 force-app/main/default/profiles
+force-app/main/default/emailservices
