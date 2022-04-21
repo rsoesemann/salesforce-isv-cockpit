@@ -30,18 +30,6 @@
 
     <!-- CUSTOM RULES -->
 
-    <rule name="NoUnderscoresInFieldNames" language="xml" class="net.sourceforge.pmd.lang.rule.XPathRule"
-          message="Custom fields should not contain underscores."  >
-        <priority>3</priority>
-        <properties>
-            <property name="xpath">
-                <value><![CDATA[
-                    //CustomField/fullName/text[matches(@Image, ".*_.*__c")]
-                ]]></value>
-            </property>
-        </properties>
-    </rule>
-
     <rule name="AvoidProductionDebugLogs" language="apex" class="net.sourceforge.pmd.lang.apex.rule.ApexXPathRule"
           message="Avoid leaving System.debug() statments in code as they negativly influence performance.">
        

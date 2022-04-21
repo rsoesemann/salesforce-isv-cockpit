@@ -30,6 +30,7 @@ private class SetupArchiveErrors_Test {
     
     // HELPER
 
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     public class MdApiMock implements WebServiceMock {
         public void doInvoke(Object stub, Object request, Map<String, Object> response, String endpoint,
                             String soapAction, String requestName, String responseNS, String responseName, String responseType) {
