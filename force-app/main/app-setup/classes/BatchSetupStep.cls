@@ -1,8 +1,5 @@
 public abstract class BatchSetupStep extends SetupStep implements Database.Batchable<SObject> {
 
-    private static final String JOBS_LINK = '/apexpages/setup/listAsyncApexJobs.apexp';
-
-
 	// PUBLIC
 
 	public virtual override ApexPages.Message getStatus() {
@@ -25,17 +22,17 @@ public abstract class BatchSetupStep extends SetupStep implements Database.Batch
 
 
 	public override PageReference run() {
-		PageReference result = null;
-
-        if((new List<String>{ 'Aborted', null }).contains(batchStatus())) {
-            Database.executeBatch(this, 100);
-			result = new PageReference(JOBS_LINK);
+        if(new List<String>{ null, 'Completed', 'Aborted' }.contains(batchStatus())) {
+            Database.executeBatch(this, batchSize());
         }
 
-		return result;
+		return currentPage();
 	}
 
 
+	public abstract Integer batchSize();
+
+	
 	// PRIVATE
 
 	private String batchStatus() {
@@ -52,7 +49,7 @@ public abstract class BatchSetupStep extends SetupStep implements Database.Batch
 
 
 	private String logsLink() {
-		return '<b><a href="' + JOBS_LINK + '">Apex Jobs</a></b>';
+		return '<b><a href="/apexpages/setup/listAsyncApexJobs.apexp">Apex Jobs</a></b>';
 	}
 
 

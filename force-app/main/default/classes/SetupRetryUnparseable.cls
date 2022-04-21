@@ -1,23 +1,43 @@
 public with sharing class SetupRetryUnparseable extends BatchSetupStep {
 
+    public Integer batchSize {
+        get {
+            if(batchSize == null) {
+                batchSize =  1;
+            }
+            return batchSize;
+        }
+        set; 
+    }
+
+	public Integer unassigned { 
+		get {
+            return [SELECT Count() FROM AppError__c WHERE lkp_License__c = NULL OR txt_ExceptionType__c = NULL];
+        }
+        private set; 
+	}
+
+	
 	// PUBLIC
 
 	public override ApexPages.Message getStatus() {
 		ApexPages.Message result = super.getStatus();
 
 		if(result == null) {
-			Integer unassigned = [SELECT Count() FROM AppError__c WHERE lkp_License__c = NULL];
 			ApexPages.Severity severity = (unassigned > 0) ? ApexPages.Severity.WARNING : ApexPages.Severity.CONFIRM;
-			String message = unassigned + ' AppErrors are not assigned. Reparse them?';
-			result = new ApexPages.Message(severity, message);
+			result = new ApexPages.Message(severity, unassigned + ' AppErrors are not assigned. Reparse them?');
 		}
 
 		return result;
 	}
 
+	public override Integer batchSize() {
+		return batchSize;
+	}
+
 
 	public List<SObject> start(Database.BatchableContext ctx) {
-		return [SELECT Id FROM AppError__c WHERE lkp_License__c = NULL];
+		return [SELECT Id FROM AppError__c WHERE lkp_License__c = NULL OR txt_ExceptionType__c = NULL];
 	}
 
 
