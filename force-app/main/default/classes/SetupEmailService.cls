@@ -31,7 +31,6 @@ public with sharing class SetupEmailService extends SetupStep {
                                 '<urn1:ApexClassId>' +  classId + '</urn1:ApexClassId>' +
                                 '<urn1:IsActive>true</urn1:IsActive>' +
                                 '<urn1:FunctionName>' + FUNCTION_NAME +'</urn1:FunctionName>');
-System.debug(LoggingLevel.ERROR, response);
 
             Id functionId = [SELECT Id FROM EmailServicesFunction WHERE FunctionName = :FUNCTION_NAME AND ApexClassId = :classId].Id;
             createSObject('<urn1:type>EmailServicesAddress</urn1:type>' +

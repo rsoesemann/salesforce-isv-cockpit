@@ -35,8 +35,6 @@ public with sharing class Tokenizer {
                 error.put(field, value);
             }
         }
-
-        System.debug(LoggingLevel.ERROR, match);
     }
 
 
@@ -46,7 +44,7 @@ public with sharing class Tokenizer {
         for(ErrorTokenizer__mdt record : new ErrorTokenizersSelector().allActiveInOrder()) {
             result.add(new Tokenizer(record));
         }
-System.debug(LoggingLevel.ERROR, result);
+        
         return result;
     }
 }

@@ -48,8 +48,6 @@ public without sharing class ParseAppErrors {
 
     private void parse() {
         for(AppError__c error : errors) {
-            System.debug(LoggingLevel.ERROR, 'FullMailBody: ' + error.txl_FullMailBody__c.replaceAll('(\\r|\\n)+', ' '));
-
             for(Tokenizer tokenizer : TOKENIZERS) {
                 tokenizer.execute(error);
             }
@@ -76,26 +74,20 @@ public without sharing class ParseAppErrors {
 
     private void linkToLma() {
         Map<String, List<AppError__c>> bySubscriber = groupBySubscriber();
-System.debug(LoggingLevel.ERROR, bySubscriber);
-System.debug(LoggingLevel.ERROR, orgIds(bySubscriber));
-System.debug(LoggingLevel.ERROR, namespaces(bySubscriber));
 
         for(sfLma__License__c license : [SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c,
                                                 sfLma__Package__r.txt_Namespace__c, sfLma__Subscriber_Org_ID__c
                                          FROM sflma__License__c
                                          WHERE sfLma__Subscriber_Org_ID__c = :orgIds(bySubscriber)
                                          AND sfLma__Package__r.txt_Namespace__c = :namespaces(bySubscriber)]) {
-
-System.debug(LoggingLevel.ERROR, license);
             String key = subscriberKey(license);
-System.debug(LoggingLevel.ERROR, key);
+
             if(bySubscriber.containsKey(key)) {
                 for(AppError__c error : bySubscriber.get(key)) {
                     error.lkp_License__c = license.Id;
                     error.lkp_Package__c = license.sfLma__Package__c;
                     error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
                     error.lkp_Account__c = license.sfLma__Account__c;
-System.debug(LoggingLevel.ERROR, error);
                 }
             }
         }
