@@ -35,8 +35,6 @@ public with sharing class Tokenizer {
                 error.put(field, value);
             }
         }
-
-        System.debug(LoggingLevel.ERROR, match);
     }
 
 

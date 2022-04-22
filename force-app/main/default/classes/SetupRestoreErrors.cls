@@ -100,9 +100,7 @@ public with sharing class SetupRestoreErrors extends SetupStep {
                 request.setBody( JSON.serialize(body) );
             }
 
-            String result = new Http().send(request).getBody();
-System.debug(LoggingLevel.ERROR, result);
-            return result;
+            return new Http().send(request).getBody();
         }
 
 
