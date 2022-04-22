@@ -8,11 +8,11 @@ public with sharing class Tokenizer {
 
     // CONSTRCUTOR
 
-    public Tokenizer(ErrorTokenizer__mdt record) {
+    public Tokenizer(Tokenizer__mdt record) {
         regex = Pattern.compile(record.txl_RegExp__c);
         
         for(String fieldValue : new List<String>{ record.txt_Group1Field__c, record.txt_Group2Field__c, record.txt_Group3Field__c, 
-                                             record.txt_Group4Field__c, record.txt_Group5Field__c}) {
+                                                  record.txt_Group4Field__c, record.txt_Group5Field__c}) {
             
             SObjectField field = (fieldValue != null) ? SCHEMA.getField(fieldValue) : null;
             if(field != null) {
@@ -43,10 +43,10 @@ public with sharing class Tokenizer {
     public static List<Tokenizer> initialize() {
         List<Tokenizer> result = new List<Tokenizer>();
 
-        for(ErrorTokenizer__mdt record : new ErrorTokenizersSelector().allActiveInOrder()) {
+        for(Tokenizer__mdt record : new TokenizersSelector().allActiveInOrder()) {
             result.add(new Tokenizer(record));
         }
-System.debug(LoggingLevel.ERROR, result);
+        
         return result;
     }
 }

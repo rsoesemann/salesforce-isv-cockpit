@@ -1,12 +1,12 @@
 public with sharing class SetupVerifyTokenizers extends SetupStep {
 
-    public List<ErrorTokenizer__mdt> records { get; set; }
+    public List<Tokenizer__mdt> records { get; set; }
 
 
     // PUBLIC    
 
     public override ApexPages.Message getStatus() {
-        records = new ErrorTokenizersSelector().allActiveInOrder();
+        records = new TokenizersSelector().allActiveInOrder();
 
         String message = String.format('{0} for {1} Tokenizers found.',
                             new List<String>{ setupLink('m00', 'CustomMetadata', 'Custom Metadata'), ''+ records.size()});
