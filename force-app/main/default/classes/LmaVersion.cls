@@ -23,6 +23,11 @@ public class LmaVersion extends DomainBuilder {
         return (LmaVersion) set(sfLma__Package_Version__c.Name, value);
     }
 
+    public LmaVersion year(Integer value) {
+        return (LmaVersion) set(sfLma__Package_Version__c.sfLma__Release_Date__c, 
+                                Date.newInstance(value, new Random().integer(11), 1 ));
+    }
+
     public LmaVersion id(String value) {
         return (LmaVersion) set(sfLma__Package_Version__c.sfLma__Version_ID__c, value);
     }
