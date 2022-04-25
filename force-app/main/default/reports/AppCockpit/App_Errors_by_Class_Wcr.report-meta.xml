@@ -8,17 +8,16 @@
             <axisBinding>y</axisBinding>
             <column>RowCount</column>
         </chartSummaries>
-        <chartType>LineCumulativeGrouped</chartType>
+        <chartType>Donut</chartType>
         <enableHoverLabels>false</enableHoverLabels>
-        <expandOthers>true</expandOthers>
-        <groupingColumn>CUST_CREATED_DATE</groupingColumn>
+        <expandOthers>false</expandOthers>
+        <groupingColumn>AppError__c.txt_ApexClass__c</groupingColumn>
         <legendPosition>Right</legendPosition>
         <location>CHART_BOTTOM</location>
-        <secondaryGroupingColumn>FK_$sfLma__Package_Version__c.sfLma__Version__c</secondaryGroupingColumn>
-        <showAxisLabels>false</showAxisLabels>
+        <showAxisLabels>true</showAxisLabels>
         <showPercentage>false</showPercentage>
-        <showTotal>false</showTotal>
-        <showValues>false</showValues>
+        <showTotal>true</showTotal>
+        <showValues>true</showValues>
         <size>Medium</size>
         <summaryAxisRange>Auto</summaryAxisRange>
         <textColor>#000000</textColor>
@@ -27,36 +26,29 @@
         <titleSize>18</titleSize>
     </chart>
     <columns>
+        <field>AppError__c.txt_ExceptionType__c</field>
+    </columns>
+    <columns>
         <field>CUST_NAME</field>
     </columns>
-    <format>Matrix</format>
-    <groupingsAcross>
-        <dateGranularity>Day</dateGranularity>
-        <field>FK_$sfLma__Package_Version__c.sfLma__Package__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsAcross>
-    <groupingsAcross>
-        <dateGranularity>Day</dateGranularity>
-        <field>FK_$sfLma__Package_Version__c.sfLma__Version__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsAcross>
+    <format>Summary</format>
     <groupingsDown>
-        <dateGranularity>Month</dateGranularity>
-        <field>CUST_CREATED_DATE</field>
+        <dateGranularity>Day</dateGranularity>
+        <field>AppError__c.txt_ApexClass__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Cumulative Errors by Version</name>
+    <name>App Errors by Class</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>CustomEntity$AppError__c@AppError__c.lkp_PackageVersion__c</reportType>
-    <scope>user</scope>
+    <reportType>CustomEntity$AppError__c</reportType>
+    <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <dateColumn>AppError__c.dtm_RecordedDate__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
     </timeFrameFilter>
 </Report>

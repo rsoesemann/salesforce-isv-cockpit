@@ -11,11 +11,11 @@
         <chartType>VerticalColumnStacked</chartType>
         <enableHoverLabels>false</enableHoverLabels>
         <expandOthers>true</expandOthers>
-        <groupingColumn>AppError__c.txt_ApexClass__c</groupingColumn>
+        <groupingColumn>FK_NAME</groupingColumn>
         <legendPosition>Right</legendPosition>
         <location>CHART_BOTTOM</location>
-        <secondaryGroupingColumn>AppError__c.txt_ExceptionType__c</secondaryGroupingColumn>
-        <showAxisLabels>true</showAxisLabels>
+        <secondaryGroupingColumn>AppError__c.lkp_PackageVersion__c</secondaryGroupingColumn>
+        <showAxisLabels>false</showAxisLabels>
         <showPercentage>false</showPercentage>
         <showTotal>false</showTotal>
         <showValues>false</showValues>
@@ -29,47 +29,29 @@
     <columns>
         <field>CUST_NAME</field>
     </columns>
-    <columns>
-        <field>CUST_CREATED_DATE</field>
-    </columns>
-    <columns>
-        <field>AppError__c.txt_OrgId__c</field>
-    </columns>
-    <columns>
-        <field>AppError__c.txt_VisualforcePage__c</field>
-    </columns>
-    <columns>
-        <field>AppError__c.lkp_Account__c</field>
-    </columns>
-    <columns>
-        <field>AppError__c.txt_UserId__c</field>
-    </columns>
-    <columns>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>AppError__c.lkp_PackageVersion__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
         <field>FK_NAME</field>
-    </columns>
-    <format>Summary</format>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>AppError__c.txt_ApexClass__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>AppError__c.txt_ExceptionType__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
-    <name>Errors Flat</name>
+    <name>App Errors by Account &amp; Version</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>CustomEntity$AppError__c@AppError__c.lkp_Package__c</reportType>
+    <reportType>CustomEntity$AppError__c@AppError__c.lkp_Account__c</reportType>
     <scope>user</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <dateColumn>AppError__c.dtm_RecordedDate__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
     </timeFrameFilter>
 </Report>
