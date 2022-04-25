@@ -7,7 +7,7 @@
     <columns>lkp_Package__c</columns>
     <columns>lkp_PackageVersion__c</columns>
     <columns>lkp_Account__c</columns>
-    <columns>CREATED_DATE</columns>
+    <columns>dtm_RecordedDate__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>lkp_License__c</field>
