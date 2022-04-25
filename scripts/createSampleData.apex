@@ -25,7 +25,7 @@ List<Object> classes = new List<Object>{ 'SetupController', 'AccountService', 'A
 List<Object> pages = new List<Object>{ 'setup', 'home', 'licenseManager', 'setupV1'};
 
 fflib_SObjectDomain.getTriggerEvent(AppErrors.class).disableAll();
-for(Integer i=0; i<new Random().integer(40,80); i++) {
+for(Integer i=0; i<new Random().integer(400,800); i++) {
     new AppError((LmaLicense) new Random().value(new List<Object>{ l1,l2,l3,l4,l5 }))
         .exception((String) new Random().value(exceptions))
         .clazz((String) new Random().value(classes))
