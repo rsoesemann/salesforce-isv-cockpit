@@ -28,7 +28,21 @@
     <columns>
         <field>CUST_NAME</field>
     </columns>
-    <format>Summary</format>
+    <filter>
+        <criteriaItems>
+            <column>AppError__c.txt_VisualforcePage__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>AppError__c.lkp_Package__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsAcross>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>AppError__c.txt_VisualforcePage__c</field>
@@ -40,7 +54,7 @@
         <value>1</value>
     </params>
     <reportType>CustomEntity$AppError__c</reportType>
-    <scope>user</scope>
+    <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>

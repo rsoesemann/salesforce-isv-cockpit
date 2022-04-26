@@ -49,7 +49,7 @@
         <value>1</value>
     </params>
     <reportType>CustomEntity$AppError__c</reportType>
-    <scope>user</scope>
+    <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
