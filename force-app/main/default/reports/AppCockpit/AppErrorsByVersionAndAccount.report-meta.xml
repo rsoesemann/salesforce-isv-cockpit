@@ -8,11 +8,13 @@
             <axisBinding>y</axisBinding>
             <column>RowCount</column>
         </chartSummaries>
-        <chartType>LineCumulative</chartType>
+        <chartType>VerticalColumnStacked</chartType>
         <enableHoverLabels>false</enableHoverLabels>
         <expandOthers>true</expandOthers>
-        <groupingColumn>FK_NAME</groupingColumn>
+        <groupingColumn>AppError__c.lkp_PackageVersion__c</groupingColumn>
+        <legendPosition>Right</legendPosition>
         <location>CHART_BOTTOM</location>
+        <secondaryGroupingColumn>AppError__c.lkp_Account__c</secondaryGroupingColumn>
         <showAxisLabels>false</showAxisLabels>
         <showPercentage>false</showPercentage>
         <showTotal>false</showTotal>
@@ -28,24 +30,41 @@
         <field>CUST_NAME</field>
     </columns>
     <columns>
-        <field>FK_$sfLma__Package_Version__c.sfLma__Release_Date__c</field>
+        <field>AppError__c.txt_ExceptionType__c</field>
     </columns>
-    <format>Matrix</format>
-    <groupingsAcross>
-        <dateGranularity>Day</dateGranularity>
-        <field>FK_NAME</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsAcross>
+    <filter>
+        <criteriaItems>
+            <column>AppError__c.txt_ExceptionType__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>AppError__c.lkp_License__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
     <groupingsDown>
-        <field>AppError__c.dtm_RecordedDate__c</field>
+        <dateGranularity>Day</dateGranularity>
+        <field>AppError__c.lkp_PackageVersion__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Errors by Time</name>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>AppError__c.lkp_Account__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>App Errors by Version and Account</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>CustomEntity$AppError__c@AppError__c.lkp_PackageVersion__c</reportType>
+    <reportType>CustomEntity$AppError__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

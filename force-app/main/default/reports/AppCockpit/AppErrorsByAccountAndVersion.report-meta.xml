@@ -29,6 +29,22 @@
     <columns>
         <field>CUST_NAME</field>
     </columns>
+    <filter>
+        <criteriaItems>
+            <column>AppError__c.txt_ExceptionType__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>AppError__c.lkp_License__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
     <format>Matrix</format>
     <groupingsAcross>
         <dateGranularity>Day</dateGranularity>
@@ -40,7 +56,7 @@
         <field>FK_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>App Errors by Account &amp; Version</name>
+    <name>App Errors by Account and Version</name>
     <params>
         <name>co</name>
         <value>1</value>
