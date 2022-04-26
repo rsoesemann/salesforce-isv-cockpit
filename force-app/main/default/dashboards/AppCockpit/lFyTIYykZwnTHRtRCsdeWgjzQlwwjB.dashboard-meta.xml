@@ -4,9 +4,9 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <chartTheme>light</chartTheme>
-    <colorPalette>accessible</colorPalette>
+    <colorPalette>justice</colorPalette>
     <dashboardChartTheme>light</dashboardChartTheme>
-    <dashboardColorPalette>accessible</dashboardColorPalette>
+    <dashboardColorPalette>justice</dashboardColorPalette>
     <dashboardGridLayout>
         <dashboardGridComponents>
             <colSpan>2</colSpan>
