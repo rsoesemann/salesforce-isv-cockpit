@@ -15,7 +15,7 @@ public with sharing class SetupReparse extends BatchSetupStep {
             if(filter == null) {
                 filter = 'lkp_License__c = NULL OR txt_ExceptionType__c = NULL';
             }
-            return String.escapeSingleQuotes(filter);
+            return filter;
         }
         set; 
     }
@@ -60,7 +60,7 @@ public with sharing class SetupReparse extends BatchSetupStep {
 
 
 	public List<SObject> start(Database.BatchableContext ctx) {
-		return Database.query('SELECT Id FROM AppError__c WHERE ' + filter);
+		return Database.query('SELECT Id FROM AppError__c WHERE ' + String.escapeSingleQuotes(filter));
 	}
 
 
