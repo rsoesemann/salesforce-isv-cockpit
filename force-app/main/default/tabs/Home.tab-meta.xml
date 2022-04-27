@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Created by Lightning App Builder</description>
-    <flexiPage>App_Cockpit_Home</flexiPage>
+    <flexiPage>AppCockpitHome</flexiPage>
     <label>Home</label>
     <motif>Custom97: Thermometer</motif>
 </CustomTab>
