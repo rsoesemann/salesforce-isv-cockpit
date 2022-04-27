@@ -158,6 +158,25 @@ private class ParseAppErrors_Test {
     }
 
 
+    @IsTest
+    private static void dateRanges(){
+
+        // Setup
+        DateTime yesterday = System.now().addDays(-1);
+        DateTime today = System.now();
+        DateTime tommorow = System.now().addDays(1);
+
+        // Exercise & Verify
+        ParseAppErrors.DateRange simple = new ParseAppErrors.DateRange(new List<AppError__c>{ error(yesterday), error(today), error(tommorow) });
+        System.assertEquals(yesterday, simple.earliest);
+        System.assertEquals(tommorow, simple.latest);
+
+        ParseAppErrors.DateRange overlap = new ParseAppErrors.DateRange(new List<AppError__c>{ error(today), error(today), error(tommorow) });
+        System.assertEquals(today, overlap.earliest);
+        System.assertEquals(tommorow, overlap.latest);
+    }
+
+
     // HELPER
 
     private static void setup() {
@@ -177,5 +196,10 @@ private class ParseAppErrors_Test {
         return [SELECT txt_UserId__c, txt_OrgId__c, txt_Namespace__c, txt_ExceptionType__c, txt_ExceptionMessage__c,
                 lkp_Account__c, txt_ApexClass__c, txt_VisualforcePage__c, txl_Stacktrace__c, lkp_License__c, lkp_Package__c,
                 lkp_PackageVersion__c, txl_FullMailBody__c FROM AppError__c];
+    }
+
+
+    private static AppError__c error(DateTime dt) {
+        return new AppError__c(dtm_RecordedDate__c = dt);
     }
 }

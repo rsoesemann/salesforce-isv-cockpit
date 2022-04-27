@@ -74,11 +74,13 @@ public without sharing class ParseAppErrors {
 
     private void linkToLma() {
         Map<String, List<AppError__c>> bySubscriber = groupBySubscriber();
+        DateRange range = new DateRange(errors);
 
         for(sfLma__License__c license : [SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c,
                                                 sfLma__Package__r.txt_Namespace__c, sfLma__Subscriber_Org_ID__c,
                                                 (SELECT NewValue, CreatedDate FROM Histories 
                                                  WHERE Field = 'sfLma__Package_Version__c' AND DataType = 'EntityId'
+                                                 AND CreatedDate >= :range.earliest AND CreatedDate <= :range.latest
                                                  ORDER BY CreatedDate DESC) 
                                          FROM sflma__License__c
                                          WHERE sfLma__Subscriber_Org_ID__c = :orgIds(bySubscriber)
@@ -89,7 +91,7 @@ public without sharing class ParseAppErrors {
                 for(AppError__c error : bySubscriber.get(key)) {
                     error.lkp_License__c = license.Id;
                     error.lkp_Package__c = license.sfLma__Package__c;
-                    error.lkp_PackageVersion__c = findRealVersion(error, license);
+                    error.lkp_PackageVersion__c = findVersion(error, license);
                     error.lkp_Account__c = license.sfLma__Account__c;
                 }
             }
@@ -99,17 +101,26 @@ public without sharing class ParseAppErrors {
 
     // Note: Assignes not current but actual version during error creation
     //       Important when importing historical app errors
-    private Id findRealVersion(AppError__c error, sfLma__License__c license) {
+    private Id findVersion(AppError__c error, sfLma__License__c license) {
         Id result = license.sfLma__Package_Version__c;
 
-        for(sfLma__License__History history : license.Histories) {
-            if(history.CreatedDate <= error.dtm_RecordedDate__c) {
-                result = (Id) history.NewValue;
+        if(notRecordedLive(error)) {
+            for(sfLma__License__History history : license.Histories) {
+                // Note: first match is right one due to ORDER BY
+                if(history.CreatedDate < error.dtm_RecordedDate__c) {
+                    result = (Id) history.NewValue;
+                    break;
+                }
             }
-
         }
 
         return result;
+    }
+
+
+    private Boolean notRecordedLive(AppError__c error) {
+        // Note: Only equals when error received as email 
+        return (error.CreatedDate > error.dtm_RecordedDate__c);
     }
 
 
@@ -163,5 +174,21 @@ public without sharing class ParseAppErrors {
         }
 
         return result;
+    }
+
+
+    // INNER
+
+    public class DateRange {
+
+        public DateTime earliest;
+        public DateTime latest;
+
+        public DateRange(List<AppError__c> errors) {
+            for(AppError__c error : errors) {
+                earliest = (earliest == null || error.dtm_RecordedDate__c < earliest) ? error.dtm_RecordedDate__c : earliest;
+                latest = (latest == null || error.dtm_RecordedDate__c > latest) ? error.dtm_RecordedDate__c : latest;
+            }
+        }
     }
 }
