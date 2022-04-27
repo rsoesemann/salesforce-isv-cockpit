@@ -76,7 +76,10 @@ public without sharing class ParseAppErrors {
         Map<String, List<AppError__c>> bySubscriber = groupBySubscriber();
 
         for(sfLma__License__c license : [SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c,
-                                                sfLma__Package__r.txt_Namespace__c, sfLma__Subscriber_Org_ID__c
+                                                sfLma__Package__r.txt_Namespace__c, sfLma__Subscriber_Org_ID__c,
+                                                (SELECT NewValue, CreatedDate FROM Histories 
+                                                 WHERE Field = 'sfLma__Package_Version__c' AND DataType = 'EntityId'
+                                                 ORDER BY CreatedDate DESC) 
                                          FROM sflma__License__c
                                          WHERE sfLma__Subscriber_Org_ID__c = :orgIds(bySubscriber)
                                          AND sfLma__Package__r.txt_Namespace__c = :namespaces(bySubscriber)]) {
@@ -86,11 +89,27 @@ public without sharing class ParseAppErrors {
                 for(AppError__c error : bySubscriber.get(key)) {
                     error.lkp_License__c = license.Id;
                     error.lkp_Package__c = license.sfLma__Package__c;
-                    error.lkp_PackageVersion__c = license.sfLma__Package_Version__c;
+                    error.lkp_PackageVersion__c = findRealVersion(error, license);
                     error.lkp_Account__c = license.sfLma__Account__c;
                 }
             }
         }
+    }
+
+
+    // Note: Assignes not current but actual version during error creation
+    //       Important when importing historical app errors
+    private Id findRealVersion(AppError__c error, sfLma__License__c license) {
+        Id result = license.sfLma__Package_Version__c;
+
+        for(sfLma__License__History history : license.Histories) {
+            if(history.CreatedDate <= error.dtm_RecordedDate__c) {
+                result = (Id) history.NewValue;
+            }
+
+        }
+
+        return result;
     }
 
 
