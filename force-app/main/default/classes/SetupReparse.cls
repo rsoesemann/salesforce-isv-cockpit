@@ -55,12 +55,13 @@ public with sharing class SetupReparse extends BatchSetupStep {
 
 
     public PageReference refresh() {
+        System.purgeOldAsyncJobs(System.today().addDays(1));
         return null;
     }
 
 
 	public List<SObject> start(Database.BatchableContext ctx) {
-		return Database.query('SELECT Id FROM AppError__c WHERE ' + String.escapeSingleQuotes(filter));
+		return Database.query('SELECT Id FROM AppError__c WHERE ' + filter);
 	}
 
 
