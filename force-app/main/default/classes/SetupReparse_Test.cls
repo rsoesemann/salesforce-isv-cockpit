@@ -1,5 +1,5 @@
 @IsTest
-private class SetupRetryUnparseable_Test {
+private class SetupReparse_Test {
 
     private static List<String> mails;
 
@@ -13,7 +13,7 @@ private class SetupRetryUnparseable_Test {
         insert new AppError__c(txl_FullMailBody__c = mails[6]);
         fflib_SObjectDomain.getTriggerEvent(AppErrors.class).enableAll();
 
-        SetupRetryUnparseable step = new SetupRetryUnparseable();
+        SetupReparse step = new SetupReparse();
         System.assertEquals(ApexPages.Severity.WARNING, step.getStatus().getSeverity());
 
 

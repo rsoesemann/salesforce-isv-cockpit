@@ -19,11 +19,19 @@
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Parse unassigned errors" step="{!setupRetryUnparseable}" enabled="{!setupRetryUnparseable.severity = 'WARNING'}" rendered="{!setupRetryUnparseable.unassigned > 0}">
+        <c:setupStep title="Reparse errors via Batch" step="{!setupReparse}" keepOpen="true">
             <apex:pageBlock>
-                <apex:pageBlockSection columns="1">
-                    <apex:input value="{!setupRetryUnparseable.batchSize}" type="number" label="Batch size:" size="100" required="true" />
+                <apex:pageBlockSection columns="2">
+                    <apex:outputLabel for="filter">Filter Condition</apex:outputLabel>
+                    <apex:inputTextarea id="filter" value="{!setupReparse.filter}" cols="20" rows="2" required="true" />
                 </apex:pageBlockSection>
+
+                <apex:pageBlockSection columns="2">
+                    <apex:outputLabel for="batchSize">Batch size:</apex:outputLabel>
+                    <apex:input id="batchSize" value="{!setupReparse.batchSize}" type="number" size="100" required="true" />
+                </apex:pageBlockSection>
+
+                <apex:commandButton action="{!setupReparse.refresh}" value="Refresh..." />
             </apex:pageBlock>
         </c:setupStep>
 
