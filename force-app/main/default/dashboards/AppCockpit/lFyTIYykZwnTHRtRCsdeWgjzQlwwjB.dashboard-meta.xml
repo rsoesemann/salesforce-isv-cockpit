@@ -34,7 +34,7 @@
                 <header>Problematic classes</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>10</maxValuesDisplayed>
-                <report>AppCockpit/App_Errors_by_Class_Wcr</report>
+                <report>AppCockpit/AppErrorsByClass</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
@@ -75,7 +75,7 @@
                 <header>App Errors by Account &amp; Version</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>10</maxValuesDisplayed>
-                <report>AppCockpit/App_Errors_by_Account_Version_p5I</report>
+                <report>AppCockpit/AppErrorsByAccountAndVersion</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -117,7 +117,7 @@
                 </groupingSortProperties>
                 <header>App Errors by Version &amp; Account</header>
                 <legendPosition>Right</legendPosition>
-                <report>AppCockpit/App_Errors_by_Account_and_Version_2XF</report>
+                <report>AppCockpit/AppErrorsByVersionAndAccount</report>
                 <showPercentage>false</showPercentage>
                 <showValues>false</showValues>
                 <sortBy>RowLabelAscending</sortBy>
@@ -151,7 +151,7 @@
                 <header>App Errors by Page</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>AppCockpit/App_Errors_by_Page_Itx</report>
+                <report>AppCockpit/AppErrorsByPage</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>true</showValues>
@@ -176,7 +176,7 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors over Time by Account</header>
-                <report>AppCockpit/App_Errors_over_Time_by_Account_Ipg</report>
+                <report>AppCockpit/AppErrorsOverTimeByAccount</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -190,7 +190,7 @@
         <rowHeight>36</rowHeight>
     </dashboardGridLayout>
     <dashboardType>SpecifiedUser</dashboardType>
-    <description>All reports of the App Cockpit</description>
+    <description>An overview of all you App Errors</description>
     <isGridLayout>true</isGridLayout>
     <runningUser>test-m5mittpk5r6u@example.com</runningUser>
     <textColor>#000000</textColor>
