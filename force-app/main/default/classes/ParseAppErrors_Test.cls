@@ -158,25 +158,6 @@ private class ParseAppErrors_Test {
     }
 
 
-    @IsTest
-    private static void dateRanges(){
-
-        // Setup
-        DateTime yesterday = System.now().addDays(-1);
-        DateTime today = System.now();
-        DateTime tommorow = System.now().addDays(1);
-
-        // Exercise & Verify
-        ParseAppErrors.DateRange simple = new ParseAppErrors.DateRange(new List<AppError__c>{ error(yesterday), error(today), error(tommorow) });
-        System.assertEquals(yesterday, simple.earliest);
-        System.assertEquals(tommorow, simple.latest);
-
-        ParseAppErrors.DateRange overlap = new ParseAppErrors.DateRange(new List<AppError__c>{ error(today), error(today), error(tommorow) });
-        System.assertEquals(today, overlap.earliest);
-        System.assertEquals(tommorow, overlap.latest);
-    }
-
-
     // HELPER
 
     private static void setup() {

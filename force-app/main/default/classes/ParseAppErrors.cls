@@ -63,7 +63,6 @@ public without sharing class ParseAppErrors {
 		error.txt_ExceptionType__c = null;
 		error.txt_ExceptionMessage__c = null;
         error.txt_ApexClass__c = null;
-        
         error.lkp_License__c = null;
         error.lkp_Package__c = null;
         error.lkp_PackageVersion__c = null;
@@ -74,13 +73,11 @@ public without sharing class ParseAppErrors {
 
     private void linkToLma() {
         Map<String, List<AppError__c>> bySubscriber = groupBySubscriber();
-        DateRange range = new DateRange(errors);
 
         for(sfLma__License__c license : [SELECT sfLma__Package__c, sfLma__Package_Version__c, sfLma__Account__c,
                                                 sfLma__Package__r.txt_Namespace__c, sfLma__Subscriber_Org_ID__c,
                                                 (SELECT NewValue, CreatedDate FROM Histories 
                                                  WHERE Field = 'sfLma__Package_Version__c' AND DataType = 'EntityId'
-                                                 AND CreatedDate >= :range.earliest AND CreatedDate <= :range.latest
                                                  ORDER BY CreatedDate DESC) 
                                          FROM sflma__License__c
                                          WHERE sfLma__Subscriber_Org_ID__c = :orgIds(bySubscriber)
@@ -106,10 +103,15 @@ public without sharing class ParseAppErrors {
 
         if(notRecordedLive(error)) {
             for(sfLma__License__History history : license.Histories) {
-                // Note: first match is right one due to ORDER BY
+                // Note: Break as this is the right one due to order by
                 if(history.CreatedDate < error.dtm_RecordedDate__c) {
                     result = (Id) history.NewValue;
                     break;
+                }
+                // Note: History limits hit. Just take the oldest version
+                //       https://help.salesforce.com/s/articleView?id=release-notes.rn_pds_field_history_tracking_deletion.htm&type=5&release=216
+                else {
+                    result = (Id) history.NewValue;
                 }
             }
         }
@@ -174,21 +176,5 @@ public without sharing class ParseAppErrors {
         }
 
         return result;
-    }
-
-
-    // INNER
-
-    public class DateRange {
-
-        public DateTime earliest;
-        public DateTime latest;
-
-        public DateRange(List<AppError__c> errors) {
-            for(AppError__c error : errors) {
-                earliest = (earliest == null || error.dtm_RecordedDate__c < earliest) ? error.dtm_RecordedDate__c : earliest;
-                latest = (latest == null || error.dtm_RecordedDate__c > latest) ? error.dtm_RecordedDate__c : latest;
-            }
-        }
     }
 }
