@@ -3,7 +3,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>AppCockpitHome</identifier>
                 <componentInstanceProperties>
                     <name>dashboardName</name>
                     <value>lFyTIYykZwnTHRtRCsdeWgjzQlwwjB</value>
@@ -13,6 +12,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>desktopDashboards:embeddedDashboard</componentName>
+                <identifier>AppCockpitHome</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>

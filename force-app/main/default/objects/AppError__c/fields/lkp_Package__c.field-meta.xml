@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>lkp_Package__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Package</label>
     <referenceTo>sfLma__Package__c</referenceTo>

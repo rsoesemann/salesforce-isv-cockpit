@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>lkp_License__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>License</label>
     <referenceTo>sfLma__License__c</referenceTo>

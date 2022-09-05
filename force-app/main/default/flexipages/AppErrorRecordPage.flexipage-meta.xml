@@ -3,7 +3,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>AppErrorRecordPage</identifier>
                 <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>true</value>
@@ -21,6 +20,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>AppErrorRecordPage</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -30,8 +30,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>DetailPanel</identifier>
                 <componentName>force:detailPanel</componentName>
+                <identifier>DetailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -41,7 +41,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>Tab</identifier>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -55,6 +54,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>Tab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -64,12 +64,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>TabSet</identifier>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>TabSet</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -79,8 +79,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <identifier>RecordFeedContainer</identifier>
                 <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>RecordFeedContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
