@@ -3,6 +3,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>AppErrorRecordPage</identifier>
                 <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>true</value>
@@ -29,6 +30,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>DetailPanel</identifier>
                 <componentName>force:detailPanel</componentName>
             </componentInstance>
         </itemInstances>
@@ -39,6 +41,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>Tab</identifier>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -61,6 +64,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>TabSet</identifier>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
@@ -75,6 +79,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>RecordFeedContainer</identifier>
                 <componentName>forceChatter:recordFeedContainer</componentName>
             </componentInstance>
         </itemInstances>

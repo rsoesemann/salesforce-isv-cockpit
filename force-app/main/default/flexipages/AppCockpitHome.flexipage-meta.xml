@@ -3,6 +3,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <identifier>AppCockpitHome</identifier>
                 <componentInstanceProperties>
                     <name>dashboardName</name>
                     <value>lFyTIYykZwnTHRtRCsdeWgjzQlwwjB</value>

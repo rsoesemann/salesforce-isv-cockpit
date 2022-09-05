@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "LmaAppCockpit",
-            "versionName": "ver 1.1",
-            "versionNumber": "1.1.0.NEXT",
+            "versionName": "ver 1.0",
+            "versionNumber": "1.0.0.NEXT",
             "dependencies": [
                 {
                     "package": "lma"
@@ -15,9 +15,8 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "51.0",
+    "sourceApiVersion": "54.0",
     "packageAliases": {
-        "LmaAppCockpit": "0Ho5p000000oLkjCAE",
         "lma": "04t30000001DWL0AAO"
     }
 }
