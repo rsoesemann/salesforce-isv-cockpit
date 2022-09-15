@@ -1,9 +1,8 @@
 public with sharing class SetupArchiveErrors extends SetupStep {
 
-    private static final String JOB_NAME = 'LmaAppCockpit_ArchiveErrors';
+    private static final String JOB_NAME = 'AppCockpit_ArchiveErrors';
 
-    private CronTrigger job;
-
+    public CronTrigger job { get; private set; }
     public String cronExpression { get; set; }
     public String filter { get; set; }
     public Integer archived { get; set; }
@@ -31,16 +30,15 @@ public with sharing class SetupArchiveErrors extends SetupStep {
 
     public override ApexPages.Message getStatus() {
         ApexPages.Severity severity = (job!=null) ? ApexPages.Severity.CONFIRM : ApexPages.Severity.WARNING;
-        String message = 'To automatically archive AppErrors ';
-        message += (job!=null) ? setupLink('/DeploymentSettings/home', 'Deployment Settings') + ' and a ' + setupLink('ScheduledJobs/home', 'Scheduled Job') + ' have been created.'
-                               : 'DeploymentSettings and a Scheduled Job need to be created.';
+        String message = 'To automatically archive AppErrors a ';
+        message += (job!=null) ? setupLink('ScheduledJobs/home', 'Scheduled Job') + ' has been created.'
+                               : 'Scheduled Job needs to be created.';
         message += ' (' + archived + ' errors were archived as Big Objects since last run.)';
         return new ApexPages.Message(severity, message);
     }
 
 
     public override PageReference run() {
-        allowChangingOfScheduledJobs();
         reschedule();
 
         return currentPage();
@@ -98,15 +96,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     }
 
 
-    private void allowChangingOfScheduledJobs() {
-        MetadataService.DeploymentSettings setting = new MetadataService.DeploymentSettings();
-        setting.doesSkipAsyncApexValidation = true;
-
-        overwrite(setting);
-    }
-
-
     private ArchiveRecords archiveCommand() {
         return new ArchiveRecords(AppError__c.SObjectType, ArchivedAppError__b.SObjectType, filter);
     }
-}
+} 

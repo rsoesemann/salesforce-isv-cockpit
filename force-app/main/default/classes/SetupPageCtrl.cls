@@ -1,7 +1,8 @@
 public with sharing class SetupPageCtrl extends SetupCtrl {
-
-    public SetupEmailService setupEmailService { get; set; }
+   
     public SetupPackageNamespaces setupPackageNamespaces { get; set; }
+    public SetupAppAnalytics setupAppAnalytics { get; set; }
+    public SetupEmailService setupEmailService { get; set; }
     public SetupVerifyTokenizers setupTokenizers { get; set; }
     public SetupReparse setupReparse { get; set; }
     public SetupArchiveErrors setupArchive { get; set; }
@@ -11,8 +12,9 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
     // CONSTRUCTOR
 
     public SetupPageCtrl() {
-        setupEmailService = new SetupEmailService();
         setupPackageNamespaces = new SetupPackageNamespaces();
+        setupEmailService = new SetupEmailService();
+        setupAppAnalytics = new SetupAppAnalytics();
         setupTokenizers = new SetupVerifyTokenizers();
         setupReparse = new SetupReparse();
         setupArchive = new SetupArchiveErrors();
@@ -23,6 +25,6 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
     // PUBLIC
 
     public override List<SetupStep> steps() {
-        return new List<SetupStep>{ setupEmailService, setupPackageNamespaces, setupTokenizers };
+        return new List<SetupStep>{ setupEmailService, setupPackageNamespaces };
     }
 }
