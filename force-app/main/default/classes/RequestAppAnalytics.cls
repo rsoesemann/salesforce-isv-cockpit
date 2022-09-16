@@ -1,22 +1,32 @@
 public with sharing class RequestAppAnalytics implements Schedulable, Queueable, Database.AllowsCallouts {
     
+    private List<Id> packageIds;
     private AppAnalyticsQueryRequest request;
+
 
     // Constructor
 
-    public RequestAppAnalytics(List<Id> packageId) {
-
+    public RequestAppAnalytics(List<Id> packageIds) {
+        this.packageIds = packageIds;
     }
+
+    
+    public RequestAppAnalytics(AppAnalyticsQueryRequest request) {
+        this.request = request;
+    }
+
 
     // PUBLIC
 
+    // Note: Will be called instantly from Setup or Scheduled
     public void execute() {
         submitAppAnalyticsRequest();
-        pollForResults();
+        
     }
 
     // Schedulable
 
+    // Note: Entry point for Scheduler
     public void execute(SchedulableContext ctx) {
         execute();
     }
@@ -24,8 +34,9 @@ public with sharing class RequestAppAnalytics implements Schedulable, Queueable,
 
     // Queueable
 
+    // Note: Entry Point for Polling for Results
     public void execute(QueueableContext ctx) {
-        
+        pollForResults();
     }
 
 
@@ -33,20 +44,19 @@ public with sharing class RequestAppAnalytics implements Schedulable, Queueable,
     // PRIVATE
 
     private void submitAppAnalyticsRequest() {
-        Date s = Date.today().addMonths(-1).toStartOfMonth();
-        DateTime startTime = DateTime.newInstanceGMT(s.year(), s.month(), s.day(), 0,0,0);
-
-        Date e = Date.today().toStartOfMonth().addDays(-1);
-        DateTime endTime = DateTime.newInstanceGMT(e.year(), e.month(), e.day(), 23,59,59);
         
         request = new AppAnalyticsQueryRequest();
         request.DataType = 'PackageUsageLog';
-        request.StartTime = startTime;
-        request.EndTime = endTime;
+        request.StartTime = Datetime.now().addDays(-1);
+        request.EndTime = Datetime.now();
+        request.PackageIds = String.join(packageIds, ',');
         insert request;
     }
 
     private void pollForResults() {
         //System.enqueueJob(new LogDownloader(aaqr.DownloadUrl, aaqr.DownloadExpirationTime, aaqr.DownloadSize));
     }
+
+
+
 }
