@@ -13,7 +13,12 @@ public with sharing class ConvertAppAnalytics implements Queueable {
     // PUBLIC
 
     public void execute() {
-        System.enqueueJob( this );
+        if(Test.isRunningTest()) {
+            execute(null);
+        }
+        else {
+            System.enqueueJob( this );
+        }
     }
 
 

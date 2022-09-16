@@ -10,7 +10,7 @@ public with sharing class AppAnalyticsQueryRequests extends fflib_SObjectDomain 
     // PUBLIC
 
     public override void onAfterUpdate(Map<Id, SObject> old) {
-        new FetchAppAnalyticsData(records).execute();
+        new FetchAppAnalytics(records).execute();
     }
 
 

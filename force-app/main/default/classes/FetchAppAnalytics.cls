@@ -1,16 +1,16 @@
-public with sharing class FetchAppAnalyticsData implements Queueable, Database.AllowsCallouts {
+public with sharing class FetchAppAnalytics implements Queueable, Database.AllowsCallouts {
 
     private List<AppAnalyticsQueryRequest> requests;
 
 
     // CTROR
 
-    public FetchAppAnalyticsData(List<AppAnalyticsQueryRequest> requests) {
+    public FetchAppAnalytics(List<AppAnalyticsQueryRequest> requests) {
         this.requests = requests;
     }
 
 
-    public FetchAppAnalyticsData(AppAnalyticsQueryRequest request) {
+    public FetchAppAnalytics(AppAnalyticsQueryRequest request) {
         this(new List<AppAnalyticsQueryRequest>{ request });
     }
 
@@ -20,7 +20,7 @@ public with sharing class FetchAppAnalyticsData implements Queueable, Database.A
     public void execute() {
         for(AppAnalyticsQueryRequest request : requests) {
             if(isReadyToFetch(request)) {
-                System.enqueueJob( new FetchAppAnalyticsData(request) );
+                System.enqueueJob( new FetchAppAnalytics(request) );
             }
         }
     }
@@ -35,7 +35,7 @@ public with sharing class FetchAppAnalyticsData implements Queueable, Database.A
                 
                 HttpResponse response = new Http().send(httpRequest);
                 if(response.getStatusCode() == 200) {
-                    new ConvertAppAnalytics(response.getBody()).execute();    
+                    //new ConvertAppAnalytics().execute(); 
                 }
                 else {
                     System.debug(LoggingLevel.ERROR, 'Download failed with Code: ' + response.getStatusCode() + ' + Message: ' + response.getStatusCode());

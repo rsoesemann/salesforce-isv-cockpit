@@ -1,4 +1,4 @@
-public with sharing class RequestAppAnalytics implements Schedulable, Queueable, Database.AllowsCallouts {
+public with sharing class RequestAppAnalytics implements Schedulable {
     
     private List<Id> packageIds;
     private AppAnalyticsQueryRequest request;
@@ -20,31 +20,6 @@ public with sharing class RequestAppAnalytics implements Schedulable, Queueable,
 
     // Note: Will be called instantly from Setup or Scheduled
     public void execute() {
-        submitAppAnalyticsRequest();
-        
-    }
-
-    // Schedulable
-
-    // Note: Entry point for Scheduler
-    public void execute(SchedulableContext ctx) {
-        execute();
-    }
-
-
-    // Queueable
-
-    // Note: Entry Point for Polling for Results
-    public void execute(QueueableContext ctx) {
-        pollForResults();
-    }
-
-
-
-    // PRIVATE
-
-    private void submitAppAnalyticsRequest() {
-        
         request = new AppAnalyticsQueryRequest();
         request.DataType = 'PackageUsageLog';
         request.StartTime = Datetime.now().addDays(-1);
@@ -53,10 +28,10 @@ public with sharing class RequestAppAnalytics implements Schedulable, Queueable,
         insert request;
     }
 
-    private void pollForResults() {
-        //System.enqueueJob(new LogDownloader(aaqr.DownloadUrl, aaqr.DownloadExpirationTime, aaqr.DownloadSize));
+    // Schedulable
+
+    // Note: Entry point for Scheduler
+    public void execute(SchedulableContext ctx) {
+        execute();
     }
-
-
-
 }
