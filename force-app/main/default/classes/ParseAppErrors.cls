@@ -48,8 +48,10 @@ public without sharing class ParseAppErrors {
 
     private void parse() {
         for(AppError__c error : errors) {
-            for(Tokenizer tokenizer : TOKENIZERS) {
-                tokenizer.execute(error);
+            if(String.isNotBlank(error.txl_FullMailBody__c)) {
+                for(Tokenizer tokenizer : TOKENIZERS) {
+                    tokenizer.execute(error);
+                }
             }
         }
     }
