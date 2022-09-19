@@ -7,6 +7,9 @@
 .sf/
 .localdevserver/
 
+#Snyk cache
+.dccache
+
 # IDEs
 .idea/
 .vscode/
