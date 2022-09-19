@@ -1,16 +1,16 @@
-public with sharing class FetchAppAnalytics implements Queueable, Database.AllowsCallouts {
+public with sharing class DownloadAppAnalytics implements Queueable, Database.AllowsCallouts {
 
     private List<AppAnalyticsQueryRequest> requests;
 
 
     // CTROR
 
-    public FetchAppAnalytics(List<AppAnalyticsQueryRequest> requests) {
+    public DownloadAppAnalytics(List<AppAnalyticsQueryRequest> requests) {
         this.requests = requests;
     }
 
 
-    public FetchAppAnalytics(AppAnalyticsQueryRequest request) {
+    public DownloadAppAnalytics(AppAnalyticsQueryRequest request) {
         this(new List<AppAnalyticsQueryRequest>{ request });
     }
 
@@ -19,8 +19,8 @@ public with sharing class FetchAppAnalytics implements Queueable, Database.Allow
 
     public void execute() {
         for(AppAnalyticsQueryRequest request : requests) {
-            if(isReadyToFetch(request)) {
-                System.enqueueJob( new FetchAppAnalytics(request) );
+            if(isComplete(request)) {
+                System.enqueueJob( new DownloadAppAnalytics(request) );
             }
         }
     }
@@ -35,7 +35,7 @@ public with sharing class FetchAppAnalytics implements Queueable, Database.Allow
                 
                 HttpResponse response = new Http().send(httpRequest);
                 if(response.getStatusCode() == 200) {
-                    //new ConvertAppAnalytics().execute(); 
+                    new ConvertAppAnalytics(response.getBody()).execute(); 
                 }
                 else {
                     System.debug(LoggingLevel.ERROR, 'Download failed with Code: ' + response.getStatusCode() + ' + Message: ' + response.getStatusCode());
@@ -50,7 +50,7 @@ public with sharing class FetchAppAnalytics implements Queueable, Database.Allow
 
     // PRIVATE
 
-    private Boolean isReadyToFetch(AppAnalyticsQueryRequest request) {
+    private Boolean isComplete(AppAnalyticsQueryRequest request) {
         return (request.RequestState == 'Complete' && request.DataType == 'PackageUsageLog');
     }
 
