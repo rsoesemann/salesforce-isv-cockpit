@@ -1,6 +1,6 @@
-public with sharing class SetupAppAnalytics extends SetupStep {
+public with sharing class SetupAppAnalytics extends SetupStep implements Schedulable {
 
-    private static final String JOB_NAME = 'AppCockpit_RequestAppAnalytics';
+    public static final String JOB_NAME = 'AppCockpit_RequestAppAnalytics';
 
     public CronTrigger job { get; private set; }
     public String cronExpression { get; set; }
@@ -46,22 +46,41 @@ public with sharing class SetupAppAnalytics extends SetupStep {
             System.abortJob(job.Id);
         }
 
-        System.schedule(JOB_NAME, cronExpression, new RequestAppAnalytics( packageIds() ));
+        System.schedule(JOB_NAME, cronExpression, this);
 
         return currentPage();
     }
 
 
     public PageReference runNow() {
-        new RequestAppAnalytics( packageIds() ).execute();
+        requestLogs();
 
         return currentPage();
+    }
+
+
+    // Schedulable
+
+    public void execute(System.SchedulableContext ctx) {
+        requestLogs();
     }
 
 
 
     // PRIVATE
 
+    private AppAnalyticsQueryRequest requestLogs() {
+        AppAnalyticsQueryRequest request = new AppAnalyticsQueryRequest();
+        request.DataType = 'PackageUsageLog';
+        request.StartTime = Datetime.now().addDays(-1);
+        request.EndTime = Datetime.now();
+        request.PackageIds = String.join(packageIds(), ',');
+        insert request;
+
+        return request;
+    }
+
+    
     private List<Id> packageIds() {
         List<Id> result = new List<Id>();
 
