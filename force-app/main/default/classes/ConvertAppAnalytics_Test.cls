@@ -5,7 +5,14 @@ private class ConvertAppAnalytics_Test {
 
     @IsTest
     private static void execute() {
+
+        // Setup
+        // Note: Take the fake ids in the Static Resource CSV
+        new LmaPackage().id('0331R000000sZin')
+            .add(new LmaVersion().id('04t1R000001MSgE'))
+            .persist();
         
+
         // Exercise 
         new ConvertAppAnalytics(CSV).execute();
 
@@ -20,7 +27,7 @@ private class ConvertAppAnalytics_Test {
             System.assert(String.isNotBlank(error.txt_ApexClass__c), '' + error);
             System.assert(String.isNotBlank(error.lkp_Package__c), '' + error);
             System.assert(String.isNotBlank(error.lkp_PackageVersion__c), '' + error);
-            System.assert(String.isNotBlank(error.txt_ExceptionType__c), '' + error);
+            // TODO: Add more
         }
     }
 

@@ -1,4 +1,4 @@
-<apex:component>
+<apex:component >
     <apex:attribute name="name" type="String" required="true" description=""/>
     <apex:attribute name="type" type="String" required="false" default="utility" description=""/>
     <apex:attribute name="styleClasses" type="String" required="false" default=" slds-icon-text-default slds-icon_x-small" description=""/>

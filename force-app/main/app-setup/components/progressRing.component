@@ -1,4 +1,4 @@
-<apex:component>
+<apex:component >
     <apex:attribute name="type" type="String" required="true" description=""/>
     <apex:attribute name="text" type="String" required="false" default="i" description=""/>
 

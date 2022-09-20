@@ -99,4 +99,4 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     private ArchiveRecords archiveCommand() {
         return new ArchiveRecords(AppError__c.SObjectType, ArchivedAppError__b.SObjectType, filter);
     }
-} 
+}
