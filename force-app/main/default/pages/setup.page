@@ -67,8 +67,6 @@
                     <apex:outputLabel for="cron">Poll when (Use <a href='http://www.cronmaker.com/'>Cronmaker</a>):</apex:outputLabel>
                     <apex:inputText id="cron" value="{!setupAppAnalytics.cronExpression}" size="20" required="true" />
                 </apex:pageBlockSection>
-
-                <apex:commandButton action="{!setupAppAnalytics.runNow}" value="Run Now..." />
             </apex:pageBlock>
         </c:setupStep>
 

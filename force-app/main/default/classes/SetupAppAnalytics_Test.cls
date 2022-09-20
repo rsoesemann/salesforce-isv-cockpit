@@ -11,13 +11,15 @@ private class SetupAppAnalytics_Test {
         System.assertEquals(ApexPages.Severity.WARNING, step.getStatus().getSeverity());
 
 
-        // Verify
+        // Exercise
         Test.startTest();
         step.run();
         Test.stopTest();
 
 
-        // Exercise
+        // Verify
+        System.assertEquals(ApexPages.Severity.WARNING, step.getStatus().getSeverity());
+
         AppAnalyticsQueryRequest request = [SELECT PackageIds FROM AppAnalyticsQueryRequest LIMIT 1];
         System.assertEquals(p.sfLma__Package_ID__c, request.PackageIds);
     }
