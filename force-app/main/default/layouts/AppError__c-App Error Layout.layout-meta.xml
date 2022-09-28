@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>txt_UserId__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>txt_Method__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

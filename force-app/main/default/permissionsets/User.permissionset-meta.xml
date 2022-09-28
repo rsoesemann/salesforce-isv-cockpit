@@ -51,6 +51,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AppError__c.txt_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AppError__c.txt_Namespace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -77,11 +82,11 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>App Cockpit User</label>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>AppError__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>

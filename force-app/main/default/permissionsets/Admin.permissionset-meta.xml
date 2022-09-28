@@ -59,6 +59,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AppError__c.txt_Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AppError__c.txt_Namespace__c</field>
         <readable>true</readable>
     </fieldPermissions>
