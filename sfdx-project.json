@@ -15,7 +15,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "54.0",
+    "sourceApiVersion": "55.0",
     "packageAliases": {
         "lma": "04t30000001DWL0AAO"
     }

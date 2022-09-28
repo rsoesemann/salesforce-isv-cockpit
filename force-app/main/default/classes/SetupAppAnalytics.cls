@@ -99,4 +99,4 @@ public with sharing class SetupAppAnalytics extends SetupStep implements Schedul
         Integer result = Integer.valueOf((nextRun.getTime() - lastRun.getTime()) / (1000*60));
         return result;
     }
-} 
+}
