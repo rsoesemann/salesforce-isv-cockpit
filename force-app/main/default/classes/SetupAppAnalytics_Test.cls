@@ -5,7 +5,7 @@ private class SetupAppAnalytics_Test {
     private static void execute() {
         
         // Setup
-        sfLma__Package__c p = (sfLma__Package__c) new LmaPackage().persist();
+        sfLma__Package__c p = (sfLma__Package__c) new LmaPackage().ns('any').persist();
 
         SetupAppAnalytics step = new SetupAppAnalytics();
         System.assertEquals(ApexPages.Severity.WARNING, step.getStatus().getSeverity());
@@ -18,9 +18,9 @@ private class SetupAppAnalytics_Test {
 
 
         // Verify
-        System.assertEquals(ApexPages.Severity.WARNING, step.getStatus().getSeverity());
+        System.assertEquals(p.sfLma__Package_ID__c, SetupAppAnalytics.request.PackageIds);
 
-        AppAnalyticsQueryRequest request = [SELECT PackageIds FROM AppAnalyticsQueryRequest LIMIT 1];
-        System.assertEquals(p.sfLma__Package_ID__c, request.PackageIds);
+        step = new SetupAppAnalytics();
+        System.assertEquals(ApexPages.Severity.CONFIRM, step.getStatus().getSeverity());
     }
 }

@@ -92,7 +92,6 @@ public with sharing class ConvertAppAnalytics implements Queueable {
 
     private StackTrace deserialize(String stacktraceJson) {
         stacktraceJson = stacktraceJson.replace('"class":', '"clazz":');
-System.debug(LoggingLevel.ERROR, stacktraceJson);       
         return (StackTrace) JSON.deserialize(stacktraceJson, StackTrace.class);
     }
 
@@ -117,7 +116,6 @@ System.debug(LoggingLevel.ERROR, stacktraceJson);
         private stackFrame last() {
             return stackFrames.get(0);
         }
-
 
         private StackFrame first() {
             return stackFrames.get( stackFrames.size() - 1);

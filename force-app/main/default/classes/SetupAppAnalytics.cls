@@ -2,24 +2,31 @@ public with sharing class SetupAppAnalytics extends SetupStep implements Schedul
 
     public static final String JOB_NAME = 'AppCockpit_RequestAppAnalytics';
 
-    public CronTrigger job { get; private set; }
-    public String cronExpression { get; set; }
-
-
-    // CONSTRUCTOR
-
-    public SetupAppAnalytics() {
-        cronExpression = '0 0 1 * * ?';
-
-        for(CronTrigger job : [SELECT CronJobDetail.Name, StartTime, CronExpression, NextFireTime, PreviousFireTime 
-                               FROM CronTrigger WHERE CronJobDetail.Name LIKE :JOB_NAME]) {
-            this.job = job;
-            cronExpression = job.CronExpression;
-        }
-    }
+    @TestVisible
+    private static AppAnalyticsQueryRequest request;
 
 
     // PUBLIC
+
+    public CronTrigger job { 
+        get {
+            for(CronTrigger job : [SELECT CronJobDetail.Name, StartTime, CronExpression, NextFireTime, PreviousFireTime 
+                                    FROM CronTrigger WHERE CronJobDetail.Name LIKE :JOB_NAME]) {
+                this.job = job;
+            }
+            return job;
+        }
+        private set; 
+    }
+
+
+    public String cronExpression { 
+        get {
+            return (job != null) ? job.CronExpression : '0 0 1 * * ?';
+        }
+        set; 
+    }
+
 
     public override ApexPages.Message getStatus() {
         ApexPages.Severity severity = (job == null) ? ApexPages.Severity.WARNING : ApexPages.Severity.CONFIRM;
@@ -69,15 +76,21 @@ public with sharing class SetupAppAnalytics extends SetupStep implements Schedul
 
     // PRIVATE
 
-    private AppAnalyticsQueryRequest requestLogs() {
-        AppAnalyticsQueryRequest request = new AppAnalyticsQueryRequest();
+    private void requestLogs() {
+        request = new AppAnalyticsQueryRequest();
         request.DataType = 'PackageUsageLog';
         request.PackageIds = String.join(packageIds(), ',');
         request.EndTime = job.NextFireTime;
         request.StartTime = job.NextFireTime.addMinutes(- minutesBetweenJob());
-        insert request;
 
-        return request;
+        try {
+            insert request;
+        }
+        catch(Exception ignored) {
+            // Note: In Scratch orgs this is ok
+            System.debug(LoggingLevel.ERROR, '(In Scratch orgs this is ok) ' + ignored);
+        }
+        
     }
 
 
