@@ -13,12 +13,12 @@
         <headerColor>#CF0000</headerColor>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
-    <description>Improve your Apps by leveraging Managed Package Error Notifications.</description>
+    <description>Monitor your ISV app directly from you Partner Business Org (PBO)</description>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
-    <label>App Cockpit</label>
+    <label>ISV Cockpit</label>
     <navType>Standard</navType>
     <tabs>Home</tabs>
     <tabs>AppError__c</tabs>
