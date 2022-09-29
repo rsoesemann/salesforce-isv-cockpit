@@ -1,64 +1,134 @@
 public with sharing class SetupEmailService extends SetupStep {
 
-    private static final String FUNCTION_NAME = 'App Error Inbox';
+    private static final String DEVELOPER_NAME = 'AppErrorCockpit';
     private Id classId = [SELECT Id FROM ApexClass WHERE Name = 'ErrorMailReceiver' LIMIT 1].Id;
 
     // PUBLIC
 
+    public EmailServicesAddress service { 
+        get {
+            for(EmailServicesAddress service : [SELECT LocalPart, EmailDomainName, Function.IsActive, FunctionId FROM EmailServicesAddress
+                                                WHERE Function.FunctionName = :DEVELOPER_NAME AND Function.ApexClassId = :classId LIMIT 1]) {
+                this.service = service;
+            }
+            return service;
+        }
+        private set; 
+    }
+
+    public Boolean isActive { 
+        get { return (service != null && service.Function.IsActive); } private set; 
+    }
+
+
+    public List<Tokenizer__mdt> tokenizers { get { return new TokenizersSelector().allActiveInOrder(); } private set; }
+
+
     public override ApexPages.Message getStatus() {
-        List<EmailServicesAddress> existing = [SELECT LocalPart, EmailDomainName, Id FROM EmailServicesAddress
-                                               WHERE Function.FunctionName = :FUNCTION_NAME AND Function.ApexClassId = :classId LIMIT 1];
-        if(existing.isEmpty()) {
-            return new ApexPages.Message(ApexPages.Severity.WARNING, 'An Email Service is required to allow the tool to receive app errors.');
+        if(isActive) {
+            String address = service.LocalPart + '@' + service.EmailDomainName;
+            String link = '<em><a href="/lightning/setup/EmailToApexFunction/page?address=%2Femail-admin%2Fservices%2FdetailEmailServicesAddress.apexp%3Fid%3D' + service.Id + '">' + address + '</a></em>';
+            String message = String.format('An Email Service is set up to receive error emails. Configure your Managed Packages to send errors to: {0}.<br/><br/>' +
+                                           '{1} for {2} Email Tokenizers is available.',
+                             new List<String>{ link, setupLink('m00', 'CustomMetadata', 'Custom Metadata'), ''+ tokenizers.size()});
+            return new ApexPages.Message(ApexPages.Severity.CONFIRM, message);
         }
         else {
-            String address = existing[0].LocalPart + '@' + existing[0].EmailDomainName;
-            String link = '<em><a href="/lightning/setup/EmailToApexFunction/page?address=%2Femail-admin%2Fservices%2FdetailEmailServicesAddress.apexp%3Fid%3D' + existing[0].Id + '">' + address + '</a></em>';
-            return new ApexPages.Message(ApexPages.Severity.CONFIRM, 'An Email Service is set up to receive app errors. Make all your Managed Packages send errors to: <br/>' + link);
+            return new ApexPages.Message(ApexPages.Severity.WARNING, 'An Email Service is required to allow the tool to receive app errors.');
         }
+    }
+
+    
+    public override Boolean getShowButtonOnSuccess() {
+        return true;
     }
 
 
     public override String buttonLabel() {
-        return 'Execute';
+        return (isActive) ? 'Deactivate' : 'Activate';
     }
 
 
     public override PageReference run() {
-        try {
-            HttpResponse response = createSObject('<urn1:type>EmailServicesFunction</urn1:type>' +
-                                '<urn1:fieldsToNull></urn1:fieldsToNull>' +
-                                '<urn1:ApexClassId>' +  classId + '</urn1:ApexClassId>' +
-                                '<urn1:IsActive>true</urn1:IsActive>' +
-                                '<urn1:FunctionName>' + FUNCTION_NAME +'</urn1:FunctionName>');
-
-            Id functionId = [SELECT Id FROM EmailServicesFunction WHERE FunctionName = :FUNCTION_NAME AND ApexClassId = :classId].Id;
-            createSObject('<urn1:type>EmailServicesAddress</urn1:type>' +
-                                '<urn1:FunctionId>' + functionId + '</urn1:FunctionId>' +
-                                '<urn1:DeveloperName>AppErrorInbox</urn1:DeveloperName>' +
-                                '<urn1:IsActive>true</urn1:IsActive>' +
-                                '<urn1:LocalPart>app-error-inbox</urn1:LocalPart>' +
-                                '<urn1:RunAsUserId>' + UserInfo.getUserId() + '</urn1:RunAsUserId>');
+        if(isActive) {
+            deactivateServiceFunction(service.FunctionId);
         }
-        catch(Exception ex) {
-            ApexPages.addMessages(ex);
+        else {
+            createOrActivateServiceFunction();
+            createOrActivateServiceAddress();
         }
 
-        return null;
+        return currentPage();
     }
 
 
     // PRIVATE
 
-    private HTTPResponse createSObject(String fragment) {
+    private void createOrActivateServiceFunction() {
+        if(service == null) {
+            soapApi('create',
+                '<urn:type>EmailServicesFunction</urn:type>' +
+                '<urn:fieldsToNull></urn:fieldsToNull>' +
+                '<urn:ApexClassId>' +  classId + '</urn:ApexClassId>' +
+                '<urn:IsActive>true</urn:IsActive>' +
+                '<urn:FunctionName>' + DEVELOPER_NAME + '</urn:FunctionName>'
+            );
+        }
+        else {
+            soapApi('update', 
+                '<urn:type>EmailServicesFunction</urn:type>' +
+                '<urn:Id>' + service.FunctionId + '</urn:Id>' +
+                '<urn:IsActive>true</urn:IsActive>'
+            );
+        }
+    }
+    
+
+    private void createOrActivateServiceAddress() {
+        if(service == null) {
+            Id functionId = [SELECT Id FROM EmailServicesFunction WHERE FunctionName = :DEVELOPER_NAME].Id;
+
+            soapApi('create',
+                '<urn:type>EmailServicesAddress</urn:type>' +
+                '<urn:FunctionId>' + functionId + '</urn:FunctionId>' +
+                '<urn:DeveloperName>' + DEVELOPER_NAME + '</urn:DeveloperName>' +
+                '<urn:IsActive>true</urn:IsActive>' +
+                '<urn:LocalPart>app-error-inbox</urn:LocalPart>' +
+                '<urn:RunAsUserId>' + UserInfo.getUserId() + '</urn:RunAsUserId>'
+            );
+        }
+        else {
+            soapApi('update',
+                '<urn:type>EmailServicesAddress</urn:type>' +
+                '<urn:Id>' + service.Id + '</urn:Id>' +
+                '<urn:IsActive>true</urn:IsActive>'
+            );
+        }
+    }
+    
+
+    private void deactivateServiceFunction(Id functionId) {
+        soapApi('update',
+            '<urn:type>EmailServicesFunction</urn:type>' +
+            '<urn:Id>' + functionId + '</urn:Id>' +
+            '<urn:IsActive>false</urn:IsActive>'
+        );
+    }
+    
+
+    private void soapApi(String operation, String sobjectXml) {
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/u/51.0');
+        request.setEndpoint(URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/u/54.0');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'text/xml; charset=UTF-8');
         request.setHeader('SOAPAction', 'ignored');
-        request.setBody('<?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:urn="urn:partner.soap.sforce.com" xmlns:urn1="urn:sobject.partner.soap.sforce.com"><env:Header><SessionHeader xmlns="urn:partner.soap.sforce.com"><sessionId>' + UserInfo.getSessionId() + '</sessionId></SessionHeader></env:Header><env:Body><urn:create><urn:sObjects>' +
-                            + fragment + '</urn:sObjects></urn:create></env:Body></env:Envelope>');
-
-        return new Http().send(request);
+        request.setBody('<?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:urn="urn:partner.soap.sforce.com" xmlns:urn1="urn:sobject.partner.soap.sforce.com">' +
+                        '<env:Header><SessionHeader xmlns="urn:partner.soap.sforce.com"><sessionId>' + UserInfo.getSessionId() + '</sessionId></SessionHeader></env:Header>' +
+                        '<env:Body><urn:' + operation + '><urn:sObjects>' + sobjectXml + '</urn:sObjects></urn:' + operation + '></env:Body></env:Envelope>');
+        
+        HttpResponse response = new Http().send(request);
+        if(response.getStatusCode() != 200) {
+            throw new ApplicationException(response.getBody());
+        }
     }
 }

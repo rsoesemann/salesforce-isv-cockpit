@@ -21,10 +21,12 @@ public with sharing class SetupAppAnalytics extends SetupStep implements Schedul
 
 
     public String cronExpression { 
-        get {
-            return (job != null) ? job.CronExpression : '0 0 1 * * ?';
-        }
-        set; 
+        get { return (job != null) ? job.CronExpression : '0 0 1 * * ?'; } set; 
+    }
+
+
+    public Boolean isActive { 
+        get {return (job != null); } private set; 
     }
 
 
@@ -43,24 +45,17 @@ public with sharing class SetupAppAnalytics extends SetupStep implements Schedul
 
 
     public override String buttonLabel() {
-        return 'Save';
+        return (isActive) ? 'Deactivate' : 'Activate';
     }
 
 
     public override PageReference run() {
-        System.purgeOldAsyncJobs(Date.today().addDays(1));
-
-        if(job != null) {
-            System.abortJob(job.Id);
+        if(isActive) {
+            deactivate();
         }
-        System.schedule(JOB_NAME, cronExpression, this);
-
-        return currentPage();
-    }
-
-
-    public PageReference runNow() {
-        requestLogs();
+        else {
+            activate();
+        }
 
         return currentPage();
     }
@@ -73,8 +68,21 @@ public with sharing class SetupAppAnalytics extends SetupStep implements Schedul
     }
 
 
-
     // PRIVATE
+
+    private void activate() {
+        System.schedule(JOB_NAME, cronExpression, this);
+    }
+
+
+    private void deactivate() {
+        System.purgeOldAsyncJobs(Date.today().addDays(1));
+
+        if(job != null) {
+            System.abortJob(job.Id);
+        }
+    }
+
 
     private void requestLogs() {
         request = new AppAnalyticsQueryRequest();
@@ -90,7 +98,6 @@ public with sharing class SetupAppAnalytics extends SetupStep implements Schedul
             // Note: In Scratch orgs this is ok
             System.debug(LoggingLevel.ERROR, '(In Scratch orgs this is ok) ' + ignored);
         }
-        
     }
 
 
