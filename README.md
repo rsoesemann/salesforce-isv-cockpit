@@ -1,6 +1,6 @@
-# Salesforce LMA App Cockpit 
+# Salesforce ISV Cockpit 
 
-The App Cockpit is a native Salesforce App that extends the Salesforce LMA and helps you monitor the health of your apps and proactively support your subscribers in error cases.
+The ISV Cockpit is a native Salesforce App that extends the Salesforce LMA in your Partner Business Org (PBO) and helps you monitor the health of your apps and proactively support your subscribers in error cases.
 
 ## TL;DR - Show me a video demo!
 
