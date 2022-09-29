@@ -3,7 +3,6 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
     public SetupPackageNamespaces setupPackageNamespaces { get; set; }
     public SetupAppAnalytics setupAppAnalytics { get; set; }
     public SetupEmailService setupEmailService { get; set; }
-    public SetupVerifyTokenizers setupTokenizers { get; set; }
     public SetupReparse setupReparse { get; set; }
     public SetupArchiveErrors setupArchive { get; set; }
     public SetupRestoreErrors setupRestore { get; set; }
@@ -15,7 +14,6 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
         setupPackageNamespaces = new SetupPackageNamespaces();
         setupEmailService = new SetupEmailService();
         setupAppAnalytics = new SetupAppAnalytics();
-        setupTokenizers = new SetupVerifyTokenizers();
         setupReparse = new SetupReparse();
         setupArchive = new SetupArchiveErrors();
         setupRestore = new SetupRestoreErrors();
