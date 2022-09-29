@@ -1,6 +1,6 @@
 <apex:component >
     <apex:attribute name="ctrl" type="SetupCtrl" required="true" description="" />
-    <apex:attribute name="progressLabel" type="String" default="Complete all the steps below to finish setting up the app" required="false" description="" />
+    <apex:attribute name="progressLabel" type="String" default="Complete all the mandatory step to finish setting up the app" required="false" description="" />
 
     <apex:slds />
 
@@ -25,4 +25,11 @@
             </ol>
         </section>
     </div>
+    
+    <script>
+        // Note: To prevent page to scroll. See https://help.salesforce.com/s/articleView?id=000334695&type=1
+        window.onload = function(){
+            window.scrollTo(0,0);
+        };
+    </script>
 </apex:component>

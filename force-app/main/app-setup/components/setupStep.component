@@ -2,7 +2,7 @@
     <apex:attribute name="title" type="String" required="true" description=""  />
     <apex:attribute name="step" type="SetupStep" required="false" description="" />
     <apex:attribute name="enabled" type="Boolean" required="false" default="true" description="" />
-    <apex:attribute name="keepOpen" type="Boolean" required="false" default="false" description="" />
+    <apex:attribute name="hideBody" type="Boolean" required="false" default="false" description="" />
 
     <style>
         .vfLabelColTextWrap {
@@ -16,20 +16,16 @@
         .messageCell {
             text-align: center !important;
         }
+        .slds-scope .slds-setup-assistant__item:last-child {
+            border-bottom: 1px solid #e5e5e5 !important;
+        }
     </style>
 
     
     <li class="slds-setup-assistant__item">
         <article class="slds-setup-assistant__step">
             <apex:form id="form">
-                <div class="slds-summary-detail slds-is-open" id="toggelDetail">
-                    <button class="{!IF(step.success && NOT(keepOpen), 'slds-hide', 'slds-button slds-button_icon slds-m-right_x-small slds-m-top_x-small')}">
-                        <span onclick="toggleContent(this); return false;" class="slds-icon_container" >
-                            <span id="chevronright" class="slds-hide"><c:svg name="chevronright"/></span>
-                            <span id="chevrondown"><c:svg name="chevrondown"/></span>
-                        </span>
-                    </button>
-
+                <div class="slds-summary-detail slds-is-open">
                     <div class="slds-container_fluid">
                         <div class="slds-summary-detail__title">
                             <div class="slds-setup-assistant__step-summary">
@@ -75,8 +71,8 @@
 
 
                         <div aria-hidden="false" class="slds-summary-detail__content" id="content">
-                            <div class="slds-setup-assistant__step-detail">
-                                <apex:componentBody rendered="{!NOT(step.success) || keepOpen}" />
+                            <div class="{!IF(hideBody, 'slds-hide', 'slds-setup-assistant__step-detail')}">
+                                <apex:componentBody />
                             </div>
                         </div>
                     </div>
@@ -84,17 +80,4 @@
             </apex:form>
         </article>
     </li>
-    
-
-    <script>
-        function toggleContent(event) {
-            event.parentElement.parentElement.classList.toggle('slds-is-open');
-
-            event.classList.toggle('slds-icon-utility-chevronright');
-            event.classList.toggle('slds-icon-utility-chevrondown');
-
-            event.children[0].classList.toggle("slds-hide");
-            event.children[1].classList.toggle("slds-hide");
-        }
-    </script>
 </apex:component>

@@ -1,26 +1,25 @@
-<apex:page controller="SetupPageCtrl" title="LMA App Cockpit - Setup" docType="html-5.0" sidebar="false" lightningStylesheets="true">
-
+<apex:page controller="SetupPageCtrl" title="ISV Cockpit - Setup" docType="html-5.0" sidebar="false" lightningStylesheets="true">
     <c:setup ctrl="{!controller}">
-        <c:setupStep title="Prepare LMA Packages (Mandatory)" step="{!setupPackageNamespaces}"/>
+        <c:setupStep title="Prepare LMA Packages (Mandatory)" step="{!setupPackageNamespaces}" hideBody="true" />
 
-        <c:setupStep title="Create Email Service (Mandatory)" step="{!setupEmailService}" rendered="{!setupAppAnalytics.job == NULL}"/>
+        <c:setupStep title="Receive Errors via App Analytics (BETA)" step="{!setupAppAnalytics}" hideBody="true" />
 
-        <c:setupStep title="Verify Email Tokenizers (Optional)" step="{!setupTokenizers}" keepOpen="true" rendered="{!setupAppAnalytics.job == NULL}">
+        <c:setupStep title="Receive Errors via Email (Mandatory)" step="{!setupEmailService}">
             <apex:pageBlock id="block">
-                <apex:pageBlockTable value="{!setupTokenizers.records}" var="record" columnsWidth="10%,5%,10%,10%,10%,10%,10%,35%">
-                    <apex:column value="{!record.DeveloperName}" />
-                    <apex:column value="{!record.num_Position__c}" />
-                    <apex:column value="{!record.txt_Group1Field__c}" />
-                    <apex:column value="{!record.txt_Group2Field__c}" />
-                    <apex:column value="{!record.txt_Group3Field__c}" />
-                    <apex:column value="{!record.txt_Group4Field__c}" />
-                    <apex:column value="{!record.txt_Group5Field__c}" />
-                    <apex:column value="{!record.txl_RegExp__c}" />
+                <apex:pageBlockTable value="{!setupEmailService.tokenizers}" var="tokenizer" columnsWidth="10%,5%,10%,10%,10%,10%,10%,35%">
+                    <apex:column value="{!tokenizer.DeveloperName}" />
+                    <apex:column value="{!tokenizer.num_Position__c}" />
+                    <apex:column value="{!tokenizer.txt_Group1Field__c}" />
+                    <apex:column value="{!tokenizer.txt_Group2Field__c}" />
+                    <apex:column value="{!tokenizer.txt_Group3Field__c}" />
+                    <apex:column value="{!tokenizer.txt_Group4Field__c}" />
+                    <apex:column value="{!tokenizer.txt_Group5Field__c}" />
+                    <apex:column value="{!tokenizer.txl_RegExp__c}" />
                 </apex:pageBlockTable>
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Reparse errors via Batch (Optional)" step="{!setupReparse}" keepOpen="true" rendered="{!setupAppAnalytics.job == NULL}">
+        <c:setupStep title="Reparse errors via Batch (Optional)" step="{!setupReparse}" enabled="{!setupEmailService.success}">
             <apex:pageBlock >
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="filter">Filter Condition</apex:outputLabel>
@@ -36,8 +35,8 @@
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Archive Errors (Optional)" step="{!setupArchive}" keepOpen="true" rendered="{!setupArchive.isSupported}">
-            <apex:pageBlock >
+        <c:setupStep title="Archive Errors (Optional)" step="{!setupArchive}" enabled="{!setupArchive.isSupported}">
+            <apex:pageBlock>
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Archive when (Use <a href='http://www.cronmaker.com/'>Cronmaker</a>):</apex:outputLabel>
                     <apex:inputText id="cron" value="{!setupArchive.cronExpression}" size="20" required="true" />
@@ -52,20 +51,11 @@
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Restore Archived Errors (Optional)" step="{!setupRestore}" keepOpen="{!setupArchive.archived > 0}" enabled="{!setupArchive.archived > 0}" rendered="{!setupArchive.isSupported}">
+        <c:setupStep title="Restore Archived Errors (Optional)" step="{!setupRestore}" enabled="{!setupArchive.isSupported && setupArchive.archived > 0}">
             <apex:pageBlock >
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Async SOQL filter</apex:outputLabel>
                     <apex:inputTextarea id="filter" value="{!setupRestore.filter}" cols="20" rows="2" />
-                </apex:pageBlockSection>
-            </apex:pageBlock>
-        </c:setupStep>
-
-        <c:setupStep title="Poll Errors via App Analytics (BETA)" step="{!setupAppAnalytics}" keepOpen="true">
-            <apex:pageBlock >
-                <apex:pageBlockSection columns="2">
-                    <apex:outputLabel for="cron">Poll when (Use <a href='http://www.cronmaker.com/'>Cronmaker</a>):</apex:outputLabel>
-                    <apex:inputText id="cron" value="{!setupAppAnalytics.cronExpression}" size="20" required="true" />
                 </apex:pageBlockSection>
             </apex:pageBlock>
         </c:setupStep>
