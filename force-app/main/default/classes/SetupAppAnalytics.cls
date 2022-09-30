@@ -1,23 +1,8 @@
-public with sharing class SetupAppAnalytics extends SetupStep implements Schedulable {
-
-    public static final String JOB_NAME = 'AppCockpit_RequestAppAnalytics';
-
-    @TestVisible
-    private static AppAnalyticsQueryRequest request;
-
+public with sharing class SetupAppAnalytics extends SetupStep  {
 
     // PUBLIC
 
-    public CronTrigger job { 
-        get {
-            for(CronTrigger job : [SELECT CronJobDetail.Name, StartTime, CronExpression, NextFireTime, PreviousFireTime 
-                                    FROM CronTrigger WHERE CronJobDetail.Name LIKE :JOB_NAME]) {
-                this.job = job;
-            }
-            return job;
-        }
-        private set; 
-    }
+    public CronTrigger job { get { return RequestAppAnalytics.queryJob(); } private set; }
 
 
     public String cronExpression { 
@@ -61,62 +46,14 @@ public with sharing class SetupAppAnalytics extends SetupStep implements Schedul
     }
 
 
-    // Schedulable
-
-    public void execute(System.SchedulableContext ctx) {
-        requestLogs();
-    }
-
-
     // PRIVATE
 
     private void activate() {
-        System.schedule(JOB_NAME, cronExpression, this);
+        new RequestAppAnalytics(job).activate();
     }
 
 
     private void deactivate() {
-        System.purgeOldAsyncJobs(Date.today().addDays(1));
-
-        if(job != null) {
-            System.abortJob(job.Id);
-        }
-    }
-
-
-    private void requestLogs() {
-        request = new AppAnalyticsQueryRequest();
-        request.DataType = 'PackageUsageLog';
-        request.PackageIds = String.join(packageIds(), ',');
-        request.EndTime = job.NextFireTime;
-        request.StartTime = job.NextFireTime.addMinutes(- minutesBetweenJob());
-
-        try {
-            insert request;
-        }
-        catch(Exception ignored) {
-            // Note: In Scratch orgs this is ok
-            System.debug(LoggingLevel.ERROR, '(In Scratch orgs this is ok) ' + ignored);
-        }
-    }
-
-
-    private List<Id> packageIds() {
-        List<Id> result = new List<Id>();
-
-        for(sfLma__Package__c p : [SELECT sfLma__Package_ID__c FROM sfLma__Package__c WHERE txt_Namespace__c <> NULL]) {
-            result.add(p.sfLma__Package_ID__c);
-        }
-
-        return result;
-    }
-
-
-    private Integer minutesBetweenJob() {
-        Datetime nextRun = job.NextFireTime;
-        Datetime lastRun = (job.PreviousFireTime == null) ? nextRun.addDays(-1) : job.PreviousFireTime;
-
-        Integer result = Integer.valueOf((nextRun.getTime() - lastRun.getTime()) / (1000*60));
-        return result;
+        new RequestAppAnalytics(job).deactivate();
     }
 }
