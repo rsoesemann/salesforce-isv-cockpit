@@ -3,28 +3,22 @@
         {
             "path": "force-app",
             "default": true,
-            "package": "IsvCockpit",
+            "package": "isv-cockpit",
             "versionName": "ver 1.0",
             "versionNumber": "1.0.0.NEXT",
+            "definitionFile": "config/scratch-org-def.json",
             "dependencies": [
                 {
                     "package": "lma"
                 }
             ]
-        },
-        {
-            "path": "force-app",
-            "package": "isv-cockpit",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.0.NEXT",
-            "default": false
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "55.0",
     "packageAliases": {
-        "lma": "04t30000001DWL0AAO",
-        "isv-cockpit": "0Ho1R000000GmaiSAC"
+        "isv-cockpit": "0Ho1R000000GmaiSAC",
+        "lma": "04t30000001DWL0AAO"
     }
 }
