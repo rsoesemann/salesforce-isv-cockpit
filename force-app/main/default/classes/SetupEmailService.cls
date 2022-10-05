@@ -1,6 +1,6 @@
 public with sharing class SetupEmailService extends SetupStep {
 
-    private static final String DEVELOPER_NAME = 'AppErrorCockpit';
+    private static final String DEVELOPER_NAME = 'IsvCockpit_EmailReceiver';
     private Id classId = [SELECT Id FROM ApexClass WHERE Name = 'ErrorMailReceiver' LIMIT 1].Id;
 
     // PUBLIC
@@ -86,8 +86,8 @@ public with sharing class SetupEmailService extends SetupStep {
 
     private void createOrActivateServiceAddress() {
         if(service == null) {
-            Id functionId = [SELECT Id FROM EmailServicesFunction WHERE FunctionName = :DEVELOPER_NAME].Id;
 
+            Id functionId = [SELECT Id FROM EmailServicesFunction WHERE FunctionName = :DEVELOPER_NAME].Id;
             soapApi('create',
                 '<urn:type>EmailServicesAddress</urn:type>' +
                 '<urn:FunctionId>' + functionId + '</urn:FunctionId>' +
@@ -126,7 +126,7 @@ public with sharing class SetupEmailService extends SetupStep {
                         '<env:Header><SessionHeader xmlns="urn:partner.soap.sforce.com"><sessionId>' + UserInfo.getSessionId() + '</sessionId></SessionHeader></env:Header>' +
                         '<env:Body><urn:' + operation + '><urn:sObjects>' + sobjectXml + '</urn:sObjects></urn:' + operation + '></env:Body></env:Envelope>');
         
-        HttpResponse response = new Http().send(request);
+                        HttpResponse response = new Http().send(request);
         if(response.getStatusCode() != 200) {
             throw new ApplicationException(response.getBody());
         }

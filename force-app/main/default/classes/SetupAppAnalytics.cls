@@ -5,11 +5,6 @@ public with sharing class SetupAppAnalytics extends SetupStep  {
     public CronTrigger job { get { return RequestAppAnalytics.queryJob(); } private set; }
 
 
-    public String cronExpression { 
-        get { return (job != null) ? job.CronExpression : '0 0 1 * * ?'; } set; 
-    }
-
-
     public Boolean isActive { 
         get {return (job != null); } private set; 
     }

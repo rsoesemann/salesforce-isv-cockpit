@@ -12,6 +12,7 @@ public with sharing class RequestAppAnalytics implements Schedulable {
 
     public RequestAppAnalytics(CronTrigger job) {
         this.job = job;
+        System.debug(LoggingLevel.ERROR, job);
     }
 
 
@@ -22,7 +23,8 @@ public with sharing class RequestAppAnalytics implements Schedulable {
             execute(null);
         }
         else {
-            System.schedule(JOB_NAME, job.cronExpression, this);
+            // Note: Run every hour
+            System.schedule(JOB_NAME, '0 0 1 * * ?', this);
         }
     }
 
@@ -90,8 +92,8 @@ public with sharing class RequestAppAnalytics implements Schedulable {
     private AppAnalyticsQueryRequest requestFor(List<Id> subscribers, List<Id> packages) {
         AppAnalyticsQueryRequest result = new AppAnalyticsQueryRequest();
         result.DataType = 'PackageUsageLog';
-        result.EndTime = job.NextFireTime;
-        result.StartTime = job.NextFireTime.addMinutes(- minutesBetweenJob());
+        result.EndTime = job.NextFireTime.addDays(-2);
+        result.StartTime = result.EndTime.addMinutes(- minutesBetweenJob());
         result.PackageIds = String.join(packages, ',');
         result.OrganizationIds = String.join(subscribers, ',');
         return result;

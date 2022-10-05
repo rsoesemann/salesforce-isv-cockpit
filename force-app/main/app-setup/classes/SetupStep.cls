@@ -38,6 +38,7 @@ public abstract class SetupStep {
         }
         catch(Exception ex) {
             ApexPages.addMessages(ex);
+            System.debug(LoggingLevel.ERROR, '' +  ex);
         }
 
         return result;
@@ -188,6 +189,7 @@ public abstract class SetupStep {
         }
         catch(Exception ex) {
             ApexPages.addMessages(ex);
+            System.debug(LoggingLevel.ERROR, '' +  ex);
         }
 
         return result;
