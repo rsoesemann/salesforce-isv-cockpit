@@ -3,7 +3,7 @@
         {
             "path": "force-app",
             "default": true,
-            "package": "LmaAppCockpit",
+            "package": "IsvCockpit",
             "versionName": "ver 1.0",
             "versionNumber": "1.0.0.NEXT",
             "dependencies": [
@@ -11,12 +11,20 @@
                     "package": "lma"
                 }
             ]
+        },
+        {
+            "path": "force-app",
+            "package": "isv-cockpit",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": false
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "55.0",
     "packageAliases": {
-        "lma": "04t30000001DWL0AAO"
+        "lma": "04t30000001DWL0AAO",
+        "isv-cockpit": "0Ho1R000000GmaiSAC"
     }
 }
