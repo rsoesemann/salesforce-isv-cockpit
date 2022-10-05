@@ -36,7 +36,7 @@
         </c:setupStep>
 
         <c:setupStep title="Archive Errors (Optional)" step="{!setupArchive}" enabled="{!setupArchive.isSupported}">
-            <apex:pageBlock>
+            <apex:pageBlock >
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Archive when (Use <a href='http://www.cronmaker.com/'>Cronmaker</a>):</apex:outputLabel>
                     <apex:inputText id="cron" value="{!setupArchive.cronExpression}" size="20" required="true" />

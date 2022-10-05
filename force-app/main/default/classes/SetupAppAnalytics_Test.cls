@@ -18,7 +18,7 @@ private class SetupAppAnalytics_Test {
 
 
         // Verify
-        System.assertEquals(p.sfLma__Package_ID__c, SetupAppAnalytics.request.PackageIds);
+        System.assertEquals(p.sfLma__Package_ID__c, RequestAppAnalytics.requests[0].PackageIds);
 
         step = new SetupAppAnalytics();
         System.assertEquals(ApexPages.Severity.CONFIRM, step.getStatus().getSeverity());

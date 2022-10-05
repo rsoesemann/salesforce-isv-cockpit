@@ -4,7 +4,7 @@ public with sharing class RequestAppAnalytics implements Schedulable {
     public static final Integer USERS_PER_CHUNK = 100;
 
     @TestVisible
-    private List<AppAnalyticsQueryRequest> requests = new List<AppAnalyticsQueryRequest>();
+    private static List<AppAnalyticsQueryRequest> requests = new List<AppAnalyticsQueryRequest>();
 
     private CronTrigger job;
 
