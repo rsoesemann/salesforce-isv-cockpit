@@ -1,3 +1,3 @@
-PACKAGE_NAME="lma-app-cockpit"
-DEV_HUB_ALIAS="DevhubPrivate"
-SCRATCH_ORG_ALIAS="lma-app-cockpit_DEV"
+PACKAGE_NAME="isv-cockpit"
+DEV_HUB_ALIAS="DevHubPrivate"
+SCRATCH_ORG_ALIAS="isv-cockpit_DEV"

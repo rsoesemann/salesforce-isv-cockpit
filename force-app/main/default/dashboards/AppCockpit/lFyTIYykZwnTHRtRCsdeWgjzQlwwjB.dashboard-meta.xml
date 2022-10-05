@@ -22,7 +22,7 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors by Class</header>
-                <report>AppCockpit/AppErrorsByClass</report>
+                <report>IsvCockpit/AppErrorsByClass</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -46,7 +46,7 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors by Account and Version</header>
-                <report>AppCockpit/AppErrorsByAccountAndVersion</report>
+                <report>IsvCockpit/AppErrorsByAccountAndVersion</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -70,7 +70,7 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors by Version and Account</header>
-                <report>AppCockpit/AppErrorsByVersionAndAccount</report>
+                <report>IsvCockpit/AppErrorsByVersionAndAccount</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -94,7 +94,7 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors by Page</header>
-                <report>AppCockpit/AppErrorsByPage</report>
+                <report>IsvCockpit/AppErrorsByPage</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -118,7 +118,7 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors over Time by Account</header>
-                <report>AppCockpit/AppErrorsOverTimeByAccount</report>
+                <report>IsvCockpit/AppErrorsOverTimeByAccount</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>

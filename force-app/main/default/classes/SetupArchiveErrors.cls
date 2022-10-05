@@ -1,6 +1,6 @@
 public with sharing class SetupArchiveErrors extends SetupStep {
 
-    private static final String JOB_NAME = 'AppCockpit_ArchiveErrors';
+    private static final String JOB_NAME = 'IsvCockpit_ArchiveErrors';
 
     public CronTrigger job { get; private set; }
     public String cronExpression { get; set; }

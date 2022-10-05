@@ -1,5 +1,5 @@
 {
-  "orgName": "lma-app-cockpit_DEV",
+  "orgName": "isv-cockpit_DEV",
   "edition": "Developer",
   "features": ["FieldAuditTrail"],
   "settings": {
