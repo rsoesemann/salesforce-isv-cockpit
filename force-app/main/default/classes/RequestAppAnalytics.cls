@@ -1,6 +1,5 @@
 public with sharing class RequestAppAnalytics implements Schedulable {
 
-    public static final String JOB_NAME = 'IsvCockpit_RequestAppAnalytics';
     public static final Integer USERS_PER_CHUNK = 100;
 
     @TestVisible
@@ -12,47 +11,14 @@ public with sharing class RequestAppAnalytics implements Schedulable {
 
     public RequestAppAnalytics(CronTrigger job) {
         this.job = job;
-        System.debug(LoggingLevel.ERROR, job);
     }
 
 
     // PUBLIC
 
-    public void activate() {
-        if(Test.isRunningTest()) {
-            execute(null);
-        }
-        else {
-            // Note: Run every hour
-            System.schedule(JOB_NAME, '0 0 1 * * ?', this);
-        }
-    }
-
-
-    public void deactivate() {
-        System.purgeOldAsyncJobs(Date.today().addDays(1));
-
-        if(job != null) {
-            System.abortJob(job.Id);
-        }
-    }
-
-
     public void execute(System.SchedulableContext ctx) {
         createWellSizedRequestForAllSubscribers();
         insertRequestsWhenAnalyticsEnabled();
-    }
-
-
-    public static CronTrigger queryJob() {
-        CronTrigger result = null;
-
-        for(CronTrigger job : [SELECT CronJobDetail.Name, StartTime, CronExpression, NextFireTime, PreviousFireTime 
-                               FROM CronTrigger WHERE CronJobDetail.Name LIKE :RequestAppAnalytics.JOB_NAME]) {
-            result = job;
-        }
-
-        return result;
     }
 
 
@@ -61,21 +27,21 @@ public with sharing class RequestAppAnalytics implements Schedulable {
     private void createWellSizedRequestForAllSubscribers() {
         SubscriberIterator subscribers = new SubscriberIterator();
 
-        while(subscribers.hasNext()) {
+        do {
             List<Id> orgIds = new List<Id>();
             List<Id> packageIds = new List<Id>();
             Integer userCount = 0;
 
-            while(userCount <= USERS_PER_CHUNK) {
+            while(subscribers.hasNext() && userCount <= USERS_PER_CHUNK) {
                 AggregateResult subscriber = subscribers.next();
 
-                orgIds.add((Id) subscriber.get('sfLma__Subscriber_Org_ID__c'));
-                packageIds.add((Id) subscriber.get('sfLma__Package__r.sfLma__Package_ID__c'));
-                userCount += (Integer) subscriber.get('users');
+                orgIds.add((Id) subscriber.get('orgId'));
+                packageIds.add((Id) subscriber.get('packageId'));
+                userCount += Integer.valueOf( subscriber.get('users') );
             }
 
             requests.add( requestFor(orgIds, packageIds) );
-        }
+        } while(subscribers.hasNext());
     }
 
 
@@ -113,27 +79,25 @@ public with sharing class RequestAppAnalytics implements Schedulable {
 
     private with sharing class SubscriberIterator implements Iterator<AggregateResult>{ 
 
-        private Integer currentIndex;
-        private List<AggregateResult> aggregates;
+        private Integer index = 0;
+        private List<AggregateResult> results;
 
         public SubscriberIterator() {
-            currentIndex = 0;
-            aggregates = [SELECT sfLma__Subscriber_Org_ID__c, sfLma__Package__r.sfLma__Package_ID__c, SUM(sfLma__Used_Licenses__c) users
+            results = [SELECT sfLma__Subscriber_Org_ID__c orgId, sfLma__Package__r.sfLma__Package_ID__c packageId, SUM(sfLma__Used_Licenses__c) users
                             FROM sfLma__License__c
-                            WHERE sfLma__Status__c IN ('Active', 'true') 
+                            WHERE sfLma__Status__c IN ('Active') 
                             AND sfLma__Used_Licenses__c > 0
                             GROUP BY sfLma__Package__r.sfLma__Package_ID__c, sfLma__Subscriber_Org_ID__c
                             ORDER BY SUM(sfLma__Used_Licenses__c)];
         }
 
         public boolean hasNext() { 
-            return currentIndex < aggregates.size() - 1;
+            return (index < results.size());
         }    
 
         public AggregateResult next() {
             if(hasNext()) {
-                currentIndex++;
-                return aggregates[currentIndex];
+                return results[index++];
             } 
             else {
                 throw new NoSuchElementException();

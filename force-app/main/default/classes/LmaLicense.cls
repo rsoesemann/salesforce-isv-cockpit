@@ -13,6 +13,10 @@ public with sharing class LmaLicense extends DomainBuilder {
         this(a, new LmaVersion());
     }
 
+    public LmaLicense(LmaVersion v) {
+        this(new Account_t(), v);
+    }
+
     public LmaLicense(Account_t a, LmaVersion v) {
         super(sfLma__License__c.SObjectType);
 
@@ -24,14 +28,10 @@ public with sharing class LmaLicense extends DomainBuilder {
         version = v;
 
         set(sfLma__License__c.sfLma__Subscriber_Org_ID__c, new Random().id(Organization.SObjectType));
-        set(sfLma__License__c.sfLma__Status__c, 'true');
+        set(sfLma__License__c.sfLma__Status__c, 'Active');
         set(sfLma__License__c.sfLma__Seats__c, -1);
         set(sfLma__License__c.sfLma__Used_Licenses__c, 1);
         org(new Random().id('00D'));
-    }
-
-    public LmaLicense(LmaVersion v) {
-        this(new Account_t(), v);
     }
 
     public LmaLicense org(String value) {

@@ -1,8 +1,20 @@
 public with sharing class SetupAppAnalytics extends SetupStep  {
 
+    private static final String JOB_NAME = 'IsvCockpit_RequestAppAnalytics';
+
     // PUBLIC
 
-    public CronTrigger job { get { return RequestAppAnalytics.queryJob(); } private set; }
+    public CronTrigger job { 
+        get {
+            for(CronTrigger job : [SELECT CronJobDetail.Name, StartTime, CronExpression, NextFireTime, PreviousFireTime 
+                                   FROM CronTrigger WHERE CronJobDetail.Name LIKE :JOB_NAME]) {
+                this.job = job;
+            }
+
+            return job;
+        }
+        private set;
+    }
 
 
     public Boolean isActive { 
@@ -43,12 +55,22 @@ public with sharing class SetupAppAnalytics extends SetupStep  {
 
     // PRIVATE
 
-    private void activate() {
-        new RequestAppAnalytics(job).activate();
+    public void activate() {
+        if(Test.isRunningTest()) {
+            new RequestAppAnalytics(job).execute(null);
+        }
+        else {
+            // Note: Run every hour
+            System.schedule(JOB_NAME, '0 0 1 * * ?', new RequestAppAnalytics(job));
+        }
     }
 
 
-    private void deactivate() {
-        new RequestAppAnalytics(job).deactivate();
+    public void deactivate() {
+        System.purgeOldAsyncJobs(Date.today().addDays(1));
+
+        if(job != null) {
+            System.abortJob(job.Id);
+        }
     }
 }
