@@ -14,6 +14,11 @@ public without sharing class ParseAppErrors {
         errors = inserted;
     }
 
+    
+    public ParseAppErrors(AppError__c error) {
+        this(new List<AppError__c>{ error });
+    }
+
 
     public ParseAppErrors(List<AppError__c> errors, Map<Id, AppError__c> old) {
         this( changedBody(errors, old) );

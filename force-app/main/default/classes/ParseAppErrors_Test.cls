@@ -14,14 +14,14 @@ private class ParseAppErrors_Test {
         // Setup
         setup();
 
+        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[0]);
+
 
         // Exercise
-        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[0]);
-        insert e;
+        new ParseAppErrors(e).execute();
 
 
         // Verify
-        e = query()[0];
         System.assertEquals('005500000024uNj', e.txt_UserId__c);
         System.assertEquals('00D000000000001', e.txt_OrgId__c);
         System.assertEquals('NSA', e.txt_Namespace__c);
@@ -38,14 +38,14 @@ private class ParseAppErrors_Test {
         // Setup
         setup();
 
+        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[1]);
+
 
         // Exercise
-        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[1]);
-        insert e;
+        new ParseAppErrors(e).execute();
 
 
         // Verify
-        e = query()[0];
         System.assertEquals('005500000024uNj', e.txt_UserId__c);
         System.assertEquals('00D000000000001', e.txt_OrgId__c);
         System.assertEquals('NSA', e.txt_Namespace__c);
@@ -62,14 +62,14 @@ private class ParseAppErrors_Test {
         // Setup
         setup();
 
+        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[2]);
+
 
         // Exercise
-        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[2]);
-        insert e;
+        new ParseAppErrors(e).execute();
 
 
         // Verify
-        e = query()[0];
         System.assertEquals('005500000024uNj', e.txt_UserId__c);
         System.assertEquals('00D000000000001', e.txt_OrgId__c);
         System.assertEquals('NSA', e.txt_Namespace__c);
@@ -92,13 +92,14 @@ private class ParseAppErrors_Test {
                 .org('00D000000000001')
                 .persist();
 
+        AppError__c e = new AppError__c(txl_FullMailBody__c = mails[1]);
+
 
         // Exercise
-        insert new AppError__c(txl_FullMailBody__c = mails[1]);
+        new ParseAppErrors(e).execute();
 
 
         // Verify
-        AppError__c e = query()[0];
         System.assertEquals(account.Id, e.lkp_Account__c);
         System.assertEquals(license.Id, e.lkp_License__c);
         System.assertEquals(app.Id, e.lkp_Package__c);
@@ -140,7 +141,7 @@ private class ParseAppErrors_Test {
 
         // Exercise
         Test.startTest();
-            insert errors;
+            new ParseAppErrors(errors).execute();
         Test.stopTest();
 
 
