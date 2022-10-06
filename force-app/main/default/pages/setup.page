@@ -5,7 +5,7 @@
         <c:setupStep title="Receive Errors via App Analytics (BETA)" step="{!setupAppAnalytics}" hideBody="true" />
 
         <c:setupStep title="Receive Errors via Email (Mandatory)" step="{!setupEmailService}">
-            <apex:pageBlock id="block">
+            <apex:pageBlock id="block" rendered="{!setupEmailService.isActive}">
                 <apex:pageBlockTable value="{!setupEmailService.tokenizers}" var="tokenizer" columnsWidth="10%,5%,10%,10%,10%,10%,10%,35%">
                     <apex:column value="{!tokenizer.DeveloperName}" />
                     <apex:column value="{!tokenizer.num_Position__c}" />
@@ -19,7 +19,7 @@
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Reparse errors via Batch (Optional)" step="{!setupReparse}" enabled="{!setupEmailService.success}">
+        <c:setupStep title="Reparse errors via Batch (Optional)" step="{!setupReparse}" rendered="{!setupEmailService.isActive}">
             <apex:pageBlock >
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="filter">Filter Condition</apex:outputLabel>
