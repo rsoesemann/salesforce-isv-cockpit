@@ -17,8 +17,8 @@ private class Personas {
 
 
     private static void assignPermSet(User user, String name) {
-        // Note: Hack by mmoyer that I need to understand and document
-        System.runAs(user) {
+        // Note: Hack to avoid MixedDml without @future according to https://salesforce.stackexchange.com/a/314170/256
+        System.runAs(new User(Id = UserInfo.getUserId())) {
             PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = :name];
             insert new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetId = ps.Id);
         }
