@@ -89,6 +89,24 @@ private class HttpMock_Test {
     }
 
 
+    @IsTest
+    private static void any() {
+
+        // Setup
+        new HttpMock()
+                .any(TIM, 200)
+                .mock();
+
+
+        // Exercise + Verify
+        Test.startTest();
+
+        System.assertEquals('tim', API.getPerson('anything').name);
+
+        Test.stopTest();
+    }
+
+
     // HELPER
 
     private class PersonApi {

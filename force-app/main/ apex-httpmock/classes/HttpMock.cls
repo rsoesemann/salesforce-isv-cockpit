@@ -8,6 +8,11 @@ public class HttpMock implements HttpCalloutMock {
 
     // PUBLIC
 
+    public HttpMock any(Object body, Integer statusCode) {
+        return mock('ANY', null, body, statusCode);
+    }
+
+
     public HttpMock get(String url, Object body, Integer statusCode) {
         return mock('GET', url, body, statusCode);
     }
@@ -96,6 +101,10 @@ public class HttpMock implements HttpCalloutMock {
             result.setHeader('Content-Type', 'application/octet-stream');
             result.setBodyAsBlob((Blob) body);
         }
+        else if(body instanceof String) {
+            result.setHeader('Content-Type', 'application/json');
+            result.setBody((String) body);
+        }
         else {
             result.setHeader('Content-Type', 'application/json');
             result.setBody( JSON.serialize(body) );
@@ -116,6 +125,12 @@ public class HttpMock implements HttpCalloutMock {
                     result = responses.get(method).remove(mock);
                     break;
                 }
+            }
+        }
+        else if(responses.containsKey('ANY')) {
+            for(String mock : responses.get('ANY').keySet()) {
+                result = responses.get('ANY').remove(mock);
+                break;
             }
         }
         
