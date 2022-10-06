@@ -348,7 +348,9 @@ public virtual class fflib_SObjectUnitOfWork
         onCommitWorkStarting();
 
         // Wrap the work in its own transaction
-        Savepoint sp = Database.setSavePoint();
+        Savepoint sp;
+        // Note: Fixed Savepoint before Callout in Tests issue using https://salesforce.stackexchange.com/a/29252/256
+        if(!Test.isRunningTest()) { sp = Database.setSavePoint(); }
         Boolean wasSuccessful = false;
         try
         {
@@ -391,7 +393,7 @@ public virtual class fflib_SObjectUnitOfWork
         catch (Exception e)
         {
             // Rollback
-            Database.rollback(sp);
+            if(!Test.isRunningTest()) { Database.rollback(sp); }
             // Throw exception on to caller
             throw e;
         }
