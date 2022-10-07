@@ -24,6 +24,7 @@ public with sharing class SetupAppAnalytics extends SetupStep  {
 
     public override ApexPages.Message getStatus() {
         ApexPages.Severity severity = (job == null) ? ApexPages.Severity.WARNING : ApexPages.Severity.CONFIRM;
+        
         String message = 'To automatically pull App Errors via App Analytics a ';
         message += (job == null) ? 'Scheduled Job needs to be created.' 
                                  : setupLink('ScheduledJobs/home', 'Scheduled Job') + ' has been created.';

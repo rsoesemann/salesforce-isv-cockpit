@@ -5,8 +5,8 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     private CorrespondingFields mapping;
     private String filter;
 
-    @TestVisible List<SObject> archived;
-    @TestVisible List<SObject> deleted;
+    @TestVisible private List<SObject> archived;
+    @TestVisible private List<SObject> deleted;
 
 
     // CONSTRUCTOR
@@ -46,13 +46,13 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
         return Database.getQueryLocator(new fflib_QueryFactory(source)
                                                     .selectFields( mapping.sourceFields(source) )
                                                     .setCondition(filter)
-                                                    .toSOQL());
+                                                    .toSOQL(), AccessLevel.SYSTEM_MODE);
     }
 
 
     public void execute(Database.BatchableContext ctx, List<SObject> originalRecords) {   
-        Database.insertImmediate( archiveRecordsOf(originalRecords) );
-        Database.deleteAsync(originalRecords);
+        Database.insertImmediate( archiveRecordsOf(originalRecords), AccessLevel.SYSTEM_MODE );
+        Database.deleteAsync(originalRecords, AccessLevel.SYSTEM_MODE);
     }
 
 

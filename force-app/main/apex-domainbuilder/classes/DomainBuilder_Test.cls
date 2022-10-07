@@ -81,13 +81,8 @@ private class DomainBuilder_Test {
     //@IsTest
     private static void worksWithSetupObjects() {
 
-        try {
-            System.runAs(User_t.standard()) {
-                new Account_t().persist();
-            }
-        }
-        catch(Exception ex) {
-            System.assert(false, ex.getStackTraceString());
+        System.runAs((User) User_t.standard().persist()) {
+            new Account_t().persist();
         }
 
         System.assertEquals(1, [SELECT Count() FROM Account]);

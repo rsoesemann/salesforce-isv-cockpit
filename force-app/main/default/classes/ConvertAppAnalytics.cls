@@ -48,7 +48,7 @@ public with sharing class ConvertAppAnalytics implements Queueable {
             errors.add(error);
         }
 
-        insert errors;
+        insert as system errors;
     }
 
 

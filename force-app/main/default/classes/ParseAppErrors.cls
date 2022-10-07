@@ -88,7 +88,8 @@ public without sharing class ParseAppErrors {
                                                  ORDER BY CreatedDate DESC) 
                                          FROM sflma__License__c
                                          WHERE sfLma__Subscriber_Org_ID__c = :orgIds(bySubscriber)
-                                         AND sfLma__Package__r.txt_Namespace__c = :namespaces(bySubscriber)]) {
+                                         AND sfLma__Package__r.txt_Namespace__c = :namespaces(bySubscriber)
+                                         WITH SYSTEM_MODE]) {
             String key = subscriberKey(license);
 
             if(bySubscriber.containsKey(key)) {

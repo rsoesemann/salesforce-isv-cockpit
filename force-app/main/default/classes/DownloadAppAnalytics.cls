@@ -17,9 +17,10 @@ public with sharing class DownloadAppAnalytics implements Queueable, Database.Al
 
     // PUBLIC
 
+    @SuppressWarnings('PMD.OperationWithLimitsInLoop')  // Note: We explicitly check for Limits in loop
     public void execute() {
         for(AppAnalyticsQueryRequest request : requests) {
-            if(isComplete(request)) {
+            if(isComplete(request) && canEnqueueMore()) {
                 System.enqueueJob( new DownloadAppAnalytics(request) );
             }
         }
@@ -67,5 +68,10 @@ public with sharing class DownloadAppAnalytics implements Queueable, Database.Al
 
     private Integer remainingHeap() {
         return (Limits.getLimitHeapSize() - Limits.getHeapSize());
+    }
+
+
+    private Boolean canEnqueueMore() {
+        return (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs() > 5);
     }
 }

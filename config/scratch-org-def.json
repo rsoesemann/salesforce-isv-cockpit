@@ -1,6 +1,7 @@
 {
   "orgName": "isv-cockpit_DEV",
   "edition": "Developer",
+  "release": "preview",
   "features": ["FieldAuditTrail"],
   "settings": {
     "lightningExperienceSettings": {

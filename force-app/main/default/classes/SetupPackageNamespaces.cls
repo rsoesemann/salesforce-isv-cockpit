@@ -34,6 +34,7 @@ public with sharing class SetupPackageNamespaces extends SetupStep {
 
     // PRIVATE
 
+    @SuppressWarnings('PMD.ApexSuggestUsingNamedCred')  // Note: NamedCreds can't be used for API Loopback calls
     private String query(String soql) {
         HttpRequest request = new HttpRequest();
         request.setHeader('Authorization', 'Bearer ' + UserInfo.getSessionID());

@@ -10,15 +10,16 @@ public with sharing class SetupArchiveErrors extends SetupStep {
 
     // CONSTRUCTOR
 
+    @SuppressWarnings('PMD.OperationWithLimitsInLoop')  // Note: Loop of size 1 to simplify code
     public SetupArchiveErrors() {
         cronExpression = '0 0 1 * * ?';
         filter = 'LastModifiedDate < LAST_N_DAYS:265';
         archived = [SELECT Id FROM ArchivedAppError__b LIMIT 100].size();
 
         String jobName = JOB_NAME + '%';
-        for(CronTrigger cron : [SELECT CronJobDetail.Name, CronExpression, PreviousFireTime 
-                               FROM CronTrigger WHERE CronJobDetail.Name LIKE :jobName LIMIT 1]) {
-            job = cron; 
+        for(CronTrigger job : [SELECT CronJobDetail.Name, CronExpression, PreviousFireTime FROM CronTrigger 
+                               WHERE CronJobDetail.Name LIKE :jobName WITH SYSTEM_MODE]) {
+            this.job = job; 
             cronExpression = job.CronExpression;
             filter = job.CronJobDetail.Name.substringAfter('#');
             archived = Math.max(archived, [SELECT Id FROM ArchivedAppError__b WHERE dtm_ArchivedDate__c < :job.PreviousFireTime].size());                            
@@ -30,10 +31,12 @@ public with sharing class SetupArchiveErrors extends SetupStep {
 
     public override ApexPages.Message getStatus() {
         ApexPages.Severity severity = (job!=null) ? ApexPages.Severity.CONFIRM : ApexPages.Severity.WARNING;
+
         String message = 'To automatically archive AppErrors a ';
         message += (job!=null) ? setupLink('ScheduledJobs/home', 'Scheduled Job') + ' has been created.'
                                : 'Scheduled Job needs to be created.';
         message += ' (' + archived + ' errors were archived as Big Objects since last run.)';
+
         return new ApexPages.Message(severity, message);
     }
 
@@ -61,6 +64,7 @@ public with sharing class SetupArchiveErrors extends SetupStep {
     }
 
 
+    @SuppressWarnings('PMD.ApexSuggestUsingNamedCred')  // Note: NamedCreds can't be used for API Loopback calls
     public Boolean getIsSupported() {
         Boolean result = true;
 

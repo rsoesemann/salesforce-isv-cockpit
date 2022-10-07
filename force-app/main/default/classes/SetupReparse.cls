@@ -23,7 +23,7 @@ public with sharing class SetupReparse extends BatchSetupStep {
     public Integer recordCount {
         get {
             try {
-                recordCount = Database.countQuery('SELECT Count() FROM AppError__c WHERE ' + filter);
+                recordCount = Database.countQuery('SELECT Count() FROM AppError__c WHERE ' + filter, AccessLevel.SYSTEM_MODE);
             }
             catch(Exception ex) {
                 ApexPages.addMessages(ex);
@@ -61,13 +61,13 @@ public with sharing class SetupReparse extends BatchSetupStep {
 
 
 	public List<SObject> start(Database.BatchableContext ctx) {
-		return Database.query('SELECT Id FROM AppError__c WHERE ' + filter);
+		return Database.query('SELECT Id FROM AppError__c WHERE ' + filter, AccessLevel.SYSTEM_MODE);
 	}
 
 
 	public void execute(Database.BatchableContext ctx, List<AppError__c> errors) {
 		ParseAppErrors.parseAlways = true;
-        update errors;
+        update as system errors;
 	}
 
 
