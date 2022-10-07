@@ -4,7 +4,7 @@ The ISV Cockpit is a native Salesforce App that extends the Salesforce LMA in yo
 
 ## TL;DR - Show me a video demo!
 
-[![](http://img.youtube.com/vi/GTy0Lr19z34/hqdefault.jpg)](http://www.youtube.com/watch?v=GTy0Lr19z34 "")
+[![](http://img.youtube.com/vi/m0m6TH8-mnM/hqdefault.jpg)](https://youtu.be/m0m6TH8-mnM "")
 
 ## How does it work?
 
