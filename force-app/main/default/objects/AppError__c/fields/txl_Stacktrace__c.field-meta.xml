@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Stacktrace</label>
     <length>4000</length>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>5</visibleLines>

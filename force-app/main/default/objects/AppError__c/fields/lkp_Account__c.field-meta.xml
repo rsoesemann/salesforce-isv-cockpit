@@ -8,6 +8,7 @@
     <relationshipLabel>App Errors</relationshipLabel>
     <relationshipName>ErrorEmails</relationshipName>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

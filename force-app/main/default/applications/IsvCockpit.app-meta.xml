@@ -9,6 +9,24 @@
         <type>Flexipage</type>
         <pageOrSobjectType>AppError__c</pageOrSobjectType>
     </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>PackageVersionRecordPage</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>sfLma__Package_Version__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>PackageRecordPage</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>sfLma__Package__c</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#CF0000</headerColor>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>

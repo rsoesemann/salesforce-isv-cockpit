@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Full Mail Body</label>
     <length>131072</length>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
     <visibleLines>20</visibleLines>

@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Recorded Date</label>
     <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>DateTime</type>
 </CustomField>
