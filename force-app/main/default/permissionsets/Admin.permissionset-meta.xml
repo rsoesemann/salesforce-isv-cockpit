@@ -134,6 +134,76 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>PackageUsageSummary__c.ext_OrganizationId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.ext_PackageId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.num_Creates__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.num_Deletes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.num_Reads__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.num_Updates__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.num_Views__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.txt_CombinedKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.txt_CustomEntityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.txt_CustomEntity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.txt_ManagedPackageNamespace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.txt_Month__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.txt_UserIdToken__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PackageUsageSummary__c.txt_UserType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>sfLma__License__c.sfLma__Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -402,6 +472,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>PackageUsageSummary__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>sfLma__License__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -433,6 +512,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Home</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>PackageUsageSummary__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

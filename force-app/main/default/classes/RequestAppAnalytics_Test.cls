@@ -10,14 +10,9 @@ private class RequestAppAnalytics_Test {
         LmaLicense l = new LmaLicense(v);
         sfLma__Package__c pck = (sfLma__Package__c) p.persist();
 
-        CronTrigger job = (CronTrigger) HttpMock.object(CronTrigger.SObjectType, new Map<String, Object>{
-            'NextFireTime' => System.now(),
-            'PreviousFireTime' => System.now().addDays(-2)
-        });
-
 
         // Exercise
-        new RequestAppAnalytics(job).execute(null);
+        new RequestAppAnalytics().execute(null);
 
 
         // Verify

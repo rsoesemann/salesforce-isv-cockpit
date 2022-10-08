@@ -2,9 +2,7 @@
     <c:setup ctrl="{!controller}">
         <c:setupStep title="Prepare LMA Packages (Mandatory)" step="{!setupPackageNamespaces}" hideBody="true" />
 
-        <c:setupStep title="Receive Errors via App Analytics (BETA)" step="{!setupAppAnalytics}" hideBody="true" />
-
-        <c:setupStep title="Receive Errors via Email (Mandatory)" step="{!setupEmailService}">
+        <c:setupStep title="Receive App Error Emails (Mandatory)" step="{!setupEmailService}">
             <apex:pageBlock id="block" rendered="{!setupEmailService.isActive}">
                 <apex:pageBlockTable value="{!setupEmailService.tokenizers}" var="tokenizer" columnsWidth="10%,5%,10%,10%,10%,10%,10%,35%">
                     <apex:column value="{!tokenizer.DeveloperName}" />
@@ -59,6 +57,8 @@
                 </apex:pageBlockSection>
             </apex:pageBlock>
         </c:setupStep>
+        
+        <c:setupStep title="Receive App Analytics Summaries (BETA)" step="{!setupAppAnalytics}" hideBody="true" />
 
         <c:setupStep title="Third-Party Licenses (click for details)">
             <div class="slds-setup-assistant__step-summary-content slds-media__body">

@@ -5,14 +5,6 @@ public with sharing class RequestAppAnalytics implements Schedulable {
     @TestVisible
     private static List<AppAnalyticsQueryRequest> requests = new List<AppAnalyticsQueryRequest>();
 
-    private CronTrigger job;
-
-    // CTOR
-
-    public RequestAppAnalytics(CronTrigger job) {
-        this.job = job;
-    }
-
 
     // PUBLIC
 
@@ -57,20 +49,16 @@ public with sharing class RequestAppAnalytics implements Schedulable {
 
     private AppAnalyticsQueryRequest requestFor(List<Id> subscribers, List<Id> packages) {
         AppAnalyticsQueryRequest result = new AppAnalyticsQueryRequest();
-        result.DataType = 'PackageUsageLog';
-        result.EndTime = job.NextFireTime.addDays(-2);
-        result.StartTime = result.EndTime.addMinutes(- minutesBetweenJob());
-        result.PackageIds = String.join(packages, ',');
-        result.OrganizationIds = String.join(subscribers, ',');
-        return result;
-    }
+        result.DataType = 'PackageUsageSummary';
+        result.PackageIds = '033xx00SIMsmall'; // TODO String.join(packages, ',');
+        result.OrganizationIds = ''; //String.join(subscribers, ',');
+        
+        Date s = Date.today().addMonths(-1).toStartOfMonth();
+        result.StartTime = DateTime.newInstanceGMT(s.year(), s.month(), s.day(), 0,0,0);
+        
+        Date e = Date.today().toStartOfMonth().addDays(-1);
+        result.EndTime = DateTime.newInstanceGMT(e.year(), e.month(), e.day(), 23,59,59);
 
-
-    private Integer minutesBetweenJob() {
-        Datetime nextRun = job.NextFireTime;
-        Datetime lastRun = (job.PreviousFireTime == null) ? nextRun.addDays(-1) : job.PreviousFireTime;
-
-        Integer result = Integer.valueOf((nextRun.getTime() - lastRun.getTime()) / (1000*60));
         return result;
     }
 

@@ -12,20 +12,20 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>PackageVersionRecordPage</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>sfLma__Package_Version__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>PackageRecordPage</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>sfLma__Package__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>PackageVersionRecordPage</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>sfLma__Package_Version__c</pageOrSobjectType>
     </actionOverrides>
     <brand>
         <headerColor>#CF0000</headerColor>
@@ -40,6 +40,7 @@
     <navType>Standard</navType>
     <tabs>Home</tabs>
     <tabs>AppError__c</tabs>
+    <tabs>PackageUsageSummary__c</tabs>
     <tabs>sfLma__Package__c</tabs>
     <tabs>sfLma__Package_Version__c</tabs>
     <tabs>sfLma__Subscriber_Support</tabs>
