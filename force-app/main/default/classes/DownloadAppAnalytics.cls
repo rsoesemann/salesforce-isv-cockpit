@@ -52,7 +52,7 @@ public with sharing class DownloadAppAnalytics implements Queueable, Database.Al
     // PRIVATE
 
     private Boolean isComplete(AppAnalyticsQueryRequest request) {
-        return (request.RequestState == 'Complete' && request.DataType == 'PackageUsageLog');
+        return (request.RequestState == 'Complete' && request.DataType == 'PackageUsageSummary');
     }
 
 
@@ -72,6 +72,6 @@ public with sharing class DownloadAppAnalytics implements Queueable, Database.Al
 
 
     private Boolean canEnqueueMore() {
-        return (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs() > 5);
+        return (Limits.getLimitQueueableJobs() > Limits.getQueueableJobs());
     }
 }

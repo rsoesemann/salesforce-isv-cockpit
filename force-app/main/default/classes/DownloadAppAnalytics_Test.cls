@@ -26,6 +26,6 @@ private class DownloadAppAnalytics_Test {
 
 
         // Verify
-        System.assert( ![SELECT Id FROM PackageUsageSummary__c].isEmpty());
+        System.assertEquals(2, [SELECT Count() FROM PackageUsageSummary__c]);
     }
 }
