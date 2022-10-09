@@ -27,11 +27,11 @@ execute sfdx force:source:deploy -p force-app
 echo "Assigning permission"
 execute sfdx force:user:permset:assign -n Admin
 
-echo "Create sample data"
-sfdx force:apex:execute -f scripts/createSampleData.apex -u $SCRATCH_ORG_ALIAS
-
 echo "Make sure Org user is english"
 sfdx force:data:record:update -s User -w "Name='User User'" -v "Languagelocalekey=en_US"
+
+echo "Create sample data"
+sfdx force:apex:execute -f scripts/createSampleData.apex -u $SCRATCH_ORG_ALIAS
 
 echo "Running Apex Tests"
 execute sfdx force:apex:test:run -l RunLocalTests -w 30 -c -r human
