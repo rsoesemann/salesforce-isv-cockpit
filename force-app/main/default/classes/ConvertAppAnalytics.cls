@@ -56,21 +56,36 @@ public with sharing class ConvertAppAnalytics implements Queueable {
     // PRIVATE 
 
     @TestVisible
-    private static List<Map<String, String>> parse(String csv) {
+    private List<Map<String, String>> parse(String csv) {
         List<Map<String, String>> result = new List<Map<String, String>>();
 
-        for(Map<String, String> line : CsvParser.parseCsv(csv)) {
-            result.add(line);
+        List<String> lines = csv.split('\n');
+        Map<Integer, String> rowNames = parseHeader(lines.remove(0));
+
+        for(String lineRaw : lines) {
+            Map<String, String> lineParsed = new Map<String, String>();
+            
+            Integer index = 0;
+            for(String value : lineRaw.split(',')) {
+                lineParsed.put(rowNames.get(index++), value.trim());
+            }
+
+            result.add(lineParsed);
         }
 
         return result;
     }
 
 
-    // Note: Taken from httrecord://salesforce.stackexchange.com/questions/1013/parsing-an-iso-8601-timestamp-to-a-datetime
-    private static DateTime dateFromIso8601(String iso8601Value) {
-        DateTime result = (DateTime) JSON.deserialize('"' + iso8601Value + '"', DateTime.class);
-        return DateTime.newInstance( result.getTime());
+    private Map<Integer, String> parseHeader(String csvHeaderLine) {
+        Map<Integer, String> result = new Map<Integer, String>();
+
+        Integer index = 0;
+        for(String rowName : csvHeaderLine.split(',')) {
+            result.put(index++, rowName.trim());
+        }
+
+        return result;
     }
 
 

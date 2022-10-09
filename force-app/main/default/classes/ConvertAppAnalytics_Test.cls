@@ -1,7 +1,7 @@
 @IsTest
 private class ConvertAppAnalytics_Test {
 
-    private static final String CSV = [SELECT Body FROM StaticResource WHERE Name = 'record_logs_csv'].Body.toString();
+    private static final String CSV = [SELECT Body FROM StaticResource WHERE Name = 'package_summaries'].Body.toString();
 
     @IsTest
     private static void execute() {
@@ -38,17 +38,5 @@ private class ConvertAppAnalytics_Test {
             System.assert(String.isNotBlank(record.txt_UserIdToken__c), '' + record);
             System.assert(String.isNotBlank(record.txt_UserType__c), '' + record);
         }
-    }
-
-
-    @IsTest
-    private static void parse() {
-
-        // Exercise
-        List<Map<String, String>> parsed = ConvertAppAnalytics.parse(CSV);
-
-
-        // Verify
-        System.assert(!parsed.isEmpty());
     }
 }
