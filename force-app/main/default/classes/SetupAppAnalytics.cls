@@ -61,8 +61,7 @@ public with sharing class SetupAppAnalytics extends SetupStep  {
         }
         else {
             // Note: Run 3rd day of every month 0 1 0 3 1/1 ? *
-
-            System.schedule(JOB_NAME, '0 00 * * * ?', new RequestAppAnalytics());
+            System.schedule(JOB_NAME,  '0 0 * * * ?', new RequestAppAnalytics());
         }
     }
 
