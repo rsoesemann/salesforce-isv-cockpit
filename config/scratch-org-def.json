@@ -12,6 +12,9 @@
     },
     "deploymentSettings": {
       "doesSkipAsyncApexValidation": true
+    },
+    "appAnalyticsSettings": {
+      "enableSimulationMode": true
     }
   }
 }
