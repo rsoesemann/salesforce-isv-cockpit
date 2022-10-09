@@ -33,7 +33,7 @@
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Archive Errors (Optional)" step="{!setupArchive}" enabled="{!setupArchive.isSupported}">
+        <c:setupStep title="Archive Errors (Optional)" step="{!setupArchive}" rendered="{!setupEmailService.isActive && setupArchive.isSupported}">
             <apex:pageBlock >
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Archive when (Use <a href='http://www.cronmaker.com/'>Cronmaker</a>):</apex:outputLabel>
@@ -49,7 +49,7 @@
             </apex:pageBlock>
         </c:setupStep>
 
-        <c:setupStep title="Restore Archived Errors (Optional)" step="{!setupRestore}" enabled="{!setupArchive.isSupported && setupArchive.archived > 0}">
+        <c:setupStep title="Restore Archived Errors (Optional)" step="{!setupRestore}" rendered="{!setupEmailService.isActive && setupArchive.isSupported && setupArchive.archived > 0}">
             <apex:pageBlock >
                 <apex:pageBlockSection columns="2">
                     <apex:outputLabel for="cron">Async SOQL filter</apex:outputLabel>
