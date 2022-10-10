@@ -22,8 +22,8 @@ public with sharing class SetupPackageNamespaces extends SetupStep {
         List<sfLma__Package__c> packages = [SELECT sfLma__Package_ID__c FROM sfLma__Package__c 
                                             WHERE txt_Namespace__c = NULL WITH USER_MODE];
         for(sfLma__Package__c pck : packages) {
-            String result = query('SELECT NamespacePrefix FROM SubscriberPackage WHERE Id = \'' + pck.sfLma__Package_ID__c + '\'');
-            pck.txt_Namespace__c = JSON2Apex.parse(result).records[0].NamespacePrefix.toUpperCase();
+            String response = query('SELECT NamespacePrefix FROM SubscriberPackage WHERE Id = \'' + pck.sfLma__Package_ID__c + '\'');
+            pck.txt_Namespace__c = new JSONParse(response).get('records[0].NamespacePrefix').getStringValue();
         }
         
         update packages; // update as user packages; fails due to https://trailhead.salesforce.com/de/trailblazer-community/feed/0D54S00000HDRKgSAP
@@ -41,7 +41,7 @@ public with sharing class SetupPackageNamespaces extends SetupStep {
         request.setHeader('Content-Type', 'application/json');
         request.setMethod('GET');
         request.setEndpoint(URL.getOrgDomainUrl().toExternalForm()
-                                + '/services/data/v45.0/tooling/query/?q=' + EncodingUtil.urlEncode(soql, 'UTF-8'));
+                                + '/services/data/v56.0/tooling/query/?q=' + EncodingUtil.urlEncode(soql, 'UTF-8'));
 
         HttpResponse response = new Http().send(request);
         return response.getBody();
