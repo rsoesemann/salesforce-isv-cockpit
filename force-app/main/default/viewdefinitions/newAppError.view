@@ -1,0 +1,27 @@
+description: 'New App Error'
+schema:
+    properties:
+        header:
+            type: string
+            required: true
+        recordLink:
+            type: string
+        recordId:
+            type: string
+components:
+    - definition: messages
+      properties:
+          text: '{!view.properties.header}'
+      components:
+          - definition: header
+            properties:
+                text: '{!view.properties.header}'
+          - definition: section
+            properties:
+                text:
+                    type: 'mrkdwn'
+                    text: '<{!view.properties.recordLink}|View in Salesforce>'
+                    verbatim: false
+                    disableEncoding: true
+
+

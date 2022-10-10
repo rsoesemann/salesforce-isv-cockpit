@@ -1,6 +1,6 @@
 public with sharing class AppErrors extends fflib_SObjectDomain {
 
-    // CONSTRUCTOR
+    // CTOR
 
     public AppErrors(List<AppError__c> sObjectList) {
         super(sObjectList);
@@ -11,6 +11,11 @@ public with sharing class AppErrors extends fflib_SObjectDomain {
 
     public override void onBeforeInsert() {
         new ParseAppErrors(records).execute();
+    }
+
+
+    public override void onAfterInsert() {
+        new NotifySlackChannel(records).execute();
     }
 
 
