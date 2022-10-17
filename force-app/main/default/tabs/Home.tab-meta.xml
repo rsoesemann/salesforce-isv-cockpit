@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
-    <flexiPage>IsvCockpitHome</flexiPage>
+    <description>Created by Lightning App Builder</description>
+    <flexiPage>Home</flexiPage>
     <label>Home</label>
-    <motif>Custom68: Globe</motif>
+    <motif>Custom89: Saxophone</motif>
 </CustomTab>

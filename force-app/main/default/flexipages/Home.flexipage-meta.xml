@@ -5,11 +5,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>dashboardName</name>
-                    <value>vswWbIloWVUYRjcxBCrzgrwwOOZtXL</value>
+                    <value>KXvelVCiiQdUbvshqthXPTjoLKbgqX</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideOnError</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>desktopDashboards:embeddedDashboard</componentName>
                 <identifier>desktopDashboards_embeddedDashboard</identifier>
@@ -18,7 +18,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>ISV Cockpit Home</masterLabel>
+    <masterLabel>Home</masterLabel>
     <template>
         <name>flexipage:defaultAppHomeTemplate</name>
     </template>

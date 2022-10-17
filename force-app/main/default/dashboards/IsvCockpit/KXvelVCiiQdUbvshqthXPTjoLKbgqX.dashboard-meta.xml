@@ -4,9 +4,9 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <chartTheme>light</chartTheme>
-    <colorPalette>accessible</colorPalette>
+    <colorPalette>unity</colorPalette>
     <dashboardChartTheme>light</dashboardChartTheme>
-    <dashboardColorPalette>accessible</dashboardColorPalette>
+    <dashboardColorPalette>unity</dashboardColorPalette>
     <dashboardGridLayout>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
@@ -21,8 +21,8 @@
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
-                <header>App Errors by Account and Version</header>
-                <report>IsvCockpit/AppErrorsByAccountAndVersion</report>
+                <header>App Errors by Version and Account</header>
+                <report>IsvCockpit/AppErrorsByVersionAndAccount</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -45,8 +45,8 @@
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
-                <header>App Errors by Version and Account</header>
-                <report>IsvCockpit/AppErrorsByVersionAndAccount</report>
+                <header>App Errors by Account and Version</header>
+                <report>IsvCockpit/AppErrorsByAccountAndVersion</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -93,8 +93,8 @@
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
-                <header>App Errors by Page</header>
-                <report>IsvCockpit/AppErrorsByPage</report>
+                <header>App Errors by Class</header>
+                <report>IsvCockpit/AppErrorsByClass</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -117,8 +117,8 @@
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
-                <header>App Errors by Class</header>
-                <report>IsvCockpit/AppErrorsByClass</report>
+                <header>App Errors by Page</header>
+                <report>IsvCockpit/AppErrorsByPage</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -128,12 +128,12 @@
             <rowIndex>16</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
-        <numberOfColumns>9</numberOfColumns>
+        <numberOfColumns>12</numberOfColumns>
         <rowHeight>36</rowHeight>
     </dashboardGridLayout>
     <dashboardType>SpecifiedUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-kbrnk0shd8tb@example.com</runningUser>
+    <runningUser>test-uuceoup9fvay@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>ISV Cockpit Dashboard</title>
     <titleColor>#000000</titleColor>
