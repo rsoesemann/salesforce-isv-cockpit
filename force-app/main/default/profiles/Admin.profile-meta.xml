@@ -58,10 +58,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CsvParser</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DomainBuilder</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -94,7 +90,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>JSON2Apex</apexClass>
+        <apexClass>JSONParse</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>JSONParseTests</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -115,6 +115,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>MetadataServiceTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NotifySlackChannel</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -199,6 +203,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>SetupRestoreErrors</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SetupSlack</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -572,12 +580,12 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Home</tab>
-        <visibility>Hidden</visibility>
+        <tab>IsvCockpitHome</tab>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>PackageUsageSummary__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Setup</tab>

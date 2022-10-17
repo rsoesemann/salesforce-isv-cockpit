@@ -1,5 +1,4 @@
-description: 'New App Error'
-schema:
+description: 'New Record Notification':
     properties:
         header:
             type: string
@@ -8,6 +7,9 @@ schema:
             type: string
         recordId:
             type: string
+        fieldValues:
+            type: List
+            required: true
 components:
     - definition: messages
       properties:
@@ -23,5 +25,3 @@ components:
                     text: '<{!view.properties.recordLink}|View in Salesforce>'
                     verbatim: false
                     disableEncoding: true
-
-

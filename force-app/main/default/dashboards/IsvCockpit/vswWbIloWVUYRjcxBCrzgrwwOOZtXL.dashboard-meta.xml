@@ -4,37 +4,13 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <chartTheme>light</chartTheme>
-    <colorPalette>justice</colorPalette>
+    <colorPalette>accessible</colorPalette>
     <dashboardChartTheme>light</dashboardChartTheme>
-    <dashboardColorPalette>justice</dashboardColorPalette>
+    <dashboardColorPalette>accessible</dashboardColorPalette>
     <dashboardGridLayout>
         <dashboardGridComponents>
-            <colSpan>2</colSpan>
+            <colSpan>4</colSpan>
             <columnIndex>0</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <componentType>Bar</componentType>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
-                <header>App Errors by Class</header>
-                <report>AppCockpit/AppErrorsByClass</report>
-                <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
-                <showValues>false</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>true</useReportChart>
-            </dashboardComponent>
-            <rowIndex>0</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>3</colSpan>
-            <columnIndex>2</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
@@ -46,7 +22,7 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors by Account and Version</header>
-                <report>AppCockpit/AppErrorsByAccountAndVersion</report>
+                <report>IsvCockpit/AppErrorsByAccountAndVersion</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -57,8 +33,8 @@
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
-            <colSpan>3</colSpan>
-            <columnIndex>0</columnIndex>
+            <colSpan>4</colSpan>
+            <columnIndex>4</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
@@ -70,42 +46,18 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors by Version and Account</header>
-                <report>AppCockpit/AppErrorsByVersionAndAccount</report>
+                <report>IsvCockpit/AppErrorsByVersionAndAccount</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>true</useReportChart>
             </dashboardComponent>
-            <rowIndex>8</rowIndex>
+            <rowIndex>0</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
-            <colSpan>2</colSpan>
-            <columnIndex>3</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <componentType>Bar</componentType>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
-                <header>App Errors by Page</header>
-                <report>AppCockpit/AppErrorsByPage</report>
-                <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
-                <showValues>false</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>true</useReportChart>
-            </dashboardComponent>
-            <rowIndex>8</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>5</colSpan>
+            <colSpan>8</colSpan>
             <columnIndex>0</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
@@ -118,7 +70,55 @@
                 <expandOthers>false</expandOthers>
                 <groupingSortProperties/>
                 <header>App Errors over Time by Account</header>
-                <report>AppCockpit/AppErrorsOverTimeByAccount</report>
+                <report>IsvCockpit/AppErrorsOverTimeByAccount</report>
+                <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>false</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>8</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <componentType>Bar</componentType>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingSortProperties/>
+                <header>App Errors by Page</header>
+                <report>IsvCockpit/AppErrorsByPage</report>
+                <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>false</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>16</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>4</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <componentType>Bar</componentType>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingSortProperties/>
+                <header>App Errors by Class</header>
+                <report>IsvCockpit/AppErrorsByClass</report>
                 <showPercentage>false</showPercentage>
                 <showPicturesOnCharts>false</showPicturesOnCharts>
                 <showValues>false</showValues>
@@ -132,9 +132,8 @@
         <rowHeight>36</rowHeight>
     </dashboardGridLayout>
     <dashboardType>SpecifiedUser</dashboardType>
-    <description>An overview of all you App Errors</description>
     <isGridLayout>true</isGridLayout>
-    <runningUser>test-v3riscj1gqgk@example.com</runningUser>
+    <runningUser>test-kbrnk0shd8tb@example.com</runningUser>
     <textColor>#000000</textColor>
     <title>ISV Cockpit Dashboard</title>
     <titleColor>#000000</titleColor>

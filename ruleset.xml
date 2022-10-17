@@ -30,6 +30,19 @@
 
     <!-- CUSTOM RULES -->
 
+    <rule name="DontSwallowExceptions" language="apex" class="net.sourceforge.pmd.lang.apex.rule.ApexXPathRule"
+          message="Only try/catch when you actually handle exceptions.">
+    
+        <priority>3</priority>
+        <properties>
+            <property name="xpath">
+                <value><![CDATA[
+                    //CatchBlockStatement//ExpressionStatement[count(*)=1]//MethodCallExpression[@FullMethodName='System.debug']
+                ]]></value>
+            </property>
+        </properties>
+    </rule>
+    
     <rule name="AvoidProductionDebugLogs" language="apex" class="net.sourceforge.pmd.lang.apex.rule.ApexXPathRule"
           message="Avoid leaving System.debug() statments in code as they negativly influence performance.">
        

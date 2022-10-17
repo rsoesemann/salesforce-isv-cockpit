@@ -13,6 +13,7 @@ public with sharing class SetupSlack extends SetupStep {
     }
 
     public override ApexPages.Message getStatus() {
+        /*
         if(isActive) {
             String address = service.LocalPart + '@' + service.EmailDomainName;
             String link = '<em><a href="/lightning/setup/EmailToApexFunction/page?address=%2Femail-admin%2Fservices%2FdetailEmailServicesAddress.apexp%3Fid%3D' + service.Id + '">' + address + '</a></em>';
@@ -21,9 +22,10 @@ public with sharing class SetupSlack extends SetupStep {
                              new List<String>{ link, setupLink('m00', 'CustomMetadata', 'Custom Metadata'), ''+ tokenizers.size()});
             return new ApexPages.Message(ApexPages.Severity.CONFIRM, message);
         }
-        else {
+        else {*/
             return new ApexPages.Message(ApexPages.Severity.WARNING, 'An Email Service is required to allow the tool to receive app errors.');
-        }
+        //}
+        
     }
 
     
@@ -39,5 +41,6 @@ public with sharing class SetupSlack extends SetupStep {
 
     public override PageReference run() {
         upsert settings;
+        return null;
     }
 }

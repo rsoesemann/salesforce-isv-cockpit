@@ -1,7 +1,6 @@
 {
   "orgName": "isv-cockpit_DEV",
   "edition": "Developer",
-  "release": "preview",
   "features": ["FieldAuditTrail", "SLACK", "SLACKPACKAGING"],
   "settings": {
     "lightningExperienceSettings": {

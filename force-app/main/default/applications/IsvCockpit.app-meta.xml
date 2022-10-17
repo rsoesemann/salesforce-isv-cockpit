@@ -38,7 +38,7 @@
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>ISV Cockpit</label>
     <navType>Standard</navType>
-    <tabs>Home</tabs>
+    <tabs>IsvCockpitHome</tabs>
     <tabs>AppError__c</tabs>
     <tabs>PackageUsageSummary__c</tabs>
     <tabs>sfLma__Package__c</tabs>
