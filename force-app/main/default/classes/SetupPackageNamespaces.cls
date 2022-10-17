@@ -23,7 +23,7 @@ public with sharing class SetupPackageNamespaces extends SetupStep {
                                             WHERE txt_Namespace__c = NULL WITH USER_MODE];
         for(sfLma__Package__c pck : packages) {
             String response = query('SELECT NamespacePrefix FROM SubscriberPackage WHERE Id = \'' + pck.sfLma__Package_ID__c + '\'');
-            pck.txt_Namespace__c = new JSONParse(response).get('records[0].NamespacePrefix').getStringValue();
+            pck.txt_Namespace__c = new JSONParse(response).get('records.[0].NamespacePrefix').getStringValue();
         }
         
         update packages; // update as user packages; fails due to https://trailhead.salesforce.com/de/trailblazer-community/feed/0D54S00000HDRKgSAP
