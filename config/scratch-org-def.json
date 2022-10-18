@@ -1,7 +1,7 @@
 {
   "orgName": "isv-cockpit_DEV",
   "edition": "Developer",
-  "features": ["FieldAuditTrail", "SLACK", "SLACKPACKAGING"],
+  "features": ["FieldAuditTrail","EnableSetPasswordInApi","SLACK"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
