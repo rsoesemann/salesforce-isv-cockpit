@@ -1,0 +1,49 @@
+display_information:
+  name: Salesforce ISV Cockpit
+  description: Salesforce ISV Cockpit
+  background_color: "#1684ba"
+features:
+  app_home:
+    home_tab_enabled: true
+    messages_tab_enabled: false
+    messages_tab_read_only_enabled: false
+  bot_user:
+    display_name: Say Hello
+    always_online: false
+  slash_commands:
+    - command: /apex-hello
+      url: https://slack-apps.salesforce.com:9443/a/A046ZUG9CM9
+      description: Say Hello
+      should_escape: false
+oauth_config:
+  redirect_urls:
+    - https://auth.slack-apps.salesforce.com/slack_oauth_callback/A046ZUG9CM9
+  scopes:
+    user:
+      - reactions:read
+      - chat:write
+    bot:
+      - channels:read
+      - chat:write
+      - commands
+      - groups:read
+      - reactions:read
+      - users:read
+settings:
+  event_subscriptions:
+    request_url: https://slack-apps.salesforce.com:9443/a/A046ZUG9CM9
+    bot_events:
+      - app_home_opened
+      - app_uninstalled
+      - grid_migration_finished
+      - grid_migration_started
+      - team_access_granted
+      - team_access_revoked
+      - tokens_revoked
+  interactivity:
+    is_enabled: true
+    request_url: https://slack-apps.salesforce.com:9443/a/A046ZUG9CM9
+    message_menu_options_url: https://slack-apps.salesforce.com:9443/a/A046ZUG9CM9
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
