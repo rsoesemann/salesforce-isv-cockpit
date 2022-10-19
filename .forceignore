@@ -4,9 +4,9 @@
 package.xml
 **appMenu
 **appSwitcher
-**profile
 **setting
-**emailservice
+**/profiles/*
+**/emailservices/*
 
 # LWC configuration files
 **/jsconfig.json
