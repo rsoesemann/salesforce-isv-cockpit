@@ -1,31 +1,26 @@
 public with sharing class SetupSlack extends SetupStep {
 
-    private static final String NOTIFICATION_CHANNEL = '#isv-cockpit';
-
     // PUBLIC
 
     public Settings__c settings { 
         get {
-            Settings__c existing = Settings__c.getOrgDefaults();
-            return (existing != null) ? existing : new Settings__c(); 
+            if(settings == null) {
+                Settings__c existing = Settings__c.getOrgDefaults();
+                settings = (existing == null) ? new Settings__c(SetupOwnerId=UserInfo.getOrganizationId()) : existing;
+            }
+            return settings;
         }
-        private set; 
+        set; 
     }
 
     public override ApexPages.Message getStatus() {
-        /*
-        if(isActive) {
-            String address = service.LocalPart + '@' + service.EmailDomainName;
-            String link = '<em><a href="/lightning/setup/EmailToApexFunction/page?address=%2Femail-admin%2Fservices%2FdetailEmailServicesAddress.apexp%3Fid%3D' + service.Id + '">' + address + '</a></em>';
-            String message = String.format('An Email Service is set up to receive error emails. Configure your Managed Packages to send errors to: {0}.<br/><br/>' +
-                                           '{1} for {2} Email Tokenizers is available.',
-                             new List<String>{ link, setupLink('m00', 'CustomMetadata', 'Custom Metadata'), ''+ tokenizers.size()});
+        if(settings.Id == null || settings.txt_SlackChannel__c == null || settings.txt_SlackTeam__c == null ) {
+            return new ApexPages.Message(ApexPages.Severity.WARNING, 'A Slack Team and Channel Id needs to be stored as Custom Setting to enable Slack notifications.');
+        }
+        else {
+            String message = 'Your Slack Team and Channel Id was successfully stored in this <em><a target="_blank" href="/lightning/setup/CustomSettings/home">Custom Setting</a></em> to enable Slack notifications.';
             return new ApexPages.Message(ApexPages.Severity.CONFIRM, message);
         }
-        else {*/
-            return new ApexPages.Message(ApexPages.Severity.WARNING, 'An Email Service is required to allow the tool to receive app errors.');
-        //}
-        
     }
 
     
@@ -41,6 +36,6 @@ public with sharing class SetupSlack extends SetupStep {
 
     public override PageReference run() {
         upsert settings;
-        return null;
+        return currentPage();
     }
 }
