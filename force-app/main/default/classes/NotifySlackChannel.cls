@@ -26,9 +26,9 @@ public with sharing class NotifySlackChannel  {
                 view.setParameter('recordLink', URL.getSalesforceBaseUrl().toExternalForm() + '/' + record.Id);
 
                 Slack.ChatPostMessageRequest request = new Slack.ChatPostMessageRequest.builder()
-                    .channel(settings.txt_SlackChannel__c)
-                    .viewReference(view)
-                    .build();
+                                                                        .channel(settings.txt_SlackChannel__c)
+                                                                        .viewReference(view)
+                                                                        .build();
 
                 Slack.ChatPostMessageResponse response = botclient.chatPostMessage(request);
                 if(!response.isOk()) {

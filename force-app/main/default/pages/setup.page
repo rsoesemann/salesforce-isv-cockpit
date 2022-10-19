@@ -61,8 +61,12 @@
         <c:setupStep title="Fetch App Analytics Summaries (BETA)" step="{!setupAppAnalytics}" hideBody="true" />
 
         <c:setupStep title="Get notified in Slack" step="{!setupSlack}">
-            <apex:inputText label="Slack Team Id" value="{!setupSlack.settings.txt_SlackTeam__c}" />
-            <apex:inputText label="Slack Channel Id" value="{!setupSlack.settings.txt_SlackChannel__c}" />
+            <apex:pageBlock>
+                <apex:pageBlockSection columns="1">
+                    <apex:inputText label="Slack Team Id" value="{!setupSlack.settings.txt_SlackTeam__c}" />
+                    <apex:inputText label="Slack Channel Id" value="{!setupSlack.settings.txt_SlackChannel__c}" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
         </c:setupStep>
 
         <c:setupStep title="Third-Party Licenses (click for details)">
