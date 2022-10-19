@@ -4,7 +4,9 @@
     <!-- appKey maps to appId on api.slack.com-->
     <appKey>A046ZUG9CM9</appKey>
     <appToken>*</appToken>
-    <botScopes>channels:read,,chat:write,commands,groups:read,reactions:read,users:read</botScopes>
+    <botScopes>
+        chat:write,chat:write.public,commands
+    </botScopes>
     <!-- clientKey maps to clientId on api.slack.com-->
     <clientKey>16612352997.4237968318723</clientKey>
     <clientSecret>653a514b50eff0920126550c4968633e</clientSecret>
