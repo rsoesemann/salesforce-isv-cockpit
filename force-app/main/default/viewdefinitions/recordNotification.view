@@ -23,5 +23,3 @@ components:
                     text: '<{!view.properties.recordLink}|View in Salesforce>'
                     verbatim: false
                     disableEncoding: true
-
-

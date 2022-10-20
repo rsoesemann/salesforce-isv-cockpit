@@ -4,10 +4,10 @@
     <appKey>A047RJAQZRP</appKey>
     <appToken>*</appToken>
     <botScopes>app_mentions:read,chat:write</botScopes>
-    <clientKey>4262786979185.4263622849873</clientKey>
-    <clientSecret>8ea83b2439b67d3c6107ab279469feba</clientSecret>
+    <clientKey>*</clientKey>
+    <clientSecret>*</clientSecret>
     <isProtected>false</isProtected>
     <masterLabel>Salesforce ISV Cockpit</masterLabel>
-    <signingSecret>3ad77553d6bf6b0e4ca1e819a859a2fa</signingSecret>
+    <signingSecret>*</signingSecret>
     <userScopes>users:read,chat:write</userScopes>
 </SlackApp>
