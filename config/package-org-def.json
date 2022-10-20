@@ -1,0 +1,19 @@
+{
+  "orgName": "isv-cockpit_DEV",
+  "edition": "Developer",
+  "features": ["FieldAuditTrail","EnableSetPasswordInApi","SLACK", "SLACKPACKAGING"],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "mobileSettings": {
+        "enableS1EncryptedStoragePref2": true
+    },
+    "deploymentSettings": {
+      "doesSkipAsyncApexValidation": true
+    },
+    "appAnalyticsSettings": {
+      "enableSimulationMode": true
+    }
+  }
+}
