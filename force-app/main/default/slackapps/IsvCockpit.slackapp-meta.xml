@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SlackApp xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>54.0</apiVersion>
-    <!-- appKey maps to appId on api.slack.com-->
-    <appKey>A046ZUG9CM9</appKey>
+    <apiVersion>56.0</apiVersion>
+    <appKey>A047RJAQZRP</appKey>
     <appToken>*</appToken>
-    <botScopes>
-        chat:write,chat:write.public,commands
-    </botScopes>
-    <!-- clientKey maps to clientId on api.slack.com-->
-    <clientKey>16612352997.4237968318723</clientKey>
-    <clientSecret>653a514b50eff0920126550c4968633e</clientSecret>
+    <botScopes>app_mentions:read,chat:write</botScopes>
+    <clientKey>4262786979185.4263622849873</clientKey>
+    <clientSecret>8ea83b2439b67d3c6107ab279469feba</clientSecret>
     <isProtected>false</isProtected>
     <masterLabel>Salesforce ISV Cockpit</masterLabel>
-    <signingSecret>09af0400533bd2940cafa83d53f5b886</signingSecret>
-    <userScopes>reactions:read,chat:write</userScopes>
+    <signingSecret>3ad77553d6bf6b0e4ca1e819a859a2fa</signingSecret>
+    <userScopes>users:read,chat:write</userScopes>
 </SlackApp>

@@ -1,14 +1,27 @@
-description: "Say Hello Example"
+description: 'New App Error'
 schema:
-  properties:
-    name:
-      type: string
-      required: true
-components:
-  - definition: modal
     properties:
-      title: "Hello {!view.properties.name}"
-    components:
-      - definition: section
-        properties:
-          text: "You did it!"
+        header:
+            type: string
+            required: true
+        recordLink:
+            type: string
+        recordId:
+            type: string
+components:
+    - definition: message
+      properties:
+          text: '{!view.properties.header}'
+      components:
+          - definition: header
+            properties:
+                text: '{!view.properties.header}'
+          - definition: section
+            properties:
+                text:
+                    type: 'mrkdwn'
+                    text: '<{!view.properties.recordLink}|View in Salesforce>'
+                    verbatim: false
+                    disableEncoding: true
+
+
