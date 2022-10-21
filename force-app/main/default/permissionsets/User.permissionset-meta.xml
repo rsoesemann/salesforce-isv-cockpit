@@ -226,6 +226,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Home</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>PackageUsageSummary__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
