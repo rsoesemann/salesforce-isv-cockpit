@@ -3,11 +3,11 @@
     <apiVersion>56.0</apiVersion>
     <appKey>A047RJAQZRP</appKey>
     <appToken>*</appToken>
-    <botScopes>app_mentions:read,chat:write</botScopes>
+    <botScopes>chat:write</botScopes>
     <clientKey>*</clientKey>
     <clientSecret>*</clientSecret>
     <isProtected>false</isProtected>
     <masterLabel>Salesforce ISV Cockpit</masterLabel>
     <signingSecret>*</signingSecret>
-    <userScopes>users:read,chat:write</userScopes>
+    <userScopes>chat:write</userScopes>
 </SlackApp>

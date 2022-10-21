@@ -6,20 +6,15 @@ schema:
             required: true
         recordLink:
             type: string
-        recordId:
-            type: string
 components:
     - definition: message
       properties:
           text: '{!view.properties.header}'
       components:
-          - definition: header
-            properties:
-                text: '{!view.properties.header}'
           - definition: section
             properties:
                 text:
                     type: 'mrkdwn'
-                    text: '<{!view.properties.recordLink}|View in Salesforce>'
+                    text: '{!view.properties.header} <{!view.properties.recordLink}|Open...>'
                     verbatim: false
                     disableEncoding: true
