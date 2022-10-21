@@ -1,4 +1,4 @@
-public with sharing class OnSlackAppMentioned extends Slack.EventDispatcher {
+public with sharing class OnSlackEvent extends Slack.EventDispatcher {
 
     public override Slack.ActionHandler invoke(Slack.EventParameters parameters, Slack.RequestContext context) {
           return Slack.ActionHandler.ack(new Handler(parameters, context));

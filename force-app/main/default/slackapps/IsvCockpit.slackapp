@@ -2,6 +2,6 @@ description: Salesforce ISV Cockpit
 events:
     app_home_opened:
         action:
-            definition: apex__action__OnSlackAppMentioned
-        title: Event handler for app_mentioned
-        description: Event fires when a the app is mentioned in a channel
+            definition: apex__action__OnSlackEvent
+        title: Generic Slack Event handler
+        description: Generic Slack Event handler
