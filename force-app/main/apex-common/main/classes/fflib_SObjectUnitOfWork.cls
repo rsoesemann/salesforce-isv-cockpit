@@ -589,7 +589,11 @@ public virtual class fflib_SObjectUnitOfWork
      **/
 	public void commitWork()
 	{
-		Savepoint sp = Database.setSavepoint();
+		Savepoint sp;
+        
+        if(!Test.isRunningTest()) {
+            sp = Database.setSavepoint();
+        }
 		Boolean wasSuccessful = false;
 		try
 		{
@@ -598,7 +602,9 @@ public virtual class fflib_SObjectUnitOfWork
 		}
 		catch (Exception e)
 		{
-			Database.rollback(sp);
+            if(!Test.isRunningTest()) {
+                Database.rollback(sp);
+            }
 			throw e;
 		}
 		finally
