@@ -50,8 +50,8 @@ public with sharing class RequestAppAnalytics implements Schedulable {
     private AppAnalyticsQueryRequest requestFor(List<Id> subscribers, List<Id> packages) {
         AppAnalyticsQueryRequest result = new AppAnalyticsQueryRequest();
         result.DataType = 'PackageUsageSummary';
-        result.PackageIds = '033xx00SIMsmall'; // TODO String.join(packages, ',');
-        result.OrganizationIds = ''; //String.join(subscribers, ',');
+        result.PackageIds = String.join(packages, ',');
+        result.OrganizationIds = String.join(subscribers, ',');
         
         Date s = Date.today().addMonths(-1).toStartOfMonth();
         result.StartTime = DateTime.newInstanceGMT(s.year(), s.month(), s.day(), 0,0,0);

@@ -5,9 +5,10 @@ private class RequestAppAnalytics_Test {
     private static void activate() {
         
         // Setup
-        LmaPackage p = new LmaPackage().ns('any');
+        LmaPackage p = new LmaPackage()
+                                .ns('any').id('033xx00SIMsmall');
         LmaVersion v = new LmaVersion(p);
-        LmaLicense l = new LmaLicense(v);
+        LmaLicense l = new LmaLicense(v).org('');
         sfLma__Package__c pck = (sfLma__Package__c) p.persist();
 
 
@@ -16,6 +17,6 @@ private class RequestAppAnalytics_Test {
 
 
         // Verify
-        System.assertEquals(pck.sfLma__Package_ID__c, RequestAppAnalytics.requests[0].PackageIds);
+        System.assert(RequestAppAnalytics.requests[0].PackageIds.startsWith(pck.sfLma__Package_ID__c));
     }
 }

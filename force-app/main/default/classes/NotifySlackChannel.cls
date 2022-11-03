@@ -24,7 +24,7 @@ public with sharing class NotifySlackChannel implements Queueable, Database.Allo
     public void execute(QueueableContext context) {
         Settings__c settings = Settings__c.getOrgDefaults();
 
-        if (settings != null || settings.txt_SlackChannel__c != null || settings.txt_SlackTeam__c != null ) {
+        if (settings != null && settings.txt_SlackChannel__c != null && settings.txt_SlackTeam__c != null ) {
             Slack.App app = Slack.App.IsvCockpit.get();
         
             Slack.BotClient botClient = app.getBotClientForTeam(settings.txt_SlackTeam__c);
