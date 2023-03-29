@@ -18,7 +18,7 @@ execute sfdx force:org:create -a $SCRATCH_ORG_ALIAS -s -f ./config/scratch-org-d
 
 echo "Install dependencies"
 execute sfdx force:package:install --package 04t30000001DWL0AAO --publishwait 5 --wait 10 -u $SCRATCH_ORG_ALIAS
-#IsvConsoleexecute sfdx force:package:install --package 04t5w000005hh7fAAA --publishwait 5 --wait 10 -u $SCRATCH_ORG_ALIAS
+#IsvConsole execute sfdx force:package:install --package 04t5w000005hh7fAAA --publishwait 5 --wait 10 -u $SCRATCH_ORG_ALIAS
 #Fmaexecute sfdx force:package:install --package 04t3h000004m8DkAAI --publishwait 5 --wait 10 -u $SCRATCH_ORG_ALIAS
 
 echo "Pushing changes to scratch org"

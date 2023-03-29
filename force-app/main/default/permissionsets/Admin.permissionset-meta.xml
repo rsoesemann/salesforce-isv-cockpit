@@ -540,6 +540,14 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>SlackAppAdministrator</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>SlackSalesUser</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>UserSlackCapabilities</name>
     </userPermissions>
 </PermissionSet>

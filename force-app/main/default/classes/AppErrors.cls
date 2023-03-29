@@ -14,11 +14,6 @@ public with sharing class AppErrors extends fflib_SObjectDomain {
     }
 
 
-    public override void onAfterInsert() {
-        new NotifySlackChannel(records).execute();
-    }
-
-
     public override void onBeforeUpdate(Map<Id, SObject> old) {
         new ParseAppErrors(records, cast(old)).execute();
     }
