@@ -79,10 +79,7 @@
                 <li><a href="https://github.com/rsoesemann/apex-httpmock/blob/master/LICENSE" target="_blank">rsoesemann/apex-httpmock</a></li>
                 <li><a href="https://github.com/apex-enterprise-patterns/fflib-apex-common/blob/master/LICENSE" target="_blank">apex-enterprise-patterns/fflib-apex-common</a></li>
                 <li><a href="https://github.com/apex-enterprise-patterns/fflib-apex-mocks/blob/master/LICENSE" target="_blank">apex-enterprise-patterns/fflib-apex-mocks</a></li>
-                <li><a href="https://github.com/open-force/jsonparse/blob/master/LICENSE.md" target="_blank">open-force/jsonparse</a></li>
-                <li><a href="https://github.com/rsoesemann/app-setup/blob/master/LICENSE" target="_blank">rsoesemann/app-setup</a></li>
-                <li><a href="https://github.com/rsoesemann/apex-domainbuilder/blob/master/LICENSE" target="_blank">rsoesemann/apex-domainbuilder</a></li>
-                <li><a href="https://github.com/rsoesemann/apex-httpmock/blob/master/LICENSE" target="_blank">rsoesemann/apex-httpmock</a></li>
+                <li><a href="https://github.com/open-force/jsonparse/blob/master/LICENSE" target="_blank">open-force/jsonparse</a></li>
             </ul>
         </c:setupStep>
     </c:setup>
