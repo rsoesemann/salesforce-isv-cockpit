@@ -168,4 +168,4 @@ Scheduled job 'Bounced Emaisl Redsport' threw unhandled exception.
 
 caused by: line 1663, column 3: Dependent class is invalid and needs recompilation:
 Class NSA.ItineraryContentDto : Dependent class is invalid and needs recompilation:
-Class NSA.Itineraries : DML operation Delete not allowed on List<KaptioTravel__ItineraryGroup__c>
+Class NSA.Itineraries : DML operation Delete not allowed on List<NSA__ItineraryGroup__c>
