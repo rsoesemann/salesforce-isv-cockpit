@@ -69,6 +69,14 @@
             </apex:pageBlock>
         </c:setupStep>
 
+        <c:setupStep title="Connect OpenAI for Smart Insights" step="{!setupOpenAi}">
+            <apex:pageBlock >
+                <apex:pageBlockSection columns="1">
+                    <apex:inputSecret label="OpenAI API Key" value="{!setupOpenAi.settings.txt_OpenAiApiKey__c}" size="60" required="true" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </c:setupStep>
+
         <c:setupStep title="Third-Party Licenses (click for details)">
             <div class="slds-setup-assistant__step-summary-content slds-media__body">
                 This software uses the following open-source software. Their licenses require us to reproduce their copyright notice.

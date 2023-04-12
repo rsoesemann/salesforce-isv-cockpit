@@ -7,6 +7,7 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
     public SetupRestoreErrors setupRestore { get; set; }
     public SetupAppAnalytics setupAppAnalytics { get; set; }
     public SetupSlack setupSlack { get; set; }
+    public SetupOpenAi setupOpenAi { get; set; }
 
 
     // CONSTRUCTOR
@@ -19,12 +20,13 @@ public with sharing class SetupPageCtrl extends SetupCtrl {
         setupRestore = new SetupRestoreErrors();
         setupAppAnalytics = new SetupAppAnalytics();
         setupSlack = new SetupSlack();
+        setupOpenAi = new SetupOpenAi();
     }
 
 
     // PUBLIC
 
     public override List<SetupStep> steps() {
-        return new List<SetupStep>{ setupPackageNamespaces, setupEmailService, setupAppAnalytics, setupSlack };
+        return new List<SetupStep>{ setupPackageNamespaces, setupEmailService, setupAppAnalytics, setupSlack, setupOpenAi };
     }
 }

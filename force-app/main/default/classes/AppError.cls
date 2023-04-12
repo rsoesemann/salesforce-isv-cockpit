@@ -33,6 +33,10 @@ public class AppError extends DomainBuilder {
         return (AppError) set(AppError__c.txt_VisualforcePage__c, value);
     }
 
+    public AppError email(String value) {
+        return (AppError) set(AppError__c.txl_FullMailBody__c, value);
+    }
+
     public AppError ver(LmaVersion value) {
         setParent(AppError__c.lkp_PackageVersion__c, value);
         sfLma__Package_Version__c version = (sfLma__Package_Version__c) value.record;

@@ -166,8 +166,28 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.txt_VisualforcePage__c</fieldItem>
+                <identifier>Recordtxt_VisualforcePage_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.txt_ExceptionType__c</fieldItem>
                 <identifier>Recordtxt_ExceptionType_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.txt_ExceptionMessage__c</fieldItem>
+                <identifier>Recordtxt_ExceptionMessage_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-9cf78e13-867e-41ed-bc59-6822931303f6</name>
@@ -180,18 +200,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.txt_VisualforcePage__c</fieldItem>
-                <identifier>Recordtxt_VisualforcePage_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.txt_ExceptionMessage__c</fieldItem>
-                <identifier>Recordtxt_ExceptionMessage_cField</identifier>
+                <fieldItem>Record.txl_Insights__c</fieldItem>
+                <identifier>Recordtxl_Insights_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-36cca529-4992-4f55-ae10-26cb231139f4</name>

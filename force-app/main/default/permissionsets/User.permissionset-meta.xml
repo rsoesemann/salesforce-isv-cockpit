@@ -31,6 +31,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AppError__c.txl_Insights__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AppError__c.txl_Stacktrace__c</field>
         <readable>true</readable>
     </fieldPermissions>
