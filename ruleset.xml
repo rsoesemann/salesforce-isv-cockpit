@@ -3,13 +3,6 @@
     
     <description>Default ruleset for PMD</description>
 
-    <!-- IGNORE FILES -->
-    <exclude-pattern>.*/apex-domainbuilder/*.*</exclude-pattern>
-    <exclude-pattern>.*/app-setup/*.*</exclude-pattern>
-    <exclude-pattern>.*/fflib-apex-common/*.*</exclude-pattern>
-    <exclude-pattern>.*/json2apex/*.*</exclude-pattern>
-
-
     <!-- STANDARD RULES -->
     
     <rule ref="category/apex/security.xml">
