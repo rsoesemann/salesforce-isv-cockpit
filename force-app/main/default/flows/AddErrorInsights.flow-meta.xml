@@ -8,6 +8,9 @@
         <locationY>158</locationY>
         <actionName>AddErrorInsights</actionName>
         <actionType>apex</actionType>
+        <faultConnector>
+            <targetReference>DisplayFaultScreen</targetReference>
+        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>errorIds</name>
@@ -39,6 +42,23 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <screens>
+        <name>DisplayFaultScreen</name>
+        <label>Display Fault Screen</label>
+        <locationX>440</locationX>
+        <locationY>278</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>DisplayFaultMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 11, 11); font-size: 14px;&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
