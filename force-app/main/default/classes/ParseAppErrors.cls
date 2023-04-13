@@ -1,5 +1,7 @@
 // Note: Otherwise the Admin running this needs to own all Account and Licences
-public without sharing class ParseAppErrors {
+public without sharing class ParseAppErrors implements Triggers.Handler,
+                                                        Triggers.BeforeInsert,
+                                                        Triggers.BeforeUpdate {
 
     public static Boolean parseAlways = false;
     
@@ -26,6 +28,21 @@ public without sharing class ParseAppErrors {
 
 
     // PUBLIC
+
+    public Boolean criteria(Triggers.Context ctx) {
+        return Triggers.WHEN_ALWAYS;
+    }
+
+
+    public void beforeInsert(Triggers.Context ctx) {
+        new ParseAppErrors(ctx.props.newList).execute();
+    }
+
+
+    public void beforeUpdate(Triggers.Context ctx) {
+        new ParseAppErrors( changedBody((List<AppError__c>) ctx.props.newList, (Map<Id, AppError__c>) ctx.props.oldMap) ).execute();
+    }
+      
 
     public void execute() {
         parse();
