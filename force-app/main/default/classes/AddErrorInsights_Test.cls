@@ -28,7 +28,7 @@ private class AddErrorInsights_Test {
 
         
         // Verify
-        e = [SELECT txl_Insights__c FROM AppError__c LIMIT 1];
-        Assert.areEqual('Check the Power cord', e.txl_Insights__c);
+        e = [SELECT txl_Hints__c FROM AppError__c LIMIT 1];
+        Assert.areEqual('Check the Power cord', e.txl_Hints__c);
     }
 }

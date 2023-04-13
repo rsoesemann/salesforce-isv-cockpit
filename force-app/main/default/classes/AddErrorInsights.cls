@@ -8,7 +8,7 @@ public with sharing class AddErrorInsights {
                                     WHERE Id IN :errorIds WITH SYSTEM_MODE];
 
         for(AppError__c error : errors) {
-            error.txl_Insights__c = execute(error);
+            error.txl_Hints__c = execute(error);
         }
 
         update as system errors;

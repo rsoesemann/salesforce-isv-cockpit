@@ -2,6 +2,16 @@
 
 The ISV Cockpit is a native Salesforce App that extends the Salesforce LMA in your Partner Business Org (PBO) and helps you monitor the health of your apps and proactively support your subscribers in error cases.
 
+**Features:**
+
+- Auto-Links Subscriber errors to Accounts and LMA Package and Licence objects 
+- Custom Metadata Tokenizer for flexible Email Parsing
+- Understand your Apps help with Reports and Dashboards
+- Notify Slack Channel on Errors
+- Archive and Restore Errors using Big Objects
+- Fetches and reports on App Analytics Summary data
+- Explain errors and fixes using OpenAI API integration
+
 ## TL;DR - Click for Video Demo!
 
 [![](http://img.youtube.com/vi/m0m6TH8-mnM/hqdefault.jpg)](https://youtu.be/m0m6TH8-mnM "")
