@@ -4,13 +4,13 @@ The ISV Cockpit is a native Salesforce App that extends the Salesforce LMA in yo
 
 **Features:**
 
-- Auto-Links Subscriber errors to Accounts and LMA Package and Licence objects 
-- Custom Metadata Tokenizer for flexible Email Parsing
-- Understand your Apps help with Reports and Dashboards
-- Notify Slack Channel on Errors
-- Archive and Restore Errors using Big Objects
-- Fetches and reports on App Analytics Summary data
-- Explain errors and fixes using OpenAI API integration
+- Auto-Links Errors to **Licence Management App** (=LMA) objects (Accounts, Packages, Versions, Licences)
+- **Custom Metadata** Tokenizer for flexible Email Parsing
+- Understand your Apps help with **Reports and Dashboards**
+- Notify **Slack** Channel on Errors
+- Archive and Restore Errors using **Big Object**
+- Fetches and reports on **App Analytics** Summary data
+- Explain errors and fixes using **OpenAI API** integration
 
 ## TL;DR - Click for Video Demo!
 
