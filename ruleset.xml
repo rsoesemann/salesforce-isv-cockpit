@@ -15,6 +15,7 @@
     <rule ref="category/apex/codestyle.xml" />
     <rule ref="category/apex/bestpractices.xml">
         <exclude name="ApexAssertionsShouldIncludeMessage" />
+        <exclude name="ApexUnitTestClassShouldHaveRunAs" />
     </rule>
     <rule ref="category/apex/documentation.xml">
         <exclude name="ApexDoc"/>
