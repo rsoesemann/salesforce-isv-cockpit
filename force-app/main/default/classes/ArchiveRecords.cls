@@ -44,7 +44,7 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
 
     public Database.QueryLocator start(Database.BatchableContext ctx) {
         return SOQL.of(source)
-                    .with(new List<SObjectField>(mapping.sourceFields(source) ))
+                    .with(mapping.sourceFields(source))
                     .whereAre(filter)
                     .systemMode()
                     .asQueryLocator();

@@ -29,6 +29,7 @@ public inherited sharing class SOQL implements Queryable {
         SOQL of(SObjectType ofObject);
 
         SOQL with(SObjectField field);
+        SOQL with(Set<SObjectField> fields);
         SOQL with(List<SObjectField> fields);
         SOQL with(String fields);
         SOQL with(String relationshipName, List<SObjectField> fields);
@@ -191,6 +192,11 @@ public inherited sharing class SOQL implements Queryable {
         return this;
     }
 
+    public SOQL with(Set<SObjectField> fields) {
+        with(new List<SObjectField>(fields));
+        return this;
+    }
+
     public SOQL with(List<SObjectField> fields) {
         builder.fields.retrive(fields);
         return this;
@@ -259,7 +265,7 @@ public inherited sharing class SOQL implements Queryable {
     }
 
     public SOQL whereAre(String conditions) {
-        builder.conditions.add(SOQL.Filter.evaluate(conditions));
+        builder.conditions.evaluate(conditions);
         return this;
     }
 
@@ -513,7 +519,7 @@ public inherited sharing class SOQL implements Queryable {
                 soqlParts.add(clause.build());
             }
 
-            return String.join(new List<String>(soqlParts), ' ');
+            return String.join(new List<String>(soqlParts), ' ').trim();
         }
     }
 
@@ -708,6 +714,7 @@ public inherited sharing class SOQL implements Queryable {
 
     public class FiltersGroup implements FilterClause, QueryClause, SoqlFiltersGroup {
         private List<FilterClause> queryConditions = new List<FilterClause>();
+        private String stringConditions;
         private String order = '';
         private Boolean isMain = false;
 
@@ -720,21 +727,38 @@ public inherited sharing class SOQL implements Queryable {
             return this;
         }
 
+        public void evaluate(String conditions) {
+            if (String.isEmpty(conditions)) {
+                return;
+            }
+            stringConditions = String.escapeSingleQuotes(conditions);
+        }
+
         public FiltersGroup conditionLogic(String order) {
             this.order = order;
             return this;
         }
 
         public String build() {
+            if (String.isNotEmpty(stringConditions)) {
+                return 'WHERE ' + stringConditions;
+            }
+
             if (String.isEmpty(order)) {
                 setDefaultOrder();
             }
 
-            if (isMain) {
-                return 'WHERE ' + buildNested();
+            String conditions = buildNested();
+
+            if (String.isEmpty(conditions)) {
+                return '';
             }
 
-            return buildNested();
+            if (isMain) {
+                return 'WHERE ' + conditions;
+            }
+
+            return conditions;
         }
 
         private void setDefaultOrder() {
@@ -789,7 +813,6 @@ public inherited sharing class SOQL implements Queryable {
         private JoinQuery joinQuery;
 
         private Binder binder;
-        private String stringCondition;
 
         public Filter(Binder binder) {
             this.binder = binder;
@@ -888,16 +911,7 @@ public inherited sharing class SOQL implements Queryable {
             return this;
         }
 
-        public Filter evaluate(String condition) {
-            stringCondition = String.escapeSingleQuotes(condition);
-            return this;
-        }
-
         public String build() {
-            if (String.isNotEmpty(stringCondition)) {
-                return stringCondition;
-            }
-
             if (joinQuery != null) {
                 return field + ' ' + comperator + ' (' + joinQuery.build() + ')';
             }
@@ -1216,12 +1230,14 @@ public inherited sharing class SOQL implements Queryable {
             return Database.getQueryLocatorWithBinds(query, binding, accessMode);
         }
 
+        @SuppressWarnings('PMD.AvoidDebugStatements')
         private void previewSoql(String query) {
-            System.debug('\n\n============ SOQL Preview ============\n' + query + '\n=======================================\n');
+            System.debug(LoggingLevel.ERROR, '\n\n============ SOQL Preview ============\n' + query + '\n=======================================\n');
         }
 
+        @SuppressWarnings('PMD.AvoidDebugStatements')
         private void previewBinding(Map<String, Object> binding) {
-            System.debug('\n\n============ SOQL Binding ============\n' + JSON.serializePretty(binding) + '\n=======================================\n');
+            System.debug(LoggingLevel.ERROR, '\n\n============ SOQL Binding ============\n' + JSON.serializePretty(binding) + '\n=======================================\n');
         }
     }
 

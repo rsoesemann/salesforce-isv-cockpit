@@ -28,7 +28,17 @@ private class SOQLTest {
     }
 
     @IsTest
-    static void withFields() {
+    static void withSetOfFields() {
+        String soql = SOQL.of(Account.SObjectType)
+            .with(new Set<SObjectField>{
+                Account.Name, Account.BillingCity
+            }).toString();
+
+        Assert.areEqual('SELECT Name, BillingCity FROM Account', soql);
+    }
+
+    @IsTest
+    static void withListOfFields() {
         String soql = SOQL.of(Account.SObjectType)
             .with(new List<SObjectField>{
                 Account.Name, Account.BillingCity
@@ -561,6 +571,17 @@ private class SOQLTest {
 
         //Verify
         Assert.areEqual('SELECT Id FROM Account WHERE NumberOfEmployees >= 10 AND NumberOfEmployees <= 20', soql);
+    }
+
+    @IsTest
+    static void evaluateEmptyConditions() {
+        //Test
+        String soql = SOQL.of(Account.SObjectType)
+            .whereAre('')
+            .toString();
+
+        //Verify
+        Assert.areEqual('SELECT Id FROM Account', soql);
     }
 
     // GROUP BY
