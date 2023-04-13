@@ -10,7 +10,7 @@ The ISV Cockpit is a native Salesforce App that extends the Salesforce LMA in yo
 - Notify **Slack** Channel on Errors
 - Archive and Restore Errors using **Big Object**
 - Fetches and reports on **App Analytics** Summary data
-- Explain errors and fixes using **OpenAI API** integration
+- [Explain errors and fixes using **OpenAI API** integration](https://youtu.be/dERb_22VSfI)
 
 ## TL;DR - Click for Video Demo!
 
