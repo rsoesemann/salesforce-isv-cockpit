@@ -7,7 +7,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>AppError__c.AddOpenAiInsights</value>
+                            <value>AppError__c.AddOpenAiHints</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
