@@ -12,6 +12,11 @@ public without sharing class ParseAppErrors implements Triggers.Handler,
 
     // CONSTRUCTOR
 
+    public ParseAppErrors() {
+        // Note: Default ctor needed for Trigger framework
+    }
+
+
     public ParseAppErrors(List<AppError__c> inserted) {
         errors = inserted;
     }

@@ -8,7 +8,7 @@ private class RequestAppAnalytics_Test {
         LmaPackage p = new LmaPackage()
                                 .ns('any').id('033xx00SIMsmall');
         LmaVersion v = new LmaVersion(p);
-        LmaLicense l = new LmaLicense(v).org('');
+        new LmaLicense(v).org('');
         sfLma__Package__c pck = (sfLma__Package__c) p.persist();
 
 
