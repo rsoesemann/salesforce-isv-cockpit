@@ -6,15 +6,10 @@ private class AddErrorInsights_Test {
 
         // Setup
         insert new Settings__c(txt_OpenAiApiKey__c = 'any');
-
-        AppError__c e = (AppError__c) new AppError().email(
-                                'Apex script unhandled exception by user/organization: 005500000024uNj/00D000000000001\n\n' +
-                                'Failed to process batch for class \'Namespace.MyBatchOb\' for job id \'7073X00009N7cij\'\n\n' +
-                                'caused by: System.NullPointerException: Attempt to de-reference a null object\n\n' + 
-                                ' External entry point')
-                            .persist();
-        Test.startTest();
         
+        AppError__c e = (AppError__c) new AppError().persist();
+
+        Test.startTest();
         new HttpMock()
                 .post('/v1/completions', 
                         new OpenAiCompletions.Response()
