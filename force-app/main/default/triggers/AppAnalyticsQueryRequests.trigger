@@ -1,3 +1,6 @@
 trigger AppAnalyticsQueryRequests on AppAnalyticsQueryRequest (after update) {
-    fflib_SObjectDomain.triggerHandler(AppAnalyticsQueryRequests.class);
+    Triggers.prepare()
+            .afterUpdate()
+                .bind( new DownloadAppAnalytics() )
+            .execute();
 }

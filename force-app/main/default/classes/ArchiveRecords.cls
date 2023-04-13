@@ -43,10 +43,11 @@ public with sharing class ArchiveRecords implements Database.Batchable<SObject>,
     // BATCH
 
     public Database.QueryLocator start(Database.BatchableContext ctx) {
-        return Database.getQueryLocator(new fflib_QueryFactory(source)
-                                                    .selectFields( mapping.sourceFields(source) )
-                                                    .setCondition(filter)
-                                                    .toSOQL(), AccessLevel.SYSTEM_MODE);
+        return SOQL.of(source)
+                    .with(new List<SObjectField>(mapping.sourceFields(source) ))
+                    .whereAre(filter)
+                    .systemMode()
+                    .asQueryLocator();
     }
 
 

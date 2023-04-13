@@ -1,9 +1,16 @@
-public with sharing class DownloadAppAnalytics implements Queueable, Database.AllowsCallouts {
+public with sharing class DownloadAppAnalytics  implements Triggers.Handler,
+                                                            Triggers.AfterUpdate,
+                                                            Queueable, Database.AllowsCallouts {
 
     private List<AppAnalyticsQueryRequest> requests;
 
 
     // CTROR
+
+    public DownloadAppAnalytics() {
+        // Note: Default ctor needed for Trigger framework
+    }
+
 
     public DownloadAppAnalytics(List<AppAnalyticsQueryRequest> requests) {
         this.requests = requests;
@@ -16,6 +23,16 @@ public with sharing class DownloadAppAnalytics implements Queueable, Database.Al
 
 
     // PUBLIC
+
+    public Boolean criteria(Triggers.Context ctx) {
+        return Triggers.WHEN_ALWAYS;
+    }
+
+
+    public void afterUpdate(Triggers.Context ctx) {
+        new DownloadAppAnalytics(ctx.props.newList).execute();
+    }
+
 
     @SuppressWarnings('PMD.OperationWithLimitsInLoop')  // Note: We explicitly check for Limits in loop
     public void execute() {

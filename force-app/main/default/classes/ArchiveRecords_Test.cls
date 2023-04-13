@@ -27,7 +27,7 @@ private class ArchiveRecords_Test {
         ArchiveRecords command = new ArchiveRecords(AppError__c.SObjectType, ArchivedAppError__b.SObjectType, '');
         command.execute();
 
-         Test.stopTest();
+        Test.stopTest();
 
 
         // Verify

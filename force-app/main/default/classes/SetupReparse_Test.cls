@@ -9,9 +9,9 @@ private class SetupReparse_Test {
         // Setup
         setup();
 
-        fflib_SObjectDomain.getTriggerEvent(AppErrors.class).disableAll();
+        Triggers.skips.add(ParseAppErrors.class);
         insert new AppError__c(txl_FullMailBody__c = mails[6]);
-        fflib_SObjectDomain.getTriggerEvent(AppErrors.class).enableAll();
+        Triggers.skips.remove(ParseAppErrors.class);
 
         SetupReparse step = new SetupReparse();
         System.assertEquals(ApexPages.Severity.WARNING, step.getStatus().getSeverity());

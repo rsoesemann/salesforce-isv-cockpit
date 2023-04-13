@@ -24,7 +24,8 @@ List<Object> exceptions = new List<Object>{ 'System.DmlException', 'System.NullP
 List<Object> classes = new List<Object>{ 'SetupController', 'AccountService', 'AsyncHandler', 'TriggerFramework', 'Bills' };
 List<Object> pages = new List<Object>{ 'setup', 'home', 'licenseManager', 'setupV1'};
 
-fflib_SObjectDomain.getTriggerEvent(AppErrors.class).disableAll();
+Triggers.skips.add(ParseAppErrors.class);
+
 for(Integer i=0; i<new Random().integer(400,800); i++) {
     new AppError((LmaLicense) new Random().value(new List<Object>{ l1,l2,l3,l4,l5 }))
         .exception((String) new Random().value(exceptions))

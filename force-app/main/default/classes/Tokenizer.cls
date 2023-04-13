@@ -1,6 +1,6 @@
 public with sharing class Tokenizer {
 
-    private static final fflib_SObjectDescribe SCHEMA = fflib_SObjectDescribe.getDescribe(AppError__c.SObjectType);
+    private static final DescribeSObjectResult DESCRIBE = AppError__c.SObjectType.getDescribe(SObjectDescribeOptions.DEFERRED);
 
     private Pattern regex;
     private List<SObjectField> fields = new List<SObjectField>();
@@ -14,7 +14,7 @@ public with sharing class Tokenizer {
         for(String fieldValue : new List<String>{ record.txt_Group1Field__c, record.txt_Group2Field__c, record.txt_Group3Field__c, 
                                                   record.txt_Group4Field__c, record.txt_Group5Field__c}) {
             
-            SObjectField field = (fieldValue != null) ? SCHEMA.getField(fieldValue) : null;
+            SObjectField field = (fieldValue != null) ? DESCRIBE.fields.getMap().get(fieldValue) : null;
             if(field != null) {
                 fields.add(field);
             }

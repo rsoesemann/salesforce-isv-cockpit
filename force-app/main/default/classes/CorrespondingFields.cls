@@ -98,13 +98,13 @@ public class CorrespondingFields {
 			SObjectType sourceType = sources.get(typeCode);
 			
 			if(sourceType != null) {
-				fflib_SObjectDescribe describe = fflib_SObjectDescribe.getDescribe(sourceType);
+				DescribeSobjectResult describe = sourceType.getDescribe();
 				String field = (typeCode == null) ? stripNs(targetField) : stripNs(targetField).substringAfter(typeCode + '_'); 
 				
 				Boolean noFieldFound = true;
 				
 				for(String candidateName : new List<String>{ field, standard(field) }) {
-					SObjectField sourceField = describe.getField(candidateName);
+					SObjectField sourceField = describe.fields.getMap().get(candidateName);
 	 	
 					if(sourceField != null) {
 						if(!result.containsKey(sourceType)) {
@@ -132,7 +132,7 @@ public class CorrespondingFields {
 	private List<SObjectField> relevantTargetFields() {
 		List<SObjectField> result = new List<SObjectField>();
 		
-		for(SObjectField field : fflib_SObjectDescribe.getDescribe(target).getFieldsMap().values()) {
+		for(SObjectField field : target.getDescribe().fields.getMap().values()) {
 			DescribeFieldResult describe = field.getDescribe();
 			
 			if((describe.isNameField() || describe.isCustom()) && dontIgnore(field)) {
