@@ -3,8 +3,8 @@
     <actionCalls>
         <name>NotifySlackOnError</name>
         <label>NotifySlackOnError</label>
-        <locationX>308</locationX>
-        <locationY>288</locationY>
+        <locationX>698</locationX>
+        <locationY>607</locationY>
         <actionName>slackPostMessage</actionName>
         <actionType>slackPostMessage</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -41,6 +41,35 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>IfSettingsExist</name>
+        <label>If Settings Exist</label>
+        <locationX>693</locationX>
+        <locationY>419</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Settings__c.txt_SlackTeam__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Setup.Settings__c.txt_SlackChannel__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NotifySlackOnError</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>AppErrorNotification</name>
@@ -60,7 +89,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -71,13 +100,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
+        <locationX>575</locationX>
+        <locationY>48</locationY>
         <object>AppError__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <scheduledPaths>
             <connector>
-                <targetReference>NotifySlackOnError</targetReference>
+                <targetReference>IfSettingsExist</targetReference>
             </connector>
             <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
