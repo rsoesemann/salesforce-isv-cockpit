@@ -6,9 +6,11 @@ public with sharing class OpenAiCompletions {
 
     // INNER
 
+    // PMD Json Wrapper needs to match API properties with _
+    @SuppressWarnings('PMD.FieldNamingConventions')
     public class Request {
         public String model;
-        public String prompt;
+        public List<Message> messages = new List<Message>();
         public Integer max_tokens = 200;
 
         public Request model(String value) {
@@ -16,8 +18,8 @@ public with sharing class OpenAiCompletions {
             return this;
         }
 
-        public Request prompt(String value) {
-            prompt = value;
+        public Request message(Message value) {
+            messages.add(value);
             return this;
         }
 
@@ -27,20 +29,38 @@ public with sharing class OpenAiCompletions {
     }
 
 
+    public class Message {
+        public String role;
+        public String content;
+
+        public Message role(String value) {
+            role = value;
+            return this;
+        }
+
+        public Message content(String value) {
+            content = value;
+            return this;
+        }
+    }
+
+
     public class Response {
         public List<Choice> choices = new List<Choice>();
 
-        public Response withChoice(String text) {
+        public Response withChoice(Message message) {
             Choice choice = new Choice();
-            choice.text = text;
+            choice.message = message;
             choices.add(choice);
             return this;
         }
     }
 
 
+    // PMD Json Wrapper needs to match API properties with _
+    @SuppressWarnings('PMD.FieldNamingConventions')
     public class Choice {
-        public String text;
+        public Message message;
         public Integer index;
         public String finish_reason;
     }
