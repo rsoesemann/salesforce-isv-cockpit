@@ -1,2 +1,0 @@
-- name: SFDX Scan Pull Request
-  uses: mitchspano/sfdx-scan-pull-request@v0.1.1

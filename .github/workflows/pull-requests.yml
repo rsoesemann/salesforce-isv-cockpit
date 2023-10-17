@@ -1,0 +1,135 @@
+name: pull-requests
+on:
+  pull_request:
+    branches: "**"
+jobs:
+  step_job_1:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/salesforcedx:latest-full
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - name: Cache node
+      uses: actions/cache@v3.3.2
+      with:
+        key: "${{ runner.os }}-node-${{ hashFiles('node_modules') }}"
+        path: node_modules
+    - name: Get dependencies
+      run: |-
+        npm ci
+        echo y | sfdx plugins:install sfdx-git-delta
+        echo y | sfdx plugins:install @salesforce/sfdx-scanner
+    - name: Generate Delta changes for Pull Request
+      run: |-
+        mkdir -p temp
+        git merge "origin/${{ github.event.pull_request.base.ref }}" -m "Local update with destination"
+        sfdx sgd:source:delta --from "origin/${{ github.event.pull_request.base.ref }}" --to "HEAD" --output temp -d
+        ls -R temp
+    - uses: actions/upload-artifact@v3.1.3
+      with:
+        name: step_job_1
+        path: temp/**
+  parallel_job_2:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/salesforcedx:latest-full
+    needs:
+    - step_job_1
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        name: step_job_1
+    - name: Cache node
+      uses: actions/cache@v3.3.2
+      with:
+        key: "${{ runner.os }}-node-${{ hashFiles('node_modules') }}"
+        path: node_modules
+    - name: Prettier
+      run: |-
+        if [ ! -d "temp/force-app" ]; then echo "There is not metadata to manage"; exit 0; fi
+        npx prettier temp/force-app --debug-check
+    - uses: actions/upload-artifact@v3.1.3
+      with:
+        name: parallel_job_2
+        path: temp/**
+  parallel_job_3:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/salesforcedx:latest-full
+    needs:
+    - step_job_1
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        name: step_job_1
+    - name: Cache node
+      uses: actions/cache@v3.3.2
+      with:
+        key: "${{ runner.os }}-node-${{ hashFiles('node_modules') }}"
+        path: node_modules
+    - name: Salesforce Code Analyzer with PMD
+      run: |-
+        if [ ! -d "temp/force-app" ]; then echo "There is not metadata to manage"; exit 0; fi
+        sfdx scanner:run --format table --target force-app --engine "pmd" --pmdconfig=ruleset.xml
+    - uses: actions/upload-artifact@v3.1.3
+      with:
+        name: parallel_job_3
+        path: temp/**
+  parallel_job_4:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/salesforcedx:latest-full
+    needs:
+    - step_job_1
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        name: step_job_1
+    - name: Cache node
+      uses: actions/cache@v3.3.2
+      with:
+        key: "${{ runner.os }}-node-${{ hashFiles('node_modules') }}"
+        path: node_modules
+    - name: Salesforce Code Analyzer with ESLint
+      run: |-
+        if [ ! -d "temp/force-app" ]; then echo "There is not metadata to manage"; exit 0; fi
+        sfdx scanner:run --format table --target "temp/force-app/**/*.js" --engine eslint --eslintconfig=.eslintrc.json --severity-threshold 3
+    - uses: actions/upload-artifact@v3.1.3
+      with:
+        name: parallel_job_4
+        path: temp/**
+  step_job_5:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/salesforcedx:latest-full
+    needs:
+    - parallel_job_4
+    - parallel_job_3
+    - parallel_job_2
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        name: parallel_job_4
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        name: parallel_job_3
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        name: parallel_job_2
+    - uses: actions/download-artifact@v3.0.2
+      with:
+        name: step_job_1
+    - name: Cache node
+      uses: actions/cache@v3.3.2
+      with:
+        key: "${{ runner.os }}-node-${{ hashFiles('node_modules') }}"
+        path: node_modules
+    - name: Validate with new Scratch Org
+      run: |-
+        git merge "origin/${{ github.event.pull_request.base.ref }}" -m "Local update with destination"
+        sfdx force:auth:sfdxurl:store -d -a $DEV_HUB_ALIAS -f <(printf $DEV_HUB_AUTH_URL)
+        ./scripts/validate-with-scratch-org.sh

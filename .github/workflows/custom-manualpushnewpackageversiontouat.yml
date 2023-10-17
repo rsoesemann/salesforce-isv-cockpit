@@ -1,0 +1,15 @@
+name: custom-manualPushNewPackageVersionToUat
+on:
+  workflow_dispatch:
+jobs:
+  step_job_1:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/salesforcedx:latest-full
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - name: Manual Push New Package Version to UAT
+      run: |-
+        sfdx force:auth:sfdxurl:store -d -a $DEV_HUB_ALIAS -f <(printf $DEV_HUB_AUTH_URL)
+        export UAT_AUTH_URL=$(eval echo \${UAT_SFDX_AUTH_URL})
+        ./scripts/create-new-package-version.sh

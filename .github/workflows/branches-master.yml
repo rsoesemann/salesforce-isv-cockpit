@@ -1,0 +1,27 @@
+name: branches-master
+on:
+  push:
+    branches: master
+jobs:
+  step_job_1:
+    runs-on: ubuntu-latest
+    container:
+      image: salesforce/salesforcedx:latest-full
+    steps:
+    - uses: actions/checkout@v4.1.0
+      with:
+        fetch-depth: 0
+    - name: Check for file changes
+      id: check-changes-d6b99d30
+      run: |
+        if git diff --name-only HEAD^ HEAD | grep -qE '^force\-app/.*.*$'; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
+    - name: Auto Push New Package Version to UAT
+      run: |-
+        sfdx force:auth:sfdxurl:store -d -a $DEV_HUB_ALIAS -f <(printf $DEV_HUB_AUTH_URL)
+        export UAT_AUTH_URL=$(eval echo \${UAT_SFDX_AUTH_URL})
+        ./scripts/create-new-package-version.sh
+      if: "${{ steps.check-changes-d6b99d30.outputs.changed == 'true' }}"

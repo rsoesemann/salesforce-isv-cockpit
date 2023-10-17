@@ -1,0 +1,126 @@
+# Bitbucket Pipelines configuration
+# For documentation please check: https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
+image:
+  name: salesforce/salesforcedx:latest-full
+
+definitions:
+
+  scripts: # This section defines scripts that can be reused in more than one step, using YAML anchors
+    authToOrg: &authToOrg echo $TARGET_SFDX_AUTH_URL > ./TARGET_SFDX_AUTH_URL.txt && sfdx auth:sfdxurl:store --sfdxurlfile ./TARGET_SFDX_AUTH_URL.txt --setdefaultusername
+    validateTempFolder: &validateTempFolder if [ ! -d "temp/force-app" ]; then echo "There is not metadata to manage"; exit 0; fi
+
+  steps:
+    - step: &getDeps
+        name: Get dependencies
+        caches:
+          - node
+        script:
+          - npm ci
+          - echo y | sfdx plugins:install sfdx-git-delta
+          - echo y | sfdx plugins:install @salesforce/sfdx-scanner
+
+    - step: &generateDeltaForPr
+        name: Generate Delta changes for Pull Request
+        caches:
+          - node
+        script:
+          - mkdir -p temp
+          # We'll check for metadata changes in the PR so we can scan what's changed and not all
+          - git merge "origin/$BITBUCKET_PR_DESTINATION_BRANCH" -m "Local update with destination"
+          - sfdx sgd:source:delta --from "origin/$BITBUCKET_PR_DESTINATION_BRANCH" --to "HEAD" --output temp -d
+          - ls -R temp
+        artifacts:
+          - temp/**
+
+    - step: &scanPrettier
+        name: Prettier
+        caches:
+          - node
+        script:
+          - *validateTempFolder
+          - npx prettier temp/force-app --debug-check
+        artifacts:
+          - temp/**
+
+    - step: &sfdxScannerWithPmd
+        name: Salesforce Code Analyzer with PMD
+        caches:
+          - node
+        script:
+          - *validateTempFolder
+          - sfdx scanner:run --format table --target force-app --engine "pmd" --pmdconfig=ruleset.xml
+        artifacts:
+          - temp/**
+
+    - step: &sfdxScannerRetireJs
+        name: Salesforce Code Analyzer RetireJS
+        caches:
+          - node
+        script:
+          - sfdx scanner:run --format table --target force-app --engine "retire-js"
+
+    - step: &sfdxScannerDfa
+        name: Salesforce Code Analyzer Graph Engine
+        caches:
+          - node
+        script:
+          # DFA performs a data-flow analysis, hence it needs the complete directory
+          - sfdx scanner:run:dfa --format table --target force-app --projectdir force-app
+
+    - step: &sfdxScannerEslint
+        name: Salesforce Code Analyzer with ESLint
+        caches:
+          - node
+        script:
+          - *validateTempFolder
+          - sfdx scanner:run --format table --target "temp/force-app/**/*.js" --engine eslint --eslintconfig=.eslintrc.json --severity-threshold 3
+        artifacts:
+          - temp/**
+
+    - step: &validateToScratchOrg
+        name: Validate with new Scratch Org
+        caches:
+          - node
+        script:
+          # Include in the validation the new changes of the target branch
+          - git merge "origin/$BITBUCKET_PR_DESTINATION_BRANCH" -m "Local update with destination"
+          - sfdx force:auth:sfdxurl:store -d -a $DEV_HUB_ALIAS -f <(printf $DEV_HUB_AUTH_URL)
+          - ./scripts/validate-with-scratch-org.sh
+
+    - step: &autoPushNewPackageVersionToUat
+        name: Auto Push New Package Version to UAT
+        condition:
+          changesets:
+            includePaths:
+              - "force-app/**"
+        script:
+          - sfdx force:auth:sfdxurl:store -d -a $DEV_HUB_ALIAS -f <(printf $DEV_HUB_AUTH_URL)
+          - export UAT_AUTH_URL=$(eval echo \${UAT_SFDX_AUTH_URL})
+          - ./scripts/create-new-package-version.sh
+
+    - step: &manualPushNewPackageVersionToUat
+        name: Manual Push New Package Version to UAT
+        script:
+          - sfdx force:auth:sfdxurl:store -d -a $DEV_HUB_ALIAS -f <(printf $DEV_HUB_AUTH_URL)
+          - export UAT_AUTH_URL=$(eval echo \${UAT_SFDX_AUTH_URL})
+          - ./scripts/create-new-package-version.sh
+
+pipelines:
+
+  pull-requests:
+    "**": # This runs validation when opening a PR
+      - step: *getDeps
+      - step: *generateDeltaForPr
+      - parallel:
+          - step: *scanPrettier
+          - step: *sfdxScannerWithPmd
+          - step: *sfdxScannerEslint
+      - step: *validateToScratchOrg
+
+  branches:
+    master:
+      - step: *autoPushNewPackageVersionToUat
+
+  custom:
+    manualPushNewPackageVersionToUat:
+      - step: *manualPushNewPackageVersionToUat
