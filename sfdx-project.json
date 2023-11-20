@@ -14,12 +14,11 @@
             ]
         }
     ],
-    "namespace": "",
+    "namespace": "aquiva",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "56.0",
+    "sourceApiVersion": "59.0",
     "packageAliases": {
-        "isv-cockpit": "0Ho1R000000GmaiSAC",
-        "lma": "04t30000001DWL0AAO",
-        "isv-cockpit@1.0.0-1": "04t1R000001E4yMQAS"
+        "isv-cockpit": "",
+        "lma": "04t30000001DWL0AAO"
     }
 }
