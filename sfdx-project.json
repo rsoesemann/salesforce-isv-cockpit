@@ -3,8 +3,8 @@
     {
       "path": "force-app",
       "package": "isv-cockpit-aquivalabs",
-      "versionName": "1.0",
-      "versionNumber": "1.0.0.NEXT",
+      "versionName": "1.0.1",
+      "versionNumber": "1.0.1.NEXT",
       "definitionFile": "config/scratch-org-def.json",
       "dependencies": [
         {
