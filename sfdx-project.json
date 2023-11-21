@@ -1,24 +1,25 @@
 {
-    "packageDirectories": [
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "package": "isv-cockpit-aquivalabs",
+      "versionName": "1.0",
+      "versionNumber": "1.0.0.NEXT",
+      "definitionFile": "config/scratch-org-def.json",
+      "dependencies": [
         {
-            "path": "force-app",
-            "default": true,
-            "package": "isv-cockpit",
-            "versionName": "ver 1.0",
-            "versionNumber": "1.0.0.NEXT",
-            "definitionFile": "config/scratch-org-def.json",
-            "dependencies": [
-                {
-                    "package": "lma"
-                }
-            ]
+          "package": "lma"
         }
-    ],
-    "namespace": "aquiva",
-    "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "59.0",
-    "packageAliases": {
-        "isv-cockpit": "",
-        "lma": "04t30000001DWL0AAO"
+      ],
+      "default": true,
+      "versionDescription": ""
     }
+  ],
+  "namespace": "aquiva",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "59.0",
+  "packageAliases": {
+    "lma": "04t30000001DWL0AAO",
+    "isv-cockpit-aquivalabs": "0HoVI000000001d0AA"
+  }
 }
