@@ -9,15 +9,15 @@
         <actionType>slackPostMessage</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>recordId</name>
+            <name>slackAppIdForToken</name>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>$Setup.Settings__c.txt_SlackChannel__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>slackAppIdForToken</name>
+            <name>slackWorkspaceIdForToken</name>
             <value>
-                <stringValue>A028VJ1KG3G</stringValue>
+                <elementReference>$Setup.Settings__c.txt_SlackTeam__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -33,12 +33,14 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>slackWorkspaceIdForToken</name>
+            <name>recordId</name>
             <value>
-                <elementReference>$Setup.Settings__c.txt_SlackTeam__c</elementReference>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>slackPostMessage</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
     <decisions>
