@@ -11,7 +11,7 @@ private class AddErrorInsights_Test {
 
         Test.startTest();
         new HttpMock()
-                .post('/v1/completions', 
+                .post('/v1/chat/completions', 
                         new OpenAiCompletions.Response().withChoice('Check the Power cord'), 200)
                 .mock();
 
