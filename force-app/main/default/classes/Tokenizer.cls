@@ -10,11 +10,12 @@ public with sharing class Tokenizer {
 
     public Tokenizer(Tokenizer__mdt record) {
         regex = Pattern.compile(record.txl_RegExp__c);
+
+        String ns = namespacePrefix();
         
         for(String fieldValue : new List<String>{ record.txt_Group1Field__c, record.txt_Group2Field__c, record.txt_Group3Field__c, 
                                                   record.txt_Group4Field__c, record.txt_Group5Field__c}) {
-            
-            SObjectField field = (fieldValue != null) ? DESCRIBE.fields.getMap().get(fieldValue) : null;
+            SObjectField field = (fieldValue != null) ? DESCRIBE.fields.getMap().get(ns + fieldValue) : null;
             if(field != null) {
                 fields.add(field);
             }
@@ -46,5 +47,10 @@ public with sharing class Tokenizer {
         }
         
         return result;
+    }
+
+    private String namespacePrefix() {
+        DescribeSObjectResult schema = AppError__c.sObjectType.getDescribe();
+        return schema.getName().remove(schema.getLocalName());
     }
 }
