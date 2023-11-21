@@ -21,6 +21,7 @@
   "packageAliases": {
     "lma": "04t30000001DWL0AAO",
     "isv-cockpit-aquivalabs": "0HoVI000000001d0AA",
-    "isv-cockpit-aquivalabs@1.0.0-1": "04tVI0000000IjJYAU"
+    "isv-cockpit-aquivalabs@1.0.0-1": "04tVI0000000IjJYAU",
+    "isv-cockpit-aquivalabs@1.0.1-1": "04tVI0000000JAjYAM"
   }
 }
