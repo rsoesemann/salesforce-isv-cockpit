@@ -54,6 +54,10 @@ public with sharing class OpenAiCompletions {
             choices.add(choice);
             return this;
         }
+
+        public Response withChoice(String message) {
+            return withChoice(new Message().content(message));
+        }
     }
 
 
