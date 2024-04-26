@@ -18,17 +18,17 @@ The ISV Cockpit is a native Salesforce App that extends the Salesforce LMA in yo
 
 ## How does it work?
 
-Managed Packages have an option to send out app errors to an email address defined during Package upload. We use this mechanism and let our App receive and parse those emails. In combination with the information in the LMA app, we can perfectly assign each incoming error to a customer account, a package, package version, and license. But we can do more. We also extract information about the type of error and where it occurred.
+Managed Packages have the option to send out app errors to an email address defined during Package upload. We use this mechanism to let our app receive and parse those emails. In combination with the information in the LMA app, we can perfectly assign each incoming error to a customer account, a package, a package version, and a license. But we can do more. We also extract information about the type of error and where it occurred.
 
 All this information is stored in a single Custom Object and can be easily used for reporting and sophisticated support workflows.
 
-## How can I use and extends this?
+## How can I use and extend this?
 
-The project was built as a flexible unnamespaced SFDX project. The repo contains all the scripts to automatically build dev scratch orgs with the LMA installed and sample data to play with.
+The project was built as a flexible, unnamespaced SFDX project. The repo contains all the scripts to build dev scratch automatically orgs with the LMA installed and sample data to play with.
 
-From there you can either build Unlocked Packages from it or even push it into a Packaging org using the deployMetadata.sh script.
+From there, you can either build Unlocked Packages or push it into a Packaging org using the deployMetadata.sh script.
 
-Feel free to fork the repo and extend it. We would love to get improvements as Pull Request from you. Or create issues when you find a problem but don't want to fix it on your own.
+Feel free to fork the repo and extend it. We would love to get improvements as a Pull Request from you. Or create issues when you find a problem but don't want to fix it alone.
 
 ---
-> NOTE: This app has a [younger brother for regular Customer orgs](https://github.com/rsoesemann/salesforce-isv-cockpit) that want to receive, store and proactivly manage their org's error emails in a more professional way.
+> NOTE: This app has a [younger brother for regular Customer orgs](https://github.com/rsoesemann/org-error-inbox) that wants to receive, store, and proactively manage their org's error emails in a more professional way.
